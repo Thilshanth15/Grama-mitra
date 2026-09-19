@@ -194,86 +194,176 @@ export default function VoiceAssistant() {
     <PublicLayout>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
 
-      {/* Page header */}
+      {/* Page header with Cinematic Ambient AI Radial Background */}
       <div style={{
-        background: '#000000',
-        padding: '5.5rem 0 3.5rem',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        position: 'relative',
+        background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.25) 0%, rgba(16, 185, 129, 0.15) 45%, rgba(3, 3, 8, 1) 100%)',
+        padding: '5.5rem 0 3rem',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
         color: '#fff',
+        overflow: 'hidden',
       }}>
-        <div className="container-sm" style={{ textAlign: 'center' }}>
+        {/* Ambient background glow orbs */}
+        <div style={{
+          position: 'absolute', top: '-100px', left: '50%', transform: 'translateX(-50%)',
+          width: '600px', height: '300px',
+          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(56, 189, 248, 0.18) 50%, transparent 70%)',
+          filter: 'blur(70px)', pointerEvents: 'none', zIndex: 0,
+        }} />
+
+        <div className="container-sm" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
           <div style={{ marginBottom: '1.75rem' }}>
-            <span className="section-label" style={{ display: 'inline-flex', gap: '0.5rem' }}>
-              <Mic size={15} />
-              {language === 'en' ? 'Multilingual Voice & Text Assistant' : 'Tamil Voice & Text Assistant'}
+            <span style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.6rem',
+              padding: '0.45rem 1.35rem',
+              borderRadius: '9999px',
+              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(124, 58, 237, 0.18) 100%)',
+              border: '1px solid rgba(52, 211, 153, 0.4)',
+              backdropFilter: 'blur(16px)',
+              boxShadow: '0 4px 20px rgba(16, 185, 129, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3)',
+              fontSize: '0.84rem',
+              fontWeight: 700,
+              color: '#34d399',
+              letterSpacing: '0.04em',
+            }}>
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                width: '24px', height: '24px', borderRadius: '50%',
+                background: 'rgba(16, 185, 129, 0.3)', border: '1px solid rgba(52, 211, 153, 0.5)'
+              }}>
+                <Mic size={14} color="#34d399" />
+              </span>
+              {language === 'en' ? 'MULTILINGUAL VOICE & TEXT ASSISTANT' : 'தமிழ் & ஆங்கில AI குரல் உதவி'}
             </span>
           </div>
-          <h1 className="section-title" style={{ marginBottom: '1.25rem' }}>
+          <h1 style={{
+            fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
+            fontWeight: 900,
+            background: 'linear-gradient(135deg, #ffffff 0%, #34d399 40%, #38bdf8 75%, #c084fc 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-0.03em',
+            marginBottom: '1.25rem',
+            lineHeight: 1.15,
+            filter: 'drop-shadow(0 4px 20px rgba(16, 185, 129, 0.25))',
+          }}>
             Ask Grama Mitra
           </h1>
-          <p style={{ color: 'var(--green-400)', fontSize: '1.15rem', fontWeight: 600, lineHeight: 1.7 }}>
+          <p style={{ color: '#e2e8f0', fontSize: '1.18rem', fontWeight: 600, lineHeight: 1.7, maxWidth: 620, margin: '0 auto' }}>
             {language === 'en'
-              ? 'Ask your question in English or Tamil — by voice or text.'
+              ? 'Ask your question in English or Tamil — by voice, text, or crop image.'
               : 'உங்கள் கேள்வியை தமிழில் கேளுங்கள் — குரலில் அல்லது எழுத்தில்.'}
           </p>
         </div>
       </div>
 
-      <div style={{ background: '#000000', minHeight: '70vh', padding: '3.5rem 0 5rem' }}>
-        <div className="container-sm">
-          {/* Category selector — Symmetrically Centered */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.65rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat.id}
-                onClick={() => setCategory(cat.id)}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '0.45rem',
-                  padding: '0.55rem 1.15rem',
-                  borderRadius: '9999px',
-                  border: `1.5px solid ${category === cat.id ? cat.color : 'rgba(255, 255, 255, 0.16)'}`,
-                  background: category === cat.id ? (cat.id === 'all' ? 'rgba(255, 255, 255, 0.16)' : cat.color + '25') : 'rgba(255, 255, 255, 0.05)',
-                  color: category === cat.id ? (cat.id === 'all' ? '#ffffff' : cat.color) : 'var(--gray-300)',
-                  fontWeight: category === cat.id ? 700 : 500,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: category === cat.id ? `0 4px 15px ${cat.color}33` : 'none',
-                }}
-              >
-                <cat.icon size={15} />
-                <span>{cat.label}</span>
-              </button>
-            ))}
+      <div style={{
+        position: 'relative',
+        background: 'linear-gradient(180deg, #030308 0%, #080812 50%, #030308 100%)',
+        minHeight: '75vh',
+        padding: '3rem 0 5rem',
+        color: '#ffffff',
+      }}>
+        {/* Secondary ambient glow */}
+        <div style={{
+          position: 'absolute', top: '15%', left: '50%', transform: 'translateX(-50%)',
+          width: '500px', height: '400px',
+          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(16, 185, 129, 0.1) 50%, transparent 70%)',
+          filter: 'blur(90px)', pointerEvents: 'none', zIndex: 0,
+        }} />
+
+        <div className="container-sm" style={{ position: 'relative', zIndex: 2 }}>
+          {/* Category selector — Premium Glass Squircles */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginBottom: '3rem', flexWrap: 'wrap' }}>
+            {CATEGORIES.map(cat => {
+              const isSelected = category === cat.id;
+              const catGlowColor = cat.id === 'all' ? '#a855f7' : cat.id === 'agriculture' ? '#10b981' : cat.id === 'government' ? '#38bdf8' : '#e11d48';
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setCategory(cat.id)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.55rem',
+                    padding: '0.65rem 1.35rem',
+                    borderRadius: '16px',
+                    border: `1.5px solid ${isSelected ? catGlowColor : 'rgba(255, 255, 255, 0.14)'}`,
+                    background: isSelected
+                      ? `linear-gradient(135deg, ${catGlowColor}28 0%, rgba(15, 23, 42, 0.8) 100%)`
+                      : 'rgba(255, 255, 255, 0.04)',
+                    backdropFilter: 'blur(16px)',
+                    color: isSelected ? '#ffffff' : 'var(--gray-300)',
+                    fontWeight: isSelected ? 700 : 600,
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: isSelected
+                      ? `0 8px 25px -4px ${catGlowColor}66, inset 0 1.5px 1px rgba(255, 255, 255, 0.4)`
+                      : '0 2px 10px rgba(0,0,0,0.3)',
+                    transform: isSelected ? 'translateY(-2px)' : 'none',
+                  }}
+                  onMouseEnter={e => {
+                    if (!isSelected) {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.borderColor = `${catGlowColor}66`;
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!isSelected) {
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                    }
+                  }}
+                >
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    width: '24px', height: '24px', borderRadius: '8px',
+                    background: isSelected ? `${catGlowColor}44` : 'rgba(255,255,255,0.08)',
+                    border: `1px solid ${isSelected ? catGlowColor : 'rgba(255,255,255,0.15)'}`
+                  }}>
+                    <cat.icon size={13} color={isSelected ? catGlowColor : '#ffffff'} />
+                  </span>
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Voice button + status */}
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            {/* Ultra-Premium Voice Mic Orb */}
-            <div className="mic-wrapper" style={{ marginBottom: '1.25rem' }}>
+          {/* Central Voice Mic Orb */}
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <div className="mic-wrapper" style={{ marginBottom: '1.5rem', display: 'inline-block' }}>
               <div className={`mic-aura ${voiceState === VOICE_STATES.RECORDING ? 'recording' : ''}`} />
               {voiceState === VOICE_STATES.RECORDING && <div className="pulse-ring" />}
               
               <div className="mic-outer-ring" style={{
-                borderColor: voiceState === VOICE_STATES.RECORDING ? 'rgba(239, 68, 68, 0.45)' :
-                  voiceState === VOICE_STATES.PROCESSING ? 'rgba(56, 189, 248, 0.45)' : 'rgba(52, 211, 153, 0.35)',
-                boxShadow: voiceState === VOICE_STATES.RECORDING ? '0 0 35px -5px rgba(239, 68, 68, 0.45)' :
-                  voiceState === VOICE_STATES.PROCESSING ? '0 0 35px -5px rgba(56, 189, 248, 0.45)' : '0 0 35px -5px rgba(16, 185, 129, 0.4)',
+                width: '136px', height: '136px',
+                borderColor: voiceState === VOICE_STATES.RECORDING ? 'rgba(239, 68, 68, 0.6)' :
+                  voiceState === VOICE_STATES.PROCESSING ? 'rgba(56, 189, 248, 0.6)' : 'rgba(52, 211, 153, 0.5)',
+                boxShadow: voiceState === VOICE_STATES.RECORDING ? '0 0 45px rgba(239, 68, 68, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4)' :
+                  voiceState === VOICE_STATES.PROCESSING ? '0 0 45px rgba(56, 189, 248, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4)' : '0 0 45px rgba(16, 185, 129, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4)',
+                background: 'rgba(15, 23, 42, 0.6)',
+                backdropFilter: 'blur(20px)',
               }}>
                 <button
                   className={`mic-button ${voiceState === VOICE_STATES.RECORDING ? 'recording' : voiceState === VOICE_STATES.PROCESSING ? 'processing' : 'idle'}`}
                   onClick={handleMicClick}
                   disabled={voiceState === VOICE_STATES.PROCESSING}
                   title={voiceState === VOICE_STATES.RECORDING ? 'Stop recording' : 'Start voice input'}
-                  style={{ opacity: voiceState === VOICE_STATES.PROCESSING ? 0.8 : 1 }}
+                  style={{
+                    width: '98px', height: '98px',
+                    opacity: voiceState === VOICE_STATES.PROCESSING ? 0.85 : 1,
+                  }}
                   aria-label="Voice input button"
                 >
                   {voiceState === VOICE_STATES.RECORDING ? (
-                    <MicOff size={36} color="#ffffff" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))' }} />
+                    <MicOff size={40} color="#ffffff" style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.5))' }} />
                   ) : voiceState === VOICE_STATES.PROCESSING ? (
-                    <div className="spinner" style={{ width: 34, height: 34, borderWidth: 3, borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#ffffff' }} />
+                    <div className="spinner" style={{ width: 38, height: 38, borderWidth: 3.5, borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#ffffff' }} />
                   ) : (
-                    <Mic size={36} color="#ffffff" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.35))' }} />
+                    <Mic size={40} color="#ffffff" style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))' }} />
                   )}
                 </button>
               </div>
@@ -281,13 +371,13 @@ export default function VoiceAssistant() {
 
             {/* Waveform (recording) */}
             {voiceState === VOICE_STATES.RECORDING && (
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <div className="waveform">
-                  {[...Array(10)].map((_, i) => (
+                  {[...Array(12)].map((_, i) => (
                     <div key={i} className="waveform-bar" style={{
-                      animationDelay: `${i * 0.08}s`,
-                      background: 'linear-gradient(to top, #ef4444, #f87171)',
-                      height: `${14 + (i % 5) * 6}px`
+                      animationDelay: `${i * 0.07}s`,
+                      background: 'linear-gradient(to top, #ef4444, #f87171, #fca5a5)',
+                      height: `${16 + (i % 6) * 6}px`
                     }} />
                   ))}
                 </div>
@@ -296,29 +386,35 @@ export default function VoiceAssistant() {
 
             {/* Status text */}
             <div style={{
-              fontSize: '1rem',
+              fontSize: '1.05rem',
               color: voiceState === VOICE_STATES.RECORDING ? '#f87171' :
                 voiceState === VOICE_STATES.PROCESSING ? '#38bdf8' : '#ffffff',
               fontFamily: voiceState === VOICE_STATES.PROCESSING ? 'var(--font-tamil)' : 'inherit',
-              fontWeight: 600,
+              fontWeight: 700,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.5rem',
+              gap: '0.6rem',
               letterSpacing: '0.01em',
             }}>
-              {voiceState === VOICE_STATES.PROCESSING && <div className="spinner" style={{ width: 16, height: 16 }} />}
+              {voiceState === VOICE_STATES.PROCESSING && <div className="spinner" style={{ width: 18, height: 18 }} />}
               {voiceState === VOICE_STATES.IDLE && (
-                <span>
-                  <strong style={{ color: '#34d399' }}>Tap to speak</strong> in Tamil or English
+                <span style={{
+                  padding: '0.4rem 1.25rem',
+                  borderRadius: '9999px',
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(52, 211, 153, 0.35)',
+                  boxShadow: '0 2px 10px rgba(16, 185, 129, 0.2)',
+                }}>
+                  <strong style={{ color: '#34d399' }}>Tap microphone to speak</strong> in Tamil or English
                 </span>
               )}
               {voiceState !== VOICE_STATES.IDLE && voiceStatusText[voiceState]}
             </div>
 
             {!isSpeechSupported && (
-              <div style={{ marginTop: '0.6rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem', fontSize: '0.8rem', color: '#fbbf24' }}>
-                <AlertTriangle size={14} />
+              <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem', fontSize: '0.85rem', color: '#fbbf24' }}>
+                <AlertTriangle size={15} />
                 Use Chrome / Edge for microphone speech recognition
               </div>
             )}
@@ -333,75 +429,85 @@ export default function VoiceAssistant() {
             style={{ display: 'none' }}
           />
 
-          {/* Text & Image Input Form */}
-          <form onSubmit={handleSubmit}>
+          {/* Text & Image Input Form — Frosted Glass Panel */}
+          <form onSubmit={handleSubmit} style={{ marginBottom: '2.5rem' }}>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '0.5rem',
-              background: 'var(--color-surface)',
-              border: selectedImage ? '2px solid var(--green-500)' : '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-xl)',
-              padding: '0.875rem',
-              boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)',
-              transition: 'all 0.2s',
+              gap: '0.75rem',
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.6) 100%)',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              border: selectedImage ? '2px solid #10b981' : '1px solid rgba(255, 255, 255, 0.18)',
+              borderRadius: '24px',
+              padding: '1.25rem',
+              boxShadow: '0 25px 65px -10px rgba(0, 0, 0, 0.9), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}>
               {/* Image Preview Thumbnail if attached */}
               {imagePreview && (
                 <div style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.625rem',
-                  padding: '0.375rem 0.75rem',
-                  background: 'var(--green-50)',
-                  border: '1px solid var(--green-200)',
-                  borderRadius: 'var(--radius-lg)',
+                  gap: '0.75rem',
+                  padding: '0.5rem 0.9rem',
+                  background: 'rgba(16, 185, 129, 0.18)',
+                  border: '1px solid rgba(52, 211, 153, 0.4)',
+                  borderRadius: '16px',
                   maxWidth: 'fit-content',
                 }}>
                   <img
                     src={imagePreview}
                     alt="Crop preview"
-                    style={{ width: 36, height: 36, objectFit: 'cover', borderRadius: '0.375rem', border: '1px solid var(--green-300)' }}
+                    style={{ width: 42, height: 42, objectFit: 'cover', borderRadius: '10px', border: '1.5px solid #34d399' }}
                   />
-                  <div style={{ fontSize: '0.8125rem', color: 'var(--green-900)', fontWeight: 600 }}>
+                  <div style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: 600 }}>
                     📷 {selectedImage?.name || 'Crop_Image.jpg'}
-                    <div style={{ fontSize: '0.7rem', color: 'var(--green-600)', fontWeight: 400 }}>AI Crop Disease Diagnosis Attached</div>
+                    <div style={{ fontSize: '0.725rem', color: '#34d399', fontWeight: 500 }}>AI Crop Disease Diagnosis Attached</div>
                   </div>
                   <button
                     type="button"
                     onClick={handleClearImage}
-                    style={{ background: 'none', border: 'none', color: 'var(--red-500)', cursor: 'pointer', padding: '0.2rem', marginLeft: '0.25rem' }}
+                    style={{ background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#f87171', borderRadius: '50%', cursor: 'pointer', padding: '0.25rem', marginLeft: '0.35rem' }}
                     title="Remove image"
                   >
-                    <X size={15} />
+                    <X size={14} />
                   </button>
                 </div>
               )}
 
-              <div style={{ display: 'flex', gap: '0.625rem', alignItems: 'flex-end' }}>
-                {/* Crop Image Upload Button (Circled in UI) */}
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                {/* Crop Image Upload Button */}
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="btn btn-sm btn-ghost"
-                  title="Upload Crop Image for Disease Diagnosis"
                   style={{
-                    color: selectedImage ? 'var(--green-600)' : 'var(--gray-500)',
-                    background: selectedImage ? 'var(--green-100)' : 'var(--gray-100)',
-                    padding: '0.6rem',
-                    borderRadius: 'var(--radius-lg)',
-                    border: '1px solid var(--gray-200)',
-                    display: 'flex',
+                    color: selectedImage ? '#34d399' : '#ffffff',
+                    background: selectedImage ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)',
+                    padding: '0.75rem 1.15rem',
+                    borderRadius: '16px',
+                    border: selectedImage ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255, 255, 255, 0.18)',
+                    display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.375rem',
+                    gap: '0.5rem',
                     cursor: 'pointer',
                     flexShrink: 0,
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'rgba(16, 185, 129, 0.28)';
+                    e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.6)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = selectedImage ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)';
+                    e.currentTarget.style.borderColor = selectedImage ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255, 255, 255, 0.18)';
                   }}
                 >
-                  <Camera size={18} />
-                  <span style={{ fontSize: '0.75rem', fontWeight: 600, display: 'inline' }}>
-                    {selectedImage ? 'Image Added' : 'Crop Photo'}
-                  </span>
+                  <Camera size={18} color={selectedImage ? '#34d399' : '#38bdf8'} />
+                  <span>{selectedImage ? 'Image Attached' : 'Crop Photo'}</span>
                 </button>
 
                 <textarea
@@ -411,37 +517,51 @@ export default function VoiceAssistant() {
                   placeholder={language === 'en' ? 'Type your question or attach crop photo...' : 'அல்லது இங்கே தட்டச்சு செய்யுங்கள்… (Type question or attach crop photo)'}
                   style={{
                     flex: 1, border: 'none', outline: 'none', resize: 'none',
-                    fontFamily: language === 'en' ? 'var(--font-sans)' : 'var(--font-tamil)', fontSize: '0.9375rem',
+                    fontFamily: language === 'en' ? 'var(--font-sans)' : 'var(--font-tamil)', fontSize: '1rem',
                     color: '#ffffff', background: 'transparent',
-                    minHeight: '48px', maxHeight: '120px',
-                    lineHeight: 1.5, padding: '0.25rem 0.25rem',
+                    minHeight: '46px', maxHeight: '120px',
+                    lineHeight: 1.5, padding: '0.4rem 0.5rem',
                   }}
                   rows={2}
                   disabled={voiceState === VOICE_STATES.PROCESSING}
                   onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(); } }}
                 />
 
-                <div style={{ display: 'flex', gap: '0.375rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                   {result && (
-                    <button type="button" onClick={handleReset} className="btn btn-sm btn-ghost" title="Clear">
-                      <RefreshCw size={15} />
+                    <button type="button" onClick={handleReset} className="btn btn-sm btn-ghost" title="Clear" style={{ borderRadius: '12px' }}>
+                      <RefreshCw size={16} />
                     </button>
                   )}
                   <button
                     type="submit"
-                    className="btn btn-sm btn-primary"
                     disabled={(!input.trim() && !selectedImage) || voiceState === VOICE_STATES.PROCESSING}
-                    style={{ minWidth: 80 }}
+                    style={{
+                      padding: '0.75rem 1.6rem',
+                      borderRadius: '16px',
+                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                      color: '#ffffff',
+                      fontWeight: 700,
+                      fontSize: '0.925rem',
+                      border: '1px solid rgba(255, 255, 255, 0.4)',
+                      boxShadow: '0 8px 25px rgba(16, 185, 129, 0.45), inset 0 1.5px 1px rgba(255, 255, 255, 0.6)',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease',
+                      opacity: (!input.trim() && !selectedImage) || voiceState === VOICE_STATES.PROCESSING ? 0.5 : 1,
+                    }}
                   >
-                    {voiceState === VOICE_STATES.PROCESSING ? <div className="spinner" style={{ width: 15, height: 15 }} /> : <><Send size={15} /> Send</>}
+                    {voiceState === VOICE_STATES.PROCESSING ? <div className="spinner" style={{ width: 16, height: 16 }} /> : <><Send size={16} /> Send</>}
                   </button>
                 </div>
               </div>
             </div>
 
             {/* Quick Crop Image Diagnostics Presets — Centered */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginTop: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--gray-400)', fontWeight: 600 }}>🌾 Crop Presets:</span>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.84rem', color: '#cbd5e1', fontWeight: 700 }}>🌾 Crop Presets:</span>
               <button
                 type="button"
                 onClick={() => {
@@ -452,15 +572,17 @@ export default function VoiceAssistant() {
                   addToast('🌾 Sample Rice Leaf Image attached!', 'info');
                 }}
                 style={{
-                  fontSize: '0.8125rem', padding: '0.45rem 0.85rem',
-                  background: 'rgba(16, 185, 129, 0.14)', color: 'var(--green-300)',
-                  border: '1px solid rgba(52, 211, 153, 0.3)', borderRadius: 'var(--radius-full)',
-                  cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.375rem',
-                  transition: 'all 0.15s',
+                  fontSize: '0.825rem', padding: '0.5rem 1rem',
+                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(15, 23, 42, 0.7) 100%)',
+                  color: '#34d399',
+                  border: '1px solid rgba(52, 211, 153, 0.4)', borderRadius: '9999px',
+                  cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.45rem',
+                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)',
+                  transition: 'all 0.2s ease',
                 }}
                 aria-label="Preset: Yellow leaf disease sample"
               >
-                <Camera size={13} />
+                <Camera size={14} color="#34d399" />
                 நெல் இலை மஞ்சள் (Yellow Leaf)
               </button>
               <button
@@ -473,15 +595,17 @@ export default function VoiceAssistant() {
                   addToast('🐛 Sample Pest Image attached!', 'info');
                 }}
                 style={{
-                  fontSize: '0.8125rem', padding: '0.45rem 0.85rem',
-                  background: 'rgba(245, 158, 11, 0.14)', color: 'var(--amber-300)',
-                  border: '1px solid rgba(245, 158, 11, 0.3)', borderRadius: 'var(--radius-full)',
-                  cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.375rem',
-                  transition: 'all 0.15s',
+                  fontSize: '0.825rem', padding: '0.5rem 1rem',
+                  background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(15, 23, 42, 0.7) 100%)',
+                  color: '#fbbf24',
+                  border: '1px solid rgba(251, 191, 36, 0.4)', borderRadius: '9999px',
+                  cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.45rem',
+                  boxShadow: '0 4px 15px rgba(245, 158, 11, 0.25)',
+                  transition: 'all 0.2s ease',
                 }}
                 aria-label="Preset: Pest attack sample"
               >
-                <Camera size={13} />
+                <Camera size={14} color="#fbbf24" />
                 பூச்சி தாக்குதல் (Pest Attack)
               </button>
             </div>
@@ -499,16 +623,16 @@ export default function VoiceAssistant() {
 
           {/* Listen button after response */}
           {result && result.response && (
-            <div style={{ marginTop: '0.75rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <div style={{ marginTop: '1rem', display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
               <button
                 className="btn btn-sm btn-ghost"
                 onClick={handleSpeak}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.18)' }}
               >
-                {speaking ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                {speaking ? <VolumeX size={16} color="#ef4444" /> : <Volume2 size={16} color="#34d399" />}
                 {speaking ? 'Stop' : (language === 'en' ? 'Listen to Answer' : 'Listen in Tamil')}
               </button>
-              <span style={{ fontSize: '0.75rem', color: 'var(--gray-400)' }}>
+              <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
                 {result.queryId && `Query ID: ${result.queryId}`}
               </span>
             </div>
@@ -516,25 +640,51 @@ export default function VoiceAssistant() {
 
           {/* Suggested questions */}
           {!result && voiceState === VOICE_STATES.IDLE && (
-            <div style={{ marginTop: '2.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                <div style={{ height: 1, flex: 1, background: 'var(--color-border)' }} />
-                <span className="text-sm" style={{ color: 'var(--gray-400)', fontWeight: 500 }}>Suggested questions & common inquiries</span>
-                <div style={{ height: 1, flex: 1, background: 'var(--color-border)' }} />
+            <div style={{ marginTop: '3rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                <div style={{ height: 1, flex: 1, background: 'rgba(255, 255, 255, 0.14)' }} />
+                <span className="text-sm" style={{ color: '#cbd5e1', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  Suggested questions & common inquiries
+                </span>
+                <div style={{ height: 1, flex: 1, background: 'rgba(255, 255, 255, 0.14)' }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {SUGGESTED_QUESTIONS.all
                   .filter(dq => category === 'all' || dq.cat.toLowerCase() === category)
                   .slice(0, 5)
                   .map((dq, i) => (
-                    <button key={i} className="demo-question" onClick={() => handleDemoQuestion(dq.q)}>
+                    <button
+                      key={i}
+                      className="demo-question"
+                      onClick={() => handleDemoQuestion(dq.q)}
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(15, 23, 42, 0.7) 100%)',
+                        border: '1px solid rgba(255, 255, 255, 0.14)',
+                        borderRadius: '16px',
+                        padding: '1rem 1.35rem',
+                        backdropFilter: 'blur(12px)',
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.45)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(56, 189, 248, 0.25)';
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.transform = 'none';
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                      }}
+                    >
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-                        <span>{dq.q}</span>
+                        <span style={{ fontSize: '1.05rem', fontWeight: 600, color: '#ffffff' }}>{dq.q}</span>
                         <span style={{
-                          fontSize: '0.7rem', padding: '0.15rem 0.5rem',
-                          background: dq.cat === 'Emergency' ? 'var(--red-100)' : 'var(--gray-100)',
-                          color: dq.cat === 'Emergency' ? 'var(--red-600)' : 'var(--gray-500)',
-                          borderRadius: 'var(--radius-full)', fontWeight: 600, flexShrink: 0,
+                          fontSize: '0.725rem', padding: '0.2rem 0.65rem',
+                          background: dq.cat === 'Emergency' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(56, 189, 248, 0.25)',
+                          color: dq.cat === 'Emergency' ? '#f87171' : '#38bdf8',
+                          border: dq.cat === 'Emergency' ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(56, 189, 248, 0.4)',
+                          borderRadius: '9999px', fontWeight: 700, flexShrink: 0,
                         }}>
                           {dq.cat}
                         </span>
@@ -547,17 +697,20 @@ export default function VoiceAssistant() {
 
           {/* Info disclaimer */}
           <div style={{
-            marginTop: '3rem', padding: '1.25rem 1.5rem',
-            background: 'rgba(56, 189, 248, 0.08)', border: '1px solid rgba(56, 189, 248, 0.22)',
-            borderRadius: 'var(--radius-xl)', display: 'flex', gap: '1rem', alignItems: 'flex-start',
-            fontSize: '0.875rem', color: 'var(--blue-200)', lineHeight: 1.7,
+            marginTop: '3.5rem', padding: '1.35rem 1.6rem',
+            background: 'linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%)',
+            border: '1px solid rgba(56, 189, 248, 0.35)',
+            backdropFilter: 'blur(16px)',
+            borderRadius: '20px', display: 'flex', gap: '1.15rem', alignItems: 'flex-start',
+            fontSize: '0.9rem', color: '#cbd5e1', lineHeight: 1.75,
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2)',
           }}>
-            <Info size={18} style={{ flexShrink: 0, marginTop: 2, color: 'var(--blue-400)' }} />
+            <Info size={20} style={{ flexShrink: 0, marginTop: 3, color: '#38bdf8' }} />
             <div>
-              <strong style={{ color: '#fff' }}>About Grama Mitra:</strong> Responses are based on verified information from TNAU, government portals, and health authorities.
+              <strong style={{ color: '#fff' }}>About Grama Mitra AI:</strong> Responses are based on verified knowledge from TNAU, government portals, and health authorities.
               Health responses are informational only — not a substitute for professional medical advice.
-              Emergency situations are automatically escalated. 
-              <span style={{ color: 'var(--green-300)' }}> Integrated multi-channel AI architecture for web, WhatsApp, and toll-free IVR.</span>
+              Emergency situations trigger automatic escalation. 
+              <span style={{ color: '#34d399', fontWeight: 600 }}> Integrated multi-channel AI architecture for web, WhatsApp, and toll-free IVR.</span>
             </div>
           </div>
         </div>
