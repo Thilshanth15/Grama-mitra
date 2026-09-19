@@ -278,17 +278,111 @@ export default function Home() {
           </div>
           <div className="challenge-grid">
             {[
-              { emoji: '🗣️', label: 'Language Barrier', desc: 'Existing portals assume English, leaving non-English speakers unable to access entitlements.' },
-              { emoji: '📱', label: 'Digital Literacy', desc: 'Multi-step web forms create friction for rural elders and first-time smartphone users.' },
-              { emoji: '📡', label: 'Connectivity & Speed', desc: 'Heavy pages fail in low-bandwidth rural regions; voice and light interfaces are needed.' },
-              { emoji: '📋', label: 'Scheme Complexity', desc: 'Overlapping central and state government welfare schemes cause confusion in applications.' },
-              { emoji: '📞', label: 'Feature Phones', desc: 'Over 40% of rural users rely on feature phones without modern web browsers or apps.' },
-              { emoji: '🏥', label: 'Health Access', desc: 'Unreliable WhatsApp forward advice can be dangerous; verified medical escalation is critical.' },
+              {
+                emoji: '🗣️',
+                label: 'Language Barrier',
+                desc: 'Existing portals assume English, leaving non-English speakers unable to access entitlements.',
+                bg: 'linear-gradient(135deg, rgba(124, 58, 237, 0.14) 0%, rgba(139, 92, 246, 0.04) 100%)',
+                border: '1px solid rgba(167, 139, 250, 0.35)',
+                glow: 'rgba(167, 139, 250, 0.25)',
+                iconBg: 'rgba(124, 58, 237, 0.25)',
+                badgeBorder: '1px solid rgba(167, 139, 250, 0.5)',
+              },
+              {
+                emoji: '📱',
+                label: 'Digital Literacy',
+                desc: 'Multi-step web forms create friction for rural elders and first-time smartphone users.',
+                bg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(52, 211, 153, 0.04) 100%)',
+                border: '1px solid rgba(52, 211, 153, 0.35)',
+                glow: 'rgba(52, 211, 153, 0.25)',
+                iconBg: 'rgba(16, 185, 129, 0.25)',
+                badgeBorder: '1px solid rgba(52, 211, 153, 0.5)',
+              },
+              {
+                emoji: '📡',
+                label: 'Connectivity & Speed',
+                desc: 'Heavy pages fail in low-bandwidth rural regions; voice and light interfaces are needed.',
+                bg: 'linear-gradient(135deg, rgba(14, 165, 233, 0.14) 0%, rgba(56, 189, 248, 0.04) 100%)',
+                border: '1px solid rgba(56, 189, 248, 0.35)',
+                glow: 'rgba(56, 189, 248, 0.25)',
+                iconBg: 'rgba(14, 165, 233, 0.25)',
+                badgeBorder: '1px solid rgba(56, 189, 248, 0.5)',
+              },
+              {
+                emoji: '📋',
+                label: 'Scheme Complexity',
+                desc: 'Overlapping central and state government welfare schemes cause confusion in applications.',
+                bg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(251, 191, 36, 0.04) 100%)',
+                border: '1px solid rgba(251, 191, 36, 0.35)',
+                glow: 'rgba(251, 191, 36, 0.25)',
+                iconBg: 'rgba(245, 158, 11, 0.25)',
+                badgeBorder: '1px solid rgba(251, 191, 36, 0.5)',
+              },
+              {
+                emoji: '📞',
+                label: 'Feature Phones',
+                desc: 'Over 40% of rural users rely on feature phones without modern web browsers or apps.',
+                bg: 'linear-gradient(135deg, rgba(244, 63, 94, 0.14) 0%, rgba(251, 113, 133, 0.04) 100%)',
+                border: '1px solid rgba(251, 113, 133, 0.35)',
+                glow: 'rgba(251, 113, 133, 0.25)',
+                iconBg: 'rgba(244, 63, 94, 0.25)',
+                badgeBorder: '1px solid rgba(251, 113, 133, 0.5)',
+              },
+              {
+                emoji: '🏥',
+                label: 'Health Access',
+                desc: 'Unreliable WhatsApp forward advice can be dangerous; verified medical escalation is critical.',
+                bg: 'linear-gradient(135deg, rgba(225, 29, 72, 0.15) 0%, rgba(244, 63, 94, 0.04) 100%)',
+                border: '1px solid rgba(244, 63, 94, 0.38)',
+                glow: 'rgba(244, 63, 94, 0.28)',
+                iconBg: 'rgba(225, 29, 72, 0.25)',
+                badgeBorder: '1px solid rgba(244, 63, 94, 0.5)',
+              },
             ].map((item, i) => (
-              <div key={i} className="card card-hover" style={{ textAlign: 'center', padding: '2.5rem 1.85rem' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '1.25rem' }}>{item.emoji}</div>
-                <div className="font-semibold" style={{ fontSize: '1.1rem', marginBottom: '0.75rem', color: 'var(--gray-900)', lineHeight: 1.4 }}>{item.label}</div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--gray-400)', lineHeight: 1.7 }}>{item.desc}</div>
+              <div
+                key={i}
+                style={{
+                  textAlign: 'center',
+                  padding: '2.5rem 1.85rem',
+                  background: item.bg,
+                  border: item.border,
+                  borderRadius: '20px',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  boxShadow: `0 12px 30px -5px ${item.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.2)`,
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = `0 20px 45px -5px ${item.glow}, 0 0 25px ${item.glow}`;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = `0 12px 30px -5px ${item.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.2)`;
+                }}
+              >
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '18px',
+                  background: item.iconBg,
+                  border: item.badgeBorder,
+                  fontSize: '2.2rem',
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                }}>
+                  {item.emoji}
+                </div>
+                <div className="font-semibold" style={{ fontSize: '1.2rem', marginBottom: '0.85rem', color: '#ffffff', lineHeight: 1.35, letterSpacing: '-0.01em' }}>
+                  {item.label}
+                </div>
+                <div style={{ fontSize: '0.925rem', color: '#cbd5e1', lineHeight: 1.7, fontWeight: 400 }}>
+                  {item.desc}
+                </div>
               </div>
             ))}
           </div>
