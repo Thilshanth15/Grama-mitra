@@ -341,10 +341,10 @@ export default function VoiceAssistant() {
               <div className="mic-outer-ring" style={{
                 width: '136px', height: '136px',
                 borderColor: voiceState === VOICE_STATES.RECORDING ? 'rgba(239, 68, 68, 0.6)' :
-                  voiceState === VOICE_STATES.PROCESSING ? 'rgba(56, 189, 248, 0.6)' : 'rgba(52, 211, 153, 0.5)',
+                  voiceState === VOICE_STATES.PROCESSING ? 'rgba(56, 189, 248, 0.65)' : 'rgba(56, 189, 248, 0.6)',
                 boxShadow: voiceState === VOICE_STATES.RECORDING ? '0 0 45px rgba(239, 68, 68, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4)' :
-                  voiceState === VOICE_STATES.PROCESSING ? '0 0 45px rgba(56, 189, 248, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4)' : '0 0 45px rgba(16, 185, 129, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4)',
-                background: 'rgba(15, 23, 42, 0.6)',
+                  voiceState === VOICE_STATES.PROCESSING ? '0 0 45px rgba(56, 189, 248, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.4)' : '0 0 50px rgba(56, 189, 248, 0.65), 0 0 25px rgba(2, 132, 199, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5)',
+                background: 'rgba(15, 23, 42, 0.7)',
                 backdropFilter: 'blur(20px)',
               }}>
                 <button
@@ -400,13 +400,13 @@ export default function VoiceAssistant() {
               {voiceState === VOICE_STATES.PROCESSING && <div className="spinner" style={{ width: 18, height: 18 }} />}
               {voiceState === VOICE_STATES.IDLE && (
                 <span style={{
-                  padding: '0.4rem 1.25rem',
+                  padding: '0.45rem 1.35rem',
                   borderRadius: '9999px',
-                  background: 'rgba(16, 185, 129, 0.15)',
-                  border: '1px solid rgba(52, 211, 153, 0.35)',
-                  boxShadow: '0 2px 10px rgba(16, 185, 129, 0.2)',
+                  background: 'rgba(56, 189, 248, 0.15)',
+                  border: '1px solid rgba(56, 189, 248, 0.4)',
+                  boxShadow: '0 4px 15px rgba(56, 189, 248, 0.25)',
                 }}>
-                  <strong style={{ color: '#34d399' }}>Tap microphone to speak</strong> in Tamil or English
+                  <strong style={{ color: '#38bdf8' }}>Tap microphone to speak</strong> in Tamil or English
                 </span>
               )}
               {voiceState !== VOICE_STATES.IDLE && voiceStatusText[voiceState]}

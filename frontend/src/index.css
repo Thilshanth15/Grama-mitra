@@ -1252,7 +1252,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: -15px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.28) 0%, rgba(16, 185, 129, 0.08) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(2, 132, 199, 0.12) 50%, transparent 70%);
   filter: blur(14px);
   pointer-events: none;
   animation: micBreathe 3s ease-in-out infinite alternate;
@@ -1267,12 +1267,12 @@ h1, h2, h3, h4, h5, h6 {
   width: 124px;
   height: 124px;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.06);
-  border: 1.5px solid rgba(52, 211, 153, 0.3);
+  background: rgba(14, 165, 233, 0.08);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 45px -5px rgba(14, 165, 233, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
@@ -1287,13 +1287,13 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
   outline: none;
 }
 
 .mic-button.idle {
-  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-  box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.6), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4), 0 14px 35px rgba(16, 185, 129, 0.65), 0 0 20px rgba(52, 211, 153, 0.4);
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 50%, #0369a1 100%);
+  box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.7), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4), 0 14px 40px rgba(2, 132, 199, 0.75), 0 0 25px rgba(56, 189, 248, 0.55);
 }
 
 .mic-button.recording {
