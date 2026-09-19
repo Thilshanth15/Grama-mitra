@@ -155,18 +155,18 @@ export default function Home() {
               borderRadius: '9999px',
               boxShadow: '0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
             }}>
-              {/* Primary Voice AI CTA — Ultra-Premium Emerald & Jade Glow */}
+              {/* Primary Voice AI CTA — Electric Cyan & Emerald Glass */}
               <Link
                 to="/assistant"
                 style={{
-                  background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%)',
+                  background: 'linear-gradient(135deg, #06b6d4 0%, #10b981 50%, #0d9488 100%)',
                   color: '#ffffff',
                   fontWeight: 700,
                   fontSize: '1rem',
                   padding: '0.9rem 2rem 0.9rem 1.25rem',
                   borderRadius: '9999px',
-                  boxShadow: '0 10px 30px -5px rgba(16, 185, 129, 0.65), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6)',
-                  border: '1px solid rgba(255, 255, 255, 0.45)',
+                  boxShadow: '0 10px 32px -4px rgba(6, 182, 212, 0.65), 0 0 22px rgba(16, 185, 129, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)',
+                  border: '1px solid rgba(255, 255, 255, 0.5)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.75rem',
@@ -176,12 +176,14 @@ export default function Home() {
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 16px 40px -4px rgba(16, 185, 129, 0.85), 0 0 25px rgba(52, 211, 153, 0.5), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.8)';
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #22d3ee 0%, #34d399 50%, #14b8a6 100%)';
+                  e.currentTarget.style.boxShadow = '0 16px 45px -4px rgba(6, 182, 212, 0.85), 0 0 30px rgba(52, 211, 153, 0.6), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px -5px rgba(16, 185, 129, 0.65), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #06b6d4 0%, #10b981 50%, #0d9488 100%)';
+                  e.currentTarget.style.boxShadow = '0 10px 32px -4px rgba(6, 182, 212, 0.65), 0 0 22px rgba(16, 185, 129, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)';
                 }}
               >
                 <span style={{
@@ -191,14 +193,14 @@ export default function Home() {
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15))',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.18))',
                   backdropFilter: 'blur(6px)',
-                  border: '1px solid rgba(255, 255, 255, 0.5)',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                  border: '1px solid rgba(255, 255, 255, 0.6)',
+                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.35)',
                 }}>
                   <Mic size={19} color="#ffffff" style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }} />
                 </span>
-                <span style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{t('talkToGrama')}</span>
+                <span style={{ textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>{t('talkToGrama')}</span>
                 <ArrowRight size={19} color="#ffffff" />
               </Link>
 
