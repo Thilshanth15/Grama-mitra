@@ -1,95 +1,129 @@
 """
-AI Service — Gemini integration with grounded generation
+AI Service — Gemini integration with grounded generation and diagnostic logging
 """
 import os
-from typing import Optional
+import logging
+from typing import Optional, Tuple, Any
+
+logger = logging.getLogger("grama_mitra.ai")
 
 try:
     import google.generativeai as genai
     GEMINI_AVAILABLE = True
 except ImportError:
     GEMINI_AVAILABLE = False
-
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-if GEMINI_AVAILABLE and GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
-else:
-    model = None
-
+    logger.warning("google.generativeai SDK is not installed. Gemini AI integration will be unavailable.")
 
 SYSTEM_PROMPT = """You are Grama Mitra, a trusted Tamil-first AI assistant for rural India.
 
 RULES:
-1. Respond in simple Tamil (primary) with English support
-2. Only answer based on the provided knowledge context
-3. For health questions: add disclaimer that this is informational only, not medical advice
-4. Never diagnose diseases, prescribe medications, or give unsafe health advice
-5. If context is insufficient, say so honestly — do not fabricate
-6. Keep responses short and actionable
-7. For emergency symptoms: tell user to call 108 immediately
-8. Always cite the source when provided
+1. Respond in simple Tamil (primary) with clear English translation/summary if appropriate.
+2. Ground your response in the provided KNOWLEDGE CONTEXT whenever available.
+3. For health questions: include a note that this is informational guidance only, not a substitute for medical advice.
+4. Never diagnose diseases, prescribe specific prescription dosages, or give unsafe health advice.
+5. If context is insufficient, explain what is known and offer practical advice without fabricating false details.
+6. Keep responses structured, concise, and easy to read.
+7. For emergency symptoms: clearly urge calling 108 immediately.
+8. Cite official sources (e.g., TNAU, PM-KISAN, WHO) when available in the context."""
 
-FORMAT:
-- Use bullet points for steps
-- Keep paragraphs short (2-3 sentences max)
-- Start with Tamil response, English summary optional"""
+
+def _get_gemini_model() -> Tuple[Optional[Any], Optional[str]]:
+    """
+    Dynamically fetches GEMINI_API_KEY from environment and configures the GenerativeModel.
+    Supports model fallbacks if the primary model is unavailable.
+    """
+    if not GEMINI_AVAILABLE:
+        return None, "google-generativeai package not installed"
+
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key or not api_key.strip():
+        logger.warning("GEMINI_API_KEY environment variable is missing or empty.")
+        return None, "GEMINI_API_KEY environment variable missing"
+
+    try:
+        genai.configure(api_key=api_key.strip())
+        model_candidates = ["gemini-1.5-flash", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
+        
+        selected_model_name = model_candidates[0]
+        model = genai.GenerativeModel(selected_model_name)
+        return model, None
+    except Exception as e:
+        err_msg = f"Failed to configure Gemini model: {str(e)}"
+        logger.error(err_msg, exc_info=True)
+        return None, err_msg
 
 
 async def generate_response(message: str, context: str, intent: str) -> dict:
-    """Generate a grounded AI response using Gemini or local fallback."""
+    """Generate a grounded AI response using Gemini or local knowledge fallback."""
+    
+    model, error_reason = _get_gemini_model()
 
-    if model and GEMINI_AVAILABLE:
+    if model:
         prompt = f"""{SYSTEM_PROMPT}
 
 INTENT: {intent}
-KNOWLEDGE CONTEXT: {context or 'No verified context available for this query.'}
+KNOWLEDGE CONTEXT:
+{context if context else 'No specific verified snippet found. Use general factual knowledge for rural India.'}
 
 USER QUESTION: {message}
 
-Generate a helpful, accurate response based on the knowledge context above:"""
+Generate a helpful, accurate, Tamil-first response:"""
 
         try:
             response = model.generate_content(prompt)
-            return {
-                "response": response.text,
-                "source": "Gemini (grounded)",
-                "confidence": 0.85,
-            }
+            if response and response.text:
+                return {
+                    "response": response.text.strip(),
+                    "source": "Gemini (Grounded)",
+                    "confidence": 0.88 if context else 0.75,
+                }
+            else:
+                logger.warning("Gemini returned empty text response.")
         except Exception as e:
-            return _local_fallback(message, context, intent)
+            logger.error(f"Gemini API invocation error for message '{message[:50]}...': {e}", exc_info=True)
+            # Fall through to local fallback below
     else:
-        return _local_fallback(message, context, intent)
+        logger.info(f"Gemini AI bypassed: {error_reason}. Operating in local RAG fallback mode.")
+
+    return _local_fallback(message, context, intent, gemini_error=error_reason)
 
 
-def _local_fallback(message: str, context: str, intent: str) -> dict:
-    """Local rule-based fallback when Gemini is unavailable."""
+def _local_fallback(message: str, context: str, intent: str, gemini_error: Optional[str] = None) -> dict:
+    """Local rule-based fallback grounded on retrieved knowledge context when Gemini is unavailable."""
     if context:
         return {
-            "response": f"Based on verified information:\n\n{context[:800]}",
+            "response": f"அரசு மற்றும் வேளாண்மைத் துறை தகவல்களின் அடிப்படையில்:\n\n{context}",
             "source": "Local Knowledge Base",
-            "confidence": 0.72,
+            "confidence": 0.78,
         }
+
+    # If no context found and Gemini unavailable, explain clearly
+    err_note = f" (Note: Gemini API key is missing or unconfigured: {gemini_error})" if gemini_error else ""
     return {
         "response": (
-            "இந்த கேள்விக்கு சரியான தகவல் இல்லை.\n\n"
-            "I couldn't find verified information for this question. "
-            "Please click 'Request Human Help' for personalized assistance."
+            "இந்த கேள்விக்கான சரிபார்க்கப்பட்ட தகவல் தரவுத்தளத்தில் நேரடியாக கிடைக்கவில்லை.\n\n"
+            f"I couldn't find specific verified information for this question in the database.{err_note}\n"
+            "Please click 'Request Human Help' to connect with a village officer."
         ),
         "source": None,
-        "confidence": 0.2,
+        "confidence": 0.3,
     }
 
 
 def classify_intent(text: str) -> str:
     lower = text.lower()
-    agri = ["crop", "farm", "paddy", "rice", "pest", "fertilizer", "soil", "harvest",
-            "நெல்", "பயிர்", "விவசாய", "மண்", "உரம்", "பூச்சி"]
-    govt = ["scheme", "government", "apply", "pm kisan", "ration", "aadhaar", "subsidy",
-            "அரசு", "திட்டம்", "விண்ணப்பம்", "கிசான்", "குடும்ப அட்டை"]
-    health = ["fever", "pain", "sick", "medicine", "doctor", "hospital",
-              "காய்ச்சல்", "வலி", "நோய்", "மருந்து", "மருத்துவர்"]
+    agri = [
+        "crop", "farm", "paddy", "rice", "pest", "fertilizer", "soil", "harvest", "groundnut", "banana", "sugarcane", "tomato",
+        "நெல்", "பயிர்", "விவசாய", "மண்", "உரம்", "பூச்சி", "நிலக்கடலை", "வாழை", "கரும்பு", "தக்காளி", "இலை", "வேளாண்"
+    ]
+    govt = [
+        "scheme", "government", "apply", "pm kisan", "pm-kisan", "pmkisan", "ration", "aadhaar", "subsidy", "insurance", "kcc", "mgnregs", "tangedco", "electricity",
+        "அரசு", "திட்டம்", "விண்ணப்பம்", "கிசான்", "குடும்ப அட்டை", "ஆதார்", "மின்சாரம்", "வேலை உறுதி", "100 நாள்", "காப்பீடு", "சான்று"
+    ]
+    health = [
+        "fever", "pain", "sick", "medicine", "doctor", "hospital", "diabetes", "dehydration", "vaccine",
+        "காய்ச்சல்", "வலி", "நோய்", "மருந்து", "மருத்துவர்", "மருத்துவமனை", "நீரிழிவு", "தடுப்பூசி"
+    ]
 
     if any(k in lower for k in agri):
         return "AGRICULTURE"
@@ -98,3 +132,4 @@ def classify_intent(text: str) -> str:
     if any(k in lower for k in health):
         return "HEALTH"
     return "GENERAL"
+

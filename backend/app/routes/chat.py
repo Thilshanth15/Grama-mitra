@@ -1,15 +1,10 @@
 from fastapi import APIRouter
-from app.models.schemas import ChatRequest, ChatResponse
+from app.models.schemas import ChatRequest, ChatResponse, SourceModel
 from app.safety.safety_service import detect_emergency, classify_risk, EMERGENCY_RESPONSE_TAMIL
 from app.ai.ai_service import generate_response, classify_intent
+from app.knowledge_base.knowledge_service import knowledge_service
 
 router = APIRouter()
-
-KNOWLEDGE_SNIPPETS = {
-    "AGRICULTURE": "நெல் இலைகள் மஞ்சளாவதற்கு நைட்ரஜன் குறைபாடு முக்கிய காரணம். ஏக்கருக்கு 10-15 கிலோ யூரியா இட்டு நீர் பாய்ச்சவும். (Source: TNAU)",
-    "GOVERNMENT_SCHEME": "PM-KISAN திட்டம்: விவசாயிகளுக்கு ஆண்டுக்கு ₹6,000 நேரடி வங்கி கணக்கில். pmkisan.gov.in இல் பதிவு செய்யவும். (Source: pmkisan.gov.in)",
-    "HEALTH": "⚠️ இது தகவல் மட்டுமே. மருத்துவ ஆலோசனை அல்ல. காய்ச்சல் 38°C மேல் இருந்தால் மருத்துவரை சந்திக்கவும். (Source: WHO)",
-}
 
 
 @router.post("/chat", response_model=ChatResponse)
@@ -28,12 +23,22 @@ async def chat(req: ChatRequest):
         )
 
     intent = req.intent or classify_intent(req.message)
-    context = KNOWLEDGE_SNIPPETS.get(intent, "")
+    
+    # Retrieve RAG context from verified knowledge base
+    context = knowledge_service.get_relevant_context(
+        query=req.message,
+        category=intent if intent in ["AGRICULTURE", "GOVERNMENT_SCHEME", "HEALTH"] else None,
+        top_k=2,
+    )
 
     ai_result = await generate_response(req.message, context, intent)
 
     confidence = ai_result.get("confidence", 0.5)
     needs_handoff = confidence < 0.6
+
+    source_obj = None
+    if ai_result.get("source"):
+        source_obj = SourceModel(name=ai_result["source"])
 
     return ChatResponse(
         response=ai_result["response"],
@@ -41,6 +46,7 @@ async def chat(req: ChatRequest):
         intent=intent,
         is_emergency=False,
         needs_handoff=needs_handoff,
+        source=source_obj,
         confidence_label=(
             "High Confidence" if confidence >= 0.8
             else "Moderate" if confidence >= 0.6

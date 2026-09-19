@@ -120,16 +120,25 @@ async def root_health():
 @app.get("/api/health", tags=["Health"])
 async def api_health():
     """Full service health summary."""
+    from app.ai.ai_service import GEMINI_AVAILABLE
+    from app.knowledge_base.knowledge_service import knowledge_service
+
     telephony_enabled = os.getenv("TELEPHONY_ENABLED", "false").lower() == "true"
     mock_mode = os.getenv("TELEPHONY_MOCK_MODE", "true").lower() == "true"
-    gemini_ready = bool(os.getenv("GEMINI_API_KEY"))
+    gemini_key_present = bool(os.getenv("GEMINI_API_KEY"))
 
     return {
         "status": "ok",
         "version": "1.1.0",
         "ai": {
             "engine": "gemini-1.5-flash",
-            "configured": gemini_ready,
+            "sdk_available": GEMINI_AVAILABLE,
+            "key_configured": gemini_key_present,
+            "configured": GEMINI_AVAILABLE and gemini_key_present,
+        },
+        "knowledge_base": {
+            "records_loaded": knowledge_service.count(),
+            "status": "ready" if knowledge_service.count() > 0 else "empty",
         },
         "telephony": {
             "engine": "exotel-agentstream",
@@ -140,3 +149,4 @@ async def api_health():
         "database": "firestore",
         "environment": os.getenv("ENVIRONMENT", "development"),
     }
+
