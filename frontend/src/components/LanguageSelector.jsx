@@ -41,23 +41,48 @@ export default function LanguageSelector() {
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '0.45rem',
-          height: '38px',
-          padding: '0 0.85rem',
-          background: 'rgba(255, 255, 255, 0.06)',
-          border: '1px solid rgba(255, 255, 255, 0.18)',
+          gap: '0.5rem',
+          height: '40px',
+          padding: '0 0.85rem 0 0.5rem',
+          background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%)',
+          border: '1px solid rgba(52, 211, 153, 0.35)',
+          backdropFilter: 'blur(12px)',
           borderRadius: '9999px',
           color: '#ffffff',
           fontSize: '0.84rem',
           fontWeight: 600,
           cursor: 'pointer',
           whiteSpace: 'nowrap',
-          transition: 'all 0.2s ease',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+          transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+          boxShadow: '0 4px 15px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(15, 23, 42, 0.8) 100%)';
+          e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.65)';
+          e.currentTarget.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4), 0 0 15px rgba(52, 211, 153, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4)';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%)';
+          e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.35)';
+          e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25)';
         }}
         aria-label="Select Language"
       >
-        <Globe size={15} color="#34d399" />
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '28px',
+          height: '28px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, rgba(52, 211, 153, 0.35) 0%, rgba(16, 185, 129, 0.25) 100%)',
+          border: '1px solid rgba(52, 211, 153, 0.5)',
+          boxShadow: '0 2px 8px rgba(16, 185, 129, 0.35)',
+        }}>
+          <Globe size={14} color="#34d399" style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.4))' }} />
+        </span>
         <span style={{ color: '#ffffff', fontWeight: 600, whiteSpace: 'nowrap' }}>
           {currentLangObj.flag} {currentLangObj.name.includes('(') ? currentLangObj.name.split(' ')[0] : currentLangObj.name}
         </span>
@@ -65,11 +90,12 @@ export default function LanguageSelector() {
           fontSize: '0.65rem',
           padding: '0.12rem 0.45rem',
           borderRadius: '9999px',
-          background: currentLangObj.status === 'Supported' ? 'rgba(16, 185, 129, 0.25)' : 'rgba(245, 158, 11, 0.25)',
+          background: currentLangObj.status === 'Supported' ? 'rgba(16, 185, 129, 0.28)' : 'rgba(245, 158, 11, 0.28)',
           color: currentLangObj.status === 'Supported' ? '#34d399' : '#fbbf24',
-          border: currentLangObj.status === 'Supported' ? '1px solid rgba(52, 211, 153, 0.35)' : '1px solid rgba(245, 158, 11, 0.35)',
+          border: currentLangObj.status === 'Supported' ? '1px solid rgba(52, 211, 153, 0.45)' : '1px solid rgba(245, 158, 11, 0.45)',
           fontWeight: 700,
           whiteSpace: 'nowrap',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
         }}>
           {currentLangObj.status === 'Supported' ? 'Verified' : 'Beta'}
         </span>

@@ -1,18 +1,15 @@
 import React from 'react';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
-import Background3D from '../components/3d/Background3D.jsx';
 
 export default function PublicLayout({ children }) {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#030305', color: '#ffffff', position: 'relative', overflowX: 'hidden' }}>
-      <Background3D />
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#000000', color: '#ffffff' }}>
       <Navbar />
-      <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+      <main style={{ flex: 1, background: '#000000' }}>
         {children}
       </main>
       <Footer />
     </div>
   );
 }
-
