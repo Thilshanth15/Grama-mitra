@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Menu, X, Building2, Home } from 'lucide-react';
 import LanguageSelector from './LanguageSelector.jsx';
-
-const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/services', label: 'Services' },
-  { to: '/how-it-works', label: 'How It Works' },
-  { to: '/assistant', label: 'Voice Assistant' },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
-];
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { to: '/', label: t('home') },
+    { to: '/services', label: t('services') },
+    { to: '/how-it-works', label: t('howItWorks') },
+    { to: '/assistant', label: t('assistant') },
+    { to: '/about', label: t('about') },
+    { to: '/contact', label: t('contact') },
+  ];
 
   return (
     <nav className="navbar">
@@ -86,7 +88,7 @@ export default function Navbar() {
             }}
           >
             <Building2 size={14} color="#38bdf8" />
-            <span>District / Block Officer</span>
+            <span>{t('districtOfficer')}</span>
           </Link>
 
           {/* 2. Village Officer Button */}
@@ -119,7 +121,7 @@ export default function Navbar() {
             }}
           >
             <Home size={14} color="#34d399" />
-            <span>Village Officer</span>
+            <span>{t('villageOfficer')}</span>
           </Link>
 
           {/* Try Assistant Button */}
@@ -144,7 +146,7 @@ export default function Navbar() {
               transition: 'all 0.2s ease',
             }}
           >
-            Try Assistant
+            {t('tryAssistant')}
           </Link>
 
           <button
@@ -193,7 +195,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', border: '1px solid rgba(255,255,255,0.15)' }}
             >
-              <Building2 size={14} color="#38bdf8" /> District / Block Officer
+              <Building2 size={14} color="#38bdf8" /> {t('districtOfficer')}
             </Link>
             <Link
               to="/officer/village/login"
@@ -201,10 +203,10 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', border: '1px solid rgba(255,255,255,0.15)' }}
             >
-              <Home size={14} color="#34d399" /> Village Officer
+              <Home size={14} color="#34d399" /> {t('villageOfficer')}
             </Link>
             <Link to="/assistant" className="btn btn-sm btn-primary" onClick={() => setOpen(false)} style={{ textAlign: 'center' }}>
-              Try Assistant
+              {t('tryAssistant')}
             </Link>
           </div>
         </div>

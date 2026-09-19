@@ -6,6 +6,8 @@ import {
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 
+import { useLanguage } from '../../context/LanguageContext.jsx';
+
 const SAMPLE_QUESTIONS = [
   { q: 'நெல் இலை மஞ்சளாகிறது — என்ன செய்வது?', cat: 'Agriculture' },
   { q: 'PM-KISAN திட்டத்தில் எப்படி சேரலாம்?', cat: 'Government' },
@@ -91,6 +93,7 @@ const TRUST_ITEMS = [
 ];
 
 export default function Home() {
+  const { t } = useLanguage();
   const scrollToCTA = (e) => {
     if (e) e.preventDefault();
     const target = document.getElementById('ask-grama-mitra-cta');
@@ -98,29 +101,7 @@ export default function Home() {
 
     const navOffset = 60;
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 1400; // 1.4 seconds graceful, slow cinematic scroll
-    let startTime = null;
-
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-
-      // easeInOutCubic easing for luxurious slow gliding
-      const ease = progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      window.scrollTo(0, startPosition + distance * ease);
-
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      }
-    }
-
-    requestAnimationFrame(animation);
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
   };
 
   return (
@@ -216,7 +197,7 @@ export default function Home() {
                 }}>
                   <Mic size={18} color="#ffffff" />
                 </span>
-                <span>Talk to Grama Mitra</span>
+                <span>{t('talkToGrama')}</span>
                 <ArrowRight size={18} />
               </Link>
 
@@ -268,7 +249,7 @@ export default function Home() {
                 }}>
                   <Layers size={18} color="#38bdf8" />
                 </span>
-                <span>Explore Services</span>
+                <span>{t('exploreServices')}</span>
                 <ChevronRight size={18} color="#94a3b8" />
               </button>
             </div>
