@@ -29,13 +29,11 @@ env/
 # --- Node / Frontend ---
 node_modules/
 frontend/dist/
+backend/app/static/
+*.mp4
 frontend/.env
 frontend/.env.local
 frontend/.env.production
-
-# --- Large Media & Static Build Outputs ---
-*.mp4
-backend/app/static/
 
 # --- IDE ---
 .vscode/settings.json
