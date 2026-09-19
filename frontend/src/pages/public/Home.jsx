@@ -147,15 +147,15 @@ export default function Home() {
               justifyContent: 'center',
               gap: '1.15rem',
               flexWrap: 'wrap',
-              padding: '0.65rem',
-              background: 'rgba(6, 11, 20, 0.65)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
+              padding: '0.75rem',
+              background: 'rgba(6, 11, 20, 0.75)',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.22)',
-              borderRadius: '9999px',
-              boxShadow: '0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
+              borderRadius: '24px',
+              boxShadow: '0 25px 65px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(124, 58, 237, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
             }}>
-              {/* Primary Voice AI CTA — Royal Violet & Purple Glow */}
+              {/* Primary Voice AI CTA — Modern Glass Squircle */}
               <Link
                 to="/assistant"
                 style={{
@@ -164,8 +164,8 @@ export default function Home() {
                   fontWeight: 700,
                   fontSize: '1rem',
                   padding: '0.9rem 2rem 0.9rem 1.25rem',
-                  borderRadius: '9999px',
-                  boxShadow: '0 10px 32px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)',
+                  borderRadius: '16px',
+                  boxShadow: '0 12px 35px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)',
                   border: '1px solid rgba(255, 255, 255, 0.5)',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -183,7 +183,7 @@ export default function Home() {
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #6d28d9 100%)';
-                  e.currentTarget.style.boxShadow = '0 10px 32px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)';
+                  e.currentTarget.style.boxShadow = '0 12px 35px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)';
                 }}
               >
                 <span style={{
@@ -192,7 +192,7 @@ export default function Home() {
                   justifyContent: 'center',
                   width: '36px',
                   height: '36px',
-                  borderRadius: '50%',
+                  borderRadius: '12px',
                   background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.18))',
                   backdropFilter: 'blur(6px)',
                   border: '1px solid rgba(255, 255, 255, 0.6)',
@@ -204,7 +204,7 @@ export default function Home() {
                 <ArrowRight size={19} color="#ffffff" />
               </Link>
 
-              {/* Secondary Discovery CTA — Ultra-Premium Sapphire & Cyan Glass */}
+              {/* Secondary Discovery CTA — Modern Glass Squircle */}
               <button
                 type="button"
                 onClick={scrollToCTA}
@@ -214,7 +214,7 @@ export default function Home() {
                   fontWeight: 700,
                   fontSize: '1rem',
                   padding: '0.9rem 2rem 0.9rem 1.25rem',
-                  borderRadius: '9999px',
+                  borderRadius: '16px',
                   border: '1px solid rgba(56, 189, 248, 0.45)',
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)',
@@ -229,7 +229,7 @@ export default function Home() {
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
                   e.currentTarget.style.background = 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(14, 165, 233, 0.35) 100%)';
                   e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.75)';
                   e.currentTarget.style.boxShadow = '0 16px 40px -4px rgba(56, 189, 248, 0.55), 0 0 20px rgba(56, 189, 248, 0.4), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.4)';
@@ -248,7 +248,7 @@ export default function Home() {
                   justifyContent: 'center',
                   width: '36px',
                   height: '36px',
-                  borderRadius: '50%',
+                  borderRadius: '12px',
                   background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.35), rgba(14, 165, 233, 0.15))',
                   border: '1px solid rgba(56, 189, 248, 0.5)',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
