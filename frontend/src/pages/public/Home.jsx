@@ -791,8 +791,9 @@ export default function Home() {
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-          {/* Top Right Corner: Ultra-Premium Glass Title Card */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '3.5rem' }}>
+          {/* Right Aligned Column: Title Card with Action Buttons Box directly below */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '1.5rem' }}>
+            {/* Top Right: Ultra-Premium Glass Title Card */}
             <div style={{
               maxWidth: '580px',
               textAlign: 'right',
@@ -843,15 +844,14 @@ export default function Home() {
                 </span>
               </h2>
             </div>
-          </div>
 
-          {/* Bottom Left Corner: Action Buttons in True Translucent Glass Container */}
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            {/* Below Title Card: Action Buttons in Translucent Glass Container */}
             <div style={{
               display: 'flex',
               gap: '1.25rem',
               flexWrap: 'wrap',
               alignItems: 'center',
+              justifyContent: 'flex-end',
               background: 'linear-gradient(135deg, rgba(6, 11, 20, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
