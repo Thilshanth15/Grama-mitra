@@ -205,14 +205,16 @@ export default function VoiceAssistant() {
           <div style={{ marginBottom: '1.75rem' }}>
             <span className="section-label" style={{ display: 'inline-flex', gap: '0.5rem' }}>
               <Mic size={15} />
-              Tamil Voice & Text Assistant
+              {language === 'en' ? 'Multilingual Voice & Text Assistant' : 'Tamil Voice & Text Assistant'}
             </span>
           </div>
           <h1 className="section-title" style={{ marginBottom: '1.25rem' }}>
             Ask Grama Mitra
           </h1>
-          <p style={{ color: 'var(--green-400)', fontSize: '1.15rem', fontFamily: 'var(--font-tamil)', fontWeight: 600, lineHeight: 1.7 }}>
-            உங்கள் கேள்வியை தமிழில் கேளுங்கள் — குரலில் அல்லது எழுத்தில்.
+          <p style={{ color: 'var(--green-400)', fontSize: '1.15rem', fontWeight: 600, lineHeight: 1.7 }}>
+            {language === 'en'
+              ? 'Ask your question in English or Tamil — by voice or text.'
+              : 'உங்கள் கேள்வியை தமிழில் கேளுங்கள் — குரலில் அல்லது எழுத்தில்.'}
           </p>
         </div>
       </div>
@@ -406,11 +408,11 @@ export default function VoiceAssistant() {
                   ref={inputRef}
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  placeholder="அல்லது இங்கே தட்டச்சு செய்யுங்கள்… (Type question or attach crop photo)"
+                  placeholder={language === 'en' ? 'Type your question or attach crop photo...' : 'அல்லது இங்கே தட்டச்சு செய்யுங்கள்… (Type question or attach crop photo)'}
                   style={{
                     flex: 1, border: 'none', outline: 'none', resize: 'none',
-                    fontFamily: 'var(--font-tamil)', fontSize: '0.9375rem',
-                    color: 'var(--gray-800)', background: 'transparent',
+                    fontFamily: language === 'en' ? 'var(--font-sans)' : 'var(--font-tamil)', fontSize: '0.9375rem',
+                    color: '#ffffff', background: 'transparent',
                     minHeight: '48px', maxHeight: '120px',
                     lineHeight: 1.5, padding: '0.25rem 0.25rem',
                   }}
@@ -504,7 +506,7 @@ export default function VoiceAssistant() {
                 style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}
               >
                 {speaking ? <VolumeX size={15} /> : <Volume2 size={15} />}
-                {speaking ? 'Stop' : 'Listen in Tamil'}
+                {speaking ? 'Stop' : (language === 'en' ? 'Listen to Answer' : 'Listen in Tamil')}
               </button>
               <span style={{ fontSize: '0.75rem', color: 'var(--gray-400)' }}>
                 {result.queryId && `Query ID: ${result.queryId}`}

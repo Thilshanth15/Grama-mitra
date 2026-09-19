@@ -1572,3 +1572,29 @@ h1, h2, h3, h4, h5, h6 {
   .modal { max-width: 100%; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
   .modal-overlay { align-items: flex-end; }
 }
+
+/* ── Google Translate Banner Overrides ── */
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-te-spinner-pos {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  pointer-events: none !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+

@@ -85,7 +85,7 @@ export default function ResponseCard({ result, onRetry, onHandoff, loading }) {
         background: isEmergency ? 'rgba(239, 68, 68, 0.14)' : 'rgba(255, 255, 255, 0.05)',
         borderRadius: 'var(--radius-lg)',
         padding: '1.25rem',
-        fontFamily: 'var(--font-tamil)',
+        fontFamily: 'inherit',
         whiteSpace: 'pre-wrap',
         marginBottom: '1rem',
         border: isEmergency ? '1px solid rgba(239, 68, 68, 0.35)' : '1px solid rgba(255, 255, 255, 0.12)',

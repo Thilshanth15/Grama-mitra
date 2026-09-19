@@ -82,7 +82,11 @@ export function LanguageProvider({ children }) {
   const setLanguage = (langCode) => {
     setLanguageState(langCode);
     localStorage.setItem(LANG_KEY, langCode);
-    applyGoogleTranslate(langCode);
+    if (langCode !== 'ta' && langCode !== 'en') {
+      applyGoogleTranslate(langCode);
+    } else {
+      resetGoogleTranslate();
+    }
   };
 
   const currentLangObj = LANGUAGES.find(l => l.code === language) || LANGUAGES[0];
@@ -98,26 +102,27 @@ export function LanguageProvider({ children }) {
   };
 
   useEffect(() => {
-    if (!window.googleTranslateElementInit) {
-      window.googleTranslateElementInit = function () {
-        if (window.google && window.google.translate) {
-          new window.google.translate.TranslateElement({
-            pageLanguage: 'ta',
-            includedLanguages: 'ta,en,hi,te,kn,ml,mr',
-            autoDisplay: false,
-          }, 'google_translate_element');
-        }
-      };
-
-      const script = document.createElement('script');
-      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-
     const saved = localStorage.getItem(LANG_KEY) || 'ta';
-    if (saved && saved !== 'ta') {
+    if (saved && saved !== 'ta' && saved !== 'en') {
+      if (!window.googleTranslateElementInit) {
+        window.googleTranslateElementInit = function () {
+          if (window.google && window.google.translate) {
+            new window.google.translate.TranslateElement({
+              pageLanguage: 'ta',
+              includedLanguages: 'ta,en,hi,te,kn,ml,mr',
+              autoDisplay: false,
+            }, 'google_translate_element');
+          }
+        };
+
+        const script = document.createElement('script');
+        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        document.body.appendChild(script);
+      }
       setTimeout(() => applyGoogleTranslate(saved), 800);
+    } else {
+      resetGoogleTranslate();
     }
   }, []);
 
@@ -143,3 +148,15 @@ function applyGoogleTranslate(langCode) {
     document.cookie = `googtrans=/ta/${langCode}; path=/`;
   }
 }
+
+function resetGoogleTranslate() {
+  document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}`;
+  document.cookie = `googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+  document.cookie = `googtrans=; path=/`;
+  const selectElem = document.querySelector('.goog-te-combo');
+  if (selectElem) {
+    selectElem.value = 'ta';
+    selectElem.dispatchEvent(new Event('change'));
+  }
+}
+

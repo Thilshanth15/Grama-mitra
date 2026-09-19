@@ -395,18 +395,47 @@ export const knowledgeBase = [
 
 // Helper: search knowledge base
 export function searchKnowledge(query, category = null) {
-  const q = query.toLowerCase();
-  const results = knowledgeBase.filter(item => {
-    const matchCat = category ? item.category === category : true;
-    const matchText =
-      item.question.toLowerCase().includes(q) ||
-      item.questionTamil.toLowerCase().includes(q) ||
-      item.answer.toLowerCase().includes(q) ||
-      item.keywords.some(k => q.includes(k) || k.includes(q));
-    return matchCat && matchText;
-  });
-  return results.slice(0, 3);
+  if (!query || !query.trim()) return [];
+  const q = query.toLowerCase().trim();
+  const qTerms = q.split(/\s+/).filter(t => t.length > 2);
+
+  const scored = [];
+  for (const item of knowledgeBase) {
+    if (category && item.category !== category) continue;
+    let score = 0;
+    const qEn = (item.question || '').toLowerCase();
+    const qTa = (item.questionTamil || '').toLowerCase();
+    const ansEn = (item.answerEnglish || '').toLowerCase();
+    const ansTa = (item.answer || '').toLowerCase();
+    const kws = (item.keywords || []).map(k => k.toLowerCase());
+
+    if (qEn.includes(q) || qTa.includes(q)) score += 10;
+    if (kws.some(k => q.includes(k) || k.includes(q))) score += 8;
+    if (ansEn.includes(q) || ansTa.includes(q)) score += 5;
+
+    for (const term of qTerms) {
+      if (qEn.includes(term)) score += 3;
+      if (qTa.includes(term)) score += 3;
+      if (ansEn.includes(term)) score += 2;
+      if (ansTa.includes(term)) score += 2;
+      if (kws.some(k => k.includes(term))) score += 4;
+    }
+
+    if (score > 0) {
+      scored.push({ item, score });
+    }
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  let topMatches = scored.slice(0, 3).map(s => s.item);
+
+  if (topMatches.length === 0 && category) {
+    return searchKnowledge(query, null);
+  }
+
+  return topMatches;
 }
+
 
 // Emergency keywords
 export const EMERGENCY_KEYWORDS = [
