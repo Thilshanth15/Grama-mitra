@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "Grama Mitra — Tamil-First AI Rural Assistance Platform",
+  "type": "module",
   "scripts": {
     "dev": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build",
+    "build": "npm --prefix frontend run build && node scripts/copy_build.js",
     "preview": "npm --prefix frontend run preview"
   }
 }

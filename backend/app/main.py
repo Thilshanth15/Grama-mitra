@@ -137,11 +137,28 @@ async def api_health():
     }
 
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # Static Assets & SPA Catch-All Route (Serves React Frontend Product UI)
 # ---------------------------------------------------------------------------
-frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
-if not frontend_dist.exists():
-    frontend_dist = Path(__file__).resolve().parent.parent / "static"
+possible_dist_paths = [
+    Path(__file__).resolve().parent / "static",                            # backend/app/static
+    Path(__file__).resolve().parent.parent / "static",                     # backend/static
+    Path(__file__).resolve().parent.parent.parent / "frontend" / "dist",   # frontend/dist
+    Path(__file__).resolve().parent.parent / "frontend" / "dist",          # backend/../frontend/dist
+    Path(os.getcwd()) / "backend" / "app" / "static",                      # cwd/backend/app/static
+    Path(os.getcwd()) / "frontend" / "dist",                               # cwd/frontend/dist
+]
+
+frontend_dist = None
+for p in possible_dist_paths:
+    if p.exists() and (p / "index.html").exists():
+        frontend_dist = p
+        logger.info(f"Frontend static build found at: {frontend_dist}")
+        break
+
+if not frontend_dist:
+    frontend_dist = Path(__file__).resolve().parent / "static"
+    logger.warning(f"No index.html found in candidate paths. Defaulting to {frontend_dist}")
 
 if (frontend_dist / "assets").exists():
     app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
@@ -172,8 +189,9 @@ async def serve_spa(full_path: str):
         status_code=404,
         content={
             "status": "error",
-            "message": "Grama Mitra Frontend UI build not found. Run 'npm run build' in frontend directory.",
+            "message": "Grama Mitra Frontend UI build not found. Run 'npm run build' in project root.",
             "api_health": "/api/health",
             "api_docs": "/api/docs",
         },
     )
+
