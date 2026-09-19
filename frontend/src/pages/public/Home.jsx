@@ -2,94 +2,120 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Mic, ArrowRight, CheckCircle, Leaf, Building2, Heart, Phone, MessageCircle,
-  Globe, Shield, Users, Zap, ChevronRight, Star, Award, TrendingUp, Layers
+  Globe, Shield, Users, Zap, ChevronRight, Star, Award, TrendingUp, Layers, Sparkles
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
-
 import { useLanguage } from '../../context/LanguageContext.jsx';
-
-const SAMPLE_QUESTIONS = [
-  { q: 'நெல் இலை மஞ்சளாகிறது — என்ன செய்வது?', cat: 'Agriculture' },
-  { q: 'PM-KISAN திட்டத்தில் எப்படி சேரலாம்?', cat: 'Government' },
-  { q: 'எனக்கு காய்ச்சல் இருக்கிறது — என்ன செய்யலாம்?', cat: 'Health' },
-];
 
 const SERVICES = [
   {
     icon: Leaf,
-    color: 'var(--green-600)',
-    bg: 'var(--green-50)',
+    theme: {
+      primary: '#10b981',
+      secondary: '#059669',
+      accent: '#34d399',
+      glow: 'rgba(16, 185, 129, 0.25)',
+      gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.05) 100%)',
+      border: 'rgba(16, 185, 129, 0.35)',
+      pillBg: 'rgba(16, 185, 129, 0.12)',
+      pillText: '#6ee7b7',
+      cardBg: 'rgba(6, 30, 20, 0.75)',
+    },
     title: 'Agriculture Guidance',
+    tagline: 'TNAU Verified Farming Science',
     desc: 'Crop advice, pest identification, fertilizer guidance, and farming best practices from TNAU-verified sources.',
-    examples: ['Crop disease identification', 'Fertilizer recommendations', 'Irrigation guidance'],
+    examples: ['Crop disease identification', 'Fertilizer recommendations', 'Irrigation timing & guidance'],
+    btnText: 'Ask Agriculture Question',
+    catId: 'agriculture',
   },
   {
     icon: Building2,
-    color: 'var(--blue-600)',
-    bg: 'var(--blue-50)',
+    theme: {
+      primary: '#3b82f6',
+      secondary: '#2563eb',
+      accent: '#60a5fa',
+      glow: 'rgba(59, 130, 246, 0.25)',
+      gradient: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.05) 100%)',
+      border: 'rgba(59, 130, 246, 0.35)',
+      pillBg: 'rgba(59, 130, 246, 0.12)',
+      pillText: '#93c5fd',
+      cardBg: 'rgba(10, 25, 47, 0.75)',
+    },
     title: 'Government Schemes',
-    desc: 'Eligibility, documents, and step-by-step application guidance for PM-KISAN, PMFBY, KCC, and more.',
-    examples: ['PM-KISAN registration', 'Crop insurance (PMFBY)', 'Kisan Credit Card'],
+    tagline: 'Eligibility & Application Checklists',
+    desc: 'Eligibility, required documents, and step-by-step application guidance for PM-KISAN, PMFBY, KCC, and ration cards.',
+    examples: ['PM-KISAN ₹6k e-KYC guidance', 'PMFBY crop insurance claim', 'Kisan Credit Card (KCC) apply'],
+    btnText: 'Ask Government Question',
+    catId: 'government',
   },
   {
     icon: Heart,
-    color: '#e11d48',
-    bg: 'rgba(225, 29, 72, 0.15)',
+    theme: {
+      primary: '#f43f5e',
+      secondary: '#e11d48',
+      accent: '#fb7185',
+      glow: 'rgba(244, 63, 94, 0.25)',
+      gradient: 'linear-gradient(135deg, rgba(244, 63, 94, 0.15) 0%, rgba(225, 29, 72, 0.05) 100%)',
+      border: 'rgba(244, 63, 94, 0.35)',
+      pillBg: 'rgba(244, 63, 94, 0.12)',
+      pillText: '#fca5a5',
+      cardBg: 'rgba(38, 12, 20, 0.75)',
+    },
     title: 'Basic Health Guidance',
-    desc: 'General health information, vaccination schedules, and immediate escalation for emergencies. Not a replacement for medical care.',
-    examples: ['Fever & common illness', 'Child vaccination info', 'Emergency escalation'],
+    tagline: 'Preventive Healthcare & 108 Emergency',
+    desc: 'General health information, child vaccination schedules, and automatic immediate escalation for medical emergencies.',
+    examples: ['Fever & common illness advice', 'Child vaccination schedule', 'Automated 108 Emergency routing'],
+    btnText: 'Ask Basic Health Question',
+    catId: 'health',
   },
 ];
 
 const CHANNELS = [
   {
     icon: Globe,
-    color: 'var(--blue-400)',
-    bg: 'var(--blue-50)',
-    name: 'Website Assistant',
-    desc: 'Tamil voice & text interface with crop image diagnosis and instant verified responses.',
-    status: 'Live Channel',
+    theme: { primary: '#06b6d4', glow: 'rgba(6, 182, 212, 0.3)', bg: 'rgba(6, 182, 212, 0.12)', border: 'rgba(6, 182, 212, 0.3)' },
+    name: 'Website AI Voice Assistant',
+    desc: 'Tamil voice & text interface with crop image diagnosis and instant verified responses directly in browser.',
+    status: 'Live Web App',
     link: '/assistant',
-    btnText: 'Launch Assistant',
+    btnText: 'Launch Web Assistant',
   },
   {
     icon: MessageCircle,
-    color: '#25D366',
-    bg: 'rgba(37, 211, 102, 0.15)',
-    name: 'WhatsApp Bot',
-    desc: 'Ask questions via WhatsApp chat and voice notes. Instant responses in simple Tamil.',
-    status: 'Active Channel',
+    theme: { primary: '#25D366', glow: 'rgba(37, 211, 102, 0.3)', bg: 'rgba(37, 211, 102, 0.12)', border: 'rgba(37, 211, 102, 0.3)' },
+    name: 'WhatsApp Bot Channel',
+    desc: 'Ask questions via WhatsApp text and Tamil voice notes. Instant automated AI responses for rural farmers.',
+    status: 'Active Bot',
     link: '/contact',
-    btnText: 'Launch WhatsApp Assistant',
+    btnText: 'Launch WhatsApp Bot',
   },
   {
     icon: Phone,
-    color: 'var(--amber-400)',
-    bg: 'var(--amber-50)',
-    name: 'Phone / IVR Helpline',
-    desc: 'Toll-free voice recognition line designed for farmers with basic feature phones.',
+    theme: { primary: '#f59e0b', glow: 'rgba(245, 158, 11, 0.3)', bg: 'rgba(245, 158, 11, 0.12)', border: 'rgba(245, 158, 11, 0.3)' },
+    name: 'Toll-Free Phone IVR Line',
+    desc: 'Keypad feature phone accessibility. Dial 1800-GRAMA-AI, speak in Tamil, and receive AI audio answers.',
     status: 'Voice Helpline',
     link: '/contact',
-    btnText: 'Access IVR Helpline',
+    btnText: 'Access Toll-Free IVR',
   },
 ];
 
 const PIPELINE_STEPS = [
-  { n: 1, label: 'User asks', sub: 'Voice or Text', color: 'var(--green-600)' },
-  { n: 2, label: 'Language detection', sub: 'Tamil / English', color: 'var(--blue-600)' },
-  { n: 3, label: 'Intent classification', sub: 'Agri / Govt / Health', color: 'var(--blue-500)' },
-  { n: 4, label: 'Safety layer', sub: 'Emergency detection', color: '#e11d48' },
-  { n: 5, label: 'Knowledge search', sub: 'Verified sources', color: 'var(--amber-600)' },
-  { n: 6, label: 'AI generation', sub: 'Grounded by Gemini', color: 'var(--green-600)' },
-  { n: 7, label: 'Tamil response', sub: 'Text + Audio', color: 'var(--green-700)' },
-  { n: 8, label: 'Human handoff', sub: 'If needed', color: 'var(--gray-600)' },
+  { n: 1, label: 'User Asks', sub: 'Tamil Voice / Text / Image', color: '#10b981', border: '#34d399' },
+  { n: 2, label: 'Language & NLU', sub: 'Tamil Dialect Detection', color: '#06b6d4', border: '#22d3ee' },
+  { n: 3, label: 'Intent Classifier', sub: 'Agri / Govt / Health / Gen', color: '#3b82f6', border: '#60a5fa' },
+  { n: 4, label: 'Safety Guardrail', sub: '108 Emergency Detection', color: '#f43f5e', border: '#fb7185' },
+  { n: 5, label: 'Knowledge RAG', sub: 'TNAU & Scheme DB Search', color: '#f59e0b', border: '#fbbf24' },
+  { n: 6, label: 'Gemini LLM', sub: 'Grounded Context Synthesis', color: '#8b5cf6', border: '#c084fc' },
+  { n: 7, label: 'Multimodal Out', sub: 'Tamil Audio + Text Render', color: '#ec4899', border: '#f472b6' },
+  { n: 8, label: 'Officer Route', sub: 'VAO Ticket Handoff', color: '#64748b', border: '#94a3b8' },
 ];
 
 const TRUST_ITEMS = [
-  { icon: Shield, title: 'Verified Information', desc: 'Every response is grounded in verified knowledge from trusted government and agricultural sources.' },
-  { icon: Award, title: 'Safety-First Design', desc: 'Health queries are handled carefully. Emergencies are escalated immediately. No harmful advice.' },
-  { icon: Users, title: 'Human Escalation', desc: 'When AI confidence is low or queries are sensitive, real humans step in through the handoff system.' },
-  { icon: Zap, title: 'Honest AI', desc: 'If we don\'t know the answer, we say so — and connect you with help. No hallucinations.' },
+  { icon: Shield, title: 'Verified Information', desc: 'Every response is grounded in verified knowledge from TNAU manuals and government portals.', theme: '#10b981' },
+  { icon: Award, title: 'Safety-First Design', desc: 'Health queries are handled carefully with automatic 108 emergency escalation.', theme: '#f43f5e' },
+  { icon: Users, title: 'Human Escalation', desc: 'Uncertain or complex local policy queries route directly to Village Administrative Officers.', theme: '#3b82f6' },
+  { icon: Zap, title: 'Zero Hallucinations', desc: 'Strict confidence thresholds ensure no fabricated data or false certainty.', theme: '#f59e0b' },
 ];
 
 export default function Home() {
@@ -106,19 +132,19 @@ export default function Home() {
 
   return (
     <PublicLayout>
-      {/* ── FULL-SCREEN CINEMATIC VIDEO HERO (Fills Entire Screen Viewport) ── */}
+      {/* ── FULL-SCREEN CINEMATIC VIDEO HERO ── */}
       <section style={{
         position: 'relative',
         height: 'calc(100vh - var(--nav-height, 76px))',
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        padding: '0 0 2rem',
+        padding: '0 0 2.5rem',
         overflow: 'hidden',
         background: '#000000',
         color: '#ffffff',
       }}>
-        {/* Full-Bleed Video that fills 100% of the viewport with vivid clarity */}
+        {/* Full-Bleed Video Background */}
         <video
           autoPlay
           loop
@@ -138,529 +164,631 @@ export default function Home() {
           src="/video/Cinematic_4k_quality_video._The_20260919174842.mp4"
         />
 
-        {/* Action Buttons Positioned at Bottom of Video */}
+        {/* Floating Glass Action Bar at Viewport Bottom */}
         <div className="container" style={{ position: 'relative', zIndex: 3, textAlign: 'center' }}>
-          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div style={{ maxWidth: 880, margin: '0 auto' }}>
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '1.15rem',
               flexWrap: 'wrap',
-              padding: '0.75rem',
-              background: 'rgba(6, 11, 20, 0.75)',
+              padding: '0.85rem',
+              background: 'rgba(6, 11, 20, 0.8)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.22)',
               borderRadius: '24px',
-              boxShadow: '0 25px 65px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(124, 58, 237, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
+              boxShadow: '0 25px 65px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(124, 58, 237, 0.35)',
             }}>
-              {/* Primary Voice AI CTA — Modern Glass Squircle */}
+              {/* Primary Voice AI CTA */}
               <Link
                 to="/assistant"
                 style={{
                   background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #6d28d9 100%)',
                   color: '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '1rem',
-                  padding: '0.9rem 2rem 0.9rem 1.25rem',
+                  fontWeight: 800,
+                  fontSize: '1.05rem',
+                  padding: '0.95rem 2.25rem 0.95rem 1.35rem',
                   borderRadius: '16px',
-                  boxShadow: '0 12px 35px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)',
+                  boxShadow: '0 12px 35px -4px rgba(124, 58, 237, 0.7), 0 0 25px rgba(168, 85, 247, 0.5)',
                   border: '1px solid rgba(255, 255, 255, 0.5)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.75rem',
                   letterSpacing: '0.02em',
                   textDecoration: 'none',
-                  transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.25s ease',
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
                   e.currentTarget.style.background = 'linear-gradient(135deg, #8b5cf6 0%, #c084fc 50%, #7c3aed 100%)';
-                  e.currentTarget.style.boxShadow = '0 16px 45px -4px rgba(124, 58, 237, 0.85), 0 0 32px rgba(192, 132, 252, 0.6), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #6d28d9 100%)';
-                  e.currentTarget.style.boxShadow = '0 12px 35px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)';
                 }}
               >
                 <span style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '36px',
-                  height: '36px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '12px',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.18))',
-                  backdropFilter: 'blur(6px)',
+                  background: 'rgba(255, 255, 255, 0.3)',
                   border: '1px solid rgba(255, 255, 255, 0.6)',
-                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.35)',
                 }}>
-                  <Mic size={19} color="#ffffff" style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }} />
+                  <Mic size={20} color="#ffffff" />
                 </span>
-                <span style={{ textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>{t('talkToGrama')}</span>
-                <ArrowRight size={19} color="#ffffff" />
+                <span>{t('talkToGrama')}</span>
+                <ArrowRight size={20} color="#ffffff" />
               </Link>
 
-              {/* Secondary Discovery CTA — Modern Glass Squircle */}
+              {/* Secondary Discovery CTA */}
               <button
                 type="button"
                 onClick={scrollToCTA}
                 style={{
-                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.45) 100%)',
                   color: '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '1rem',
-                  padding: '0.9rem 2rem 0.9rem 1.25rem',
+                  fontWeight: 800,
+                  fontSize: '1.05rem',
+                  padding: '0.95rem 2.25rem 0.95rem 1.35rem',
                   borderRadius: '16px',
-                  border: '1px solid rgba(56, 189, 248, 0.45)',
+                  border: '1px solid rgba(56, 189, 248, 0.5)',
                   backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
                   letterSpacing: '0.02em',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.75rem',
                   cursor: 'pointer',
                   textDecoration: 'none',
-                  boxShadow: '0 10px 30px -5px rgba(14, 165, 233, 0.35), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.25)',
-                  transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: '0 10px 30px -5px rgba(14, 165, 233, 0.4)',
+                  transition: 'all 0.25s ease',
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(14, 165, 233, 0.35) 100%)';
-                  e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.75)';
-                  e.currentTarget.style.boxShadow = '0 16px 40px -4px rgba(56, 189, 248, 0.55), 0 0 20px rgba(56, 189, 248, 0.4), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.4)';
+                  e.currentTarget.style.borderColor = '#38bdf8';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 58, 138, 0.4) 100%)';
-                  e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.45)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px -5px rgba(14, 165, 233, 0.35), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.25)';
+                  e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)';
                 }}
-                aria-label="Explore Services - Scroll to Ask Grama Mitra"
+                aria-label="Explore Services"
               >
                 <span style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '36px',
-                  height: '36px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '12px',
-                  background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.35), rgba(14, 165, 233, 0.15))',
+                  background: 'rgba(56, 189, 248, 0.25)',
                   border: '1px solid rgba(56, 189, 248, 0.5)',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
                 }}>
-                  <Layers size={19} color="#38bdf8" />
+                  <Layers size={20} color="#38bdf8" />
                 </span>
-                <span style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{t('exploreServices')}</span>
-                <ChevronRight size={19} color="#38bdf8" />
+                <span>{t('exploreServices')}</span>
+                <ChevronRight size={20} color="#38bdf8" />
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── PROBLEM ── */}
-      <section className="section" style={{ background: '#050507', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      {/* ── THE RURAL CHALLENGE ── */}
+      <section className="section" style={{ background: '#020617', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '5.5rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem' }}>
-              <span className="section-label">The Challenge</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(244, 63, 94, 0.1)', border: '1px solid rgba(244, 63, 94, 0.3)', color: '#fb7185', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
+              The Problem We Solve
             </div>
-            <h2 className="section-title">Rural communities face real barriers</h2>
-            <p className="section-subtitle">
-              Most digital services assume English literacy, smartphones, and stable connectivity — 
-              leaving rural users behind.
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
+              Rural Communities Face Real Barriers
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '1.15rem', maxWidth: '700px', margin: '0 auto', lineHeight: 1.7 }}>
+              Most digital government and agricultural services assume English literacy, smartphones, and high-speed internet.
             </p>
           </div>
-          <div className="challenge-grid">
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             {[
               {
                 emoji: '🗣️',
                 label: 'Language Barrier',
-                desc: 'Existing portals assume English, leaving non-English speakers unable to access entitlements.',
+                desc: 'Existing portals assume English literacy, leaving non-English speakers unable to access entitlements.',
                 bg: 'linear-gradient(135deg, rgba(124, 58, 237, 0.16) 0%, rgba(168, 85, 247, 0.05) 100%)',
-                border: '1px solid rgba(167, 139, 250, 0.4)',
+                border: 'rgba(167, 139, 250, 0.4)',
                 glow: 'rgba(167, 139, 250, 0.3)',
                 iconBg: 'rgba(124, 58, 237, 0.28)',
-                badgeBorder: '1px solid rgba(192, 132, 252, 0.6)',
               },
               {
                 emoji: '📱',
                 label: 'Digital Literacy',
-                desc: 'Multi-step web forms create friction for rural elders and first-time smartphone users.',
+                desc: 'Complex multi-step web forms create friction for rural elders and first-time mobile users.',
                 bg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(52, 211, 153, 0.05) 100%)',
-                border: '1px solid rgba(52, 211, 153, 0.4)',
+                border: 'rgba(52, 211, 153, 0.4)',
                 glow: 'rgba(52, 211, 153, 0.3)',
                 iconBg: 'rgba(16, 185, 129, 0.28)',
-                badgeBorder: '1px solid rgba(110, 231, 183, 0.6)',
               },
               {
                 emoji: '📡',
-                label: 'Connectivity & Speed',
-                desc: 'Heavy pages fail in low-bandwidth rural regions; voice and light interfaces are needed.',
+                label: 'Low Bandwidth',
+                desc: 'Heavy website pages fail in low-network rural regions; voice and light interfaces are critical.',
                 bg: 'linear-gradient(135deg, rgba(14, 165, 233, 0.16) 0%, rgba(56, 189, 248, 0.05) 100%)',
-                border: '1px solid rgba(56, 189, 248, 0.4)',
+                border: 'rgba(56, 189, 248, 0.4)',
                 glow: 'rgba(56, 189, 248, 0.3)',
                 iconBg: 'rgba(14, 165, 233, 0.28)',
-                badgeBorder: '1px solid rgba(125, 211, 252, 0.6)',
               },
               {
                 emoji: '📋',
                 label: 'Scheme Complexity',
                 desc: 'Overlapping central and state government welfare schemes cause confusion in applications.',
                 bg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.16) 0%, rgba(251, 191, 36, 0.05) 100%)',
-                border: '1px solid rgba(251, 191, 36, 0.4)',
+                border: 'rgba(251, 191, 36, 0.4)',
                 glow: 'rgba(251, 191, 36, 0.3)',
                 iconBg: 'rgba(245, 158, 11, 0.28)',
-                badgeBorder: '1px solid rgba(253, 224, 71, 0.6)',
               },
               {
                 emoji: '📞',
-                label: 'Feature Phones',
-                desc: 'Over 40% of rural users rely on feature phones without modern web browsers or apps.',
+                label: 'Feature Phone Exclusion',
+                desc: 'Over 40% of rural citizens rely on basic keypad feature phones without web browsers.',
                 bg: 'linear-gradient(135deg, rgba(219, 39, 119, 0.16) 0%, rgba(244, 114, 182, 0.05) 100%)',
-                border: '1px solid rgba(244, 114, 182, 0.4)',
+                border: 'rgba(244, 114, 182, 0.4)',
                 glow: 'rgba(244, 114, 182, 0.3)',
                 iconBg: 'rgba(219, 39, 119, 0.28)',
-                badgeBorder: '1px solid rgba(249, 168, 212, 0.6)',
               },
               {
                 emoji: '🏥',
-                label: 'Health Access',
-                desc: 'Unreliable WhatsApp forward advice can be dangerous; verified medical escalation is critical.',
+                label: 'Unverified Advice',
+                desc: 'Unreliable social media forwards can cause crop failures; verified medical escalation is essential.',
                 bg: 'linear-gradient(135deg, rgba(225, 29, 72, 0.16) 0%, rgba(251, 113, 133, 0.05) 100%)',
-                border: '1px solid rgba(251, 113, 133, 0.4)',
+                border: 'rgba(251, 113, 133, 0.4)',
                 glow: 'rgba(251, 113, 133, 0.3)',
                 iconBg: 'rgba(225, 29, 72, 0.28)',
-                badgeBorder: '1px solid rgba(253, 164, 175, 0.6)',
               },
             ].map((item, i) => (
               <div
                 key={i}
                 style={{
                   textAlign: 'center',
-                  padding: '2.5rem 1.85rem',
+                  padding: '2.5rem 2rem',
                   background: item.bg,
-                  border: item.border,
-                  borderRadius: '20px',
+                  border: `1px solid ${item.border}`,
+                  borderRadius: '24px',
                   backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
-                  boxShadow: `0 12px 30px -5px ${item.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.2)`,
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: `0 12px 30px -5px ${item.glow}`,
+                  transition: 'all 0.3s ease',
                   cursor: 'pointer',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = `0 20px 45px -5px ${item.glow}, 0 0 25px ${item.glow}`;
+                  e.currentTarget.style.boxShadow = `0 20px 45px -5px ${item.glow}`;
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = `0 12px 30px -5px ${item.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.2)`;
+                  e.currentTarget.style.boxShadow = `0 12px 30px -5px ${item.glow}`;
                 }}
               >
                 <div style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '18px',
+                  width: '68px',
+                  height: '68px',
+                  borderRadius: '20px',
                   background: item.iconBg,
-                  border: item.badgeBorder,
-                  fontSize: '2.2rem',
+                  border: `1px solid ${item.border}`,
+                  fontSize: '2.4rem',
                   marginBottom: '1.5rem',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                  boxShadow: '0 6px 20px rgba(0, 0, 0, 0.3)',
                 }}>
                   {item.emoji}
                 </div>
-                <div className="font-semibold" style={{ fontSize: '1.2rem', marginBottom: '0.85rem', color: '#ffffff', lineHeight: 1.35, letterSpacing: '-0.01em' }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.85rem', color: '#ffffff', lineHeight: 1.3 }}>
                   {item.label}
-                </div>
-                <div style={{ fontSize: '0.925rem', color: '#cbd5e1', lineHeight: 1.7, fontWeight: 400 }}>
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.7, fontWeight: 400 }}>
                   {item.desc}
-                </div>
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CORE SERVICES ── */}
-      <section className="section" style={{ background: '#000000' }}>
+      {/* ── CORE SERVICES (3 Vibrant Glass Cards) ── */}
+      <section className="section" style={{ background: '#030712', padding: '5.5rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem' }}>
-              <span className="section-label">Core Services</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#34d399', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
+              Core Domains
             </div>
-            <h2 className="section-title">Three areas. One trusted platform.</h2>
-            <p className="section-subtitle">
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
+              Three Pillars. One Trusted AI Engine.
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '1.15rem', maxWidth: '700px', margin: '0 auto' }}>
               Verified, Tamil-first guidance across agriculture, government schemes, and basic health.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.25rem' }}>
-            {SERVICES.map((s, i) => (
-              <div key={i} className="card card-hover" style={{ position: 'relative', overflow: 'hidden', padding: '2.75rem 2rem', display: 'flex', flexDirection: 'column' }}>
-                <div style={{
-                  position: 'absolute', top: 0, left: 0, right: 0, height: 4,
-                  background: s.color, borderRadius: 'var(--radius-xl) var(--radius-xl) 0 0',
-                }} />
-                <div style={{ width: 60, height: 60, borderRadius: 'var(--radius-xl)', background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                  <s.icon size={28} color={s.color} />
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
+            {SERVICES.map((s, i) => {
+              const IconComp = s.icon;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    background: s.theme.cardBg,
+                    border: `1px solid ${s.theme.border}`,
+                    borderRadius: '24px',
+                    padding: '2.5rem 2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    boxShadow: `0 12px 35px -5px ${s.theme.glow}`,
+                    backdropFilter: 'blur(16px)',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+                >
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${s.theme.primary}, ${s.theme.accent})` }} />
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '1.5rem' }}>
+                    <div style={{ width: 62, height: 62, borderRadius: '18px', background: s.theme.gradient, border: `1px solid ${s.theme.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 6px 20px ${s.theme.glow}` }}>
+                      <IconComp size={30} style={{ color: s.theme.primary }} />
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.25, marginBottom: '0.35rem' }}>{s.title}</h3>
+                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: s.theme.pillText, background: s.theme.pillBg, padding: '0.2rem 0.65rem', borderRadius: '9999px', border: `1px solid ${s.theme.border}`, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        {s.tagline}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p style={{ color: '#cbd5e1', fontSize: '0.98rem', lineHeight: 1.75, marginBottom: '1.75rem' }}>
+                    {s.desc}
+                  </p>
+
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '2.25rem' }}>
+                    {s.examples.map((ex, j) => (
+                      <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontSize: '0.92rem', color: '#f1f5f9' }}>
+                        <ChevronRight size={16} style={{ color: s.theme.primary, flexShrink: 0 }} />
+                        <span>{ex}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                    <Link
+                      to={`/assistant?cat=${s.catId}`}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.625rem',
+                        width: '100%',
+                        padding: '0.95rem 1.25rem',
+                        borderRadius: '14px',
+                        background: `linear-gradient(135deg, ${s.theme.primary}, ${s.theme.secondary})`,
+                        color: '#ffffff',
+                        fontWeight: 800,
+                        fontSize: '0.95rem',
+                        textDecoration: 'none',
+                        boxShadow: `0 8px 20px ${s.theme.glow}`,
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <span>{s.btnText}</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
                 </div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.875rem', color: 'var(--gray-900)', lineHeight: 1.35 }}>{s.title}</h3>
-                <p style={{ color: 'var(--gray-400)', fontSize: '0.925rem', lineHeight: 1.75, marginBottom: '1.5rem' }}>{s.desc}</p>
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '2rem' }}>
-                  {s.examples.map((ex, j) => (
-                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontSize: '0.9rem', color: 'var(--gray-300)', lineHeight: 1.5 }}>
-                      <ChevronRight size={15} color={s.color} style={{ flexShrink: 0 }} />
-                      {ex}
-                    </li>
-                  ))}
-                </ul>
-                <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)' }}>
-                  <Link
-                    to={`/assistant?cat=${s.title.toLowerCase().includes('agri') ? 'agriculture' : s.title.toLowerCase().includes('govt') ? 'government' : 'health'}`}
-                    className="btn btn-outline"
-                    style={{ color: s.color, borderColor: s.color, width: '100%', padding: '0.85rem 1.25rem', fontWeight: 700, fontSize: '0.925rem', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}
-                    aria-label={`Ask question about ${s.title}`}
-                  >
-                    Ask {s.title.split(' ')[0]} Question <ArrowRight size={16} />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── HOW AI PIPELINE WORKS ── */}
-      <section className="section" style={{ background: '#050507', color: 'var(--color-text)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+      {/* ── AI ARCHITECTURE PIPELINE PREVIEW ── */}
+      <section className="section" style={{ background: '#020617', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', padding: '5.5rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem' }}>
-              <span className="section-label">
-                AI Architecture
-              </span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(139, 92, 246, 0.1)', border: '1px solid rgba(139, 92, 246, 0.3)', color: '#c084fc', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
+              Safety Architecture
             </div>
-            <h2 className="section-title">
-              How Grama Mitra answers safely
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
+              How Grama Mitra Answers Safely
             </h2>
-            <p className="section-subtitle">
-              Every query passes through a verified, safety-checked, human-reviewed AI pipeline.
+            <p style={{ color: '#94a3b8', fontSize: '1.15rem', maxWidth: '700px', margin: '0 auto' }}>
+              Every query passes through an 8-stage verified, safety-checked AI pipeline.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.75rem' }}>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
             {PIPELINE_STEPS.map((step, i) => (
-              <div key={i} className="card-hover" style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: 'var(--radius-xl)',
+              <div key={i} style={{
+                background: 'rgba(15, 23, 42, 0.7)',
+                border: `1px solid ${step.border}35`,
+                borderRadius: '18px',
                 padding: '1.75rem 1.35rem',
                 display: 'flex',
                 gap: '1.125rem',
                 alignItems: 'flex-start',
-                transition: 'all 0.2s',
+                backdropFilter: 'blur(10px)',
+                boxShadow: `0 4px 20px ${step.color}15`,
               }}>
                 <div style={{
-                  width: 40, height: 40, borderRadius: '50%',
-                  background: step.color, color: '#fff',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 800, fontSize: '0.875rem', flexShrink: 0,
-                  boxShadow: `0 4px 14px ${step.color}40`,
+                  width: 42,
+                  height: 42,
+                  borderRadius: '12px',
+                  background: `linear-gradient(135deg, ${step.color}, ${step.border})`,
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 900,
+                  fontSize: '0.95rem',
+                  flexShrink: 0,
+                  boxShadow: `0 4px 14px ${step.color}50`,
                 }}>
                   {step.n}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, color: '#fff', marginBottom: '0.45rem', fontSize: '1.05rem', lineHeight: 1.35 }}>{step.label}</div>
-                  <div style={{ fontSize: '0.875rem', color: 'var(--gray-400)', lineHeight: 1.6 }}>{step.sub}</div>
+                  <div style={{ fontWeight: 800, color: '#ffffff', marginBottom: '0.35rem', fontSize: '1.05rem', lineHeight: 1.3 }}>{step.label}</div>
+                  <div style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5, fontWeight: 500 }}>{step.sub}</div>
                 </div>
               </div>
             ))}
           </div>
+
           <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-            <Link to="/how-it-works" className="btn btn-outline" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)', padding: '0.9rem 2.25rem', fontWeight: 600 }}>
-              Explore Full 9-Step Pipeline Details <ArrowRight size={16} />
+            <Link to="/how-it-works" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.625rem',
+              padding: '0.95rem 2.25rem',
+              borderRadius: '14px',
+              border: '1px solid rgba(255,255,255,0.25)',
+              background: 'rgba(255,255,255,0.05)',
+              color: '#ffffff',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+              textDecoration: 'none',
+              backdropFilter: 'blur(10px)',
+            }}>
+              Explore Full System Architecture <ArrowRight size={18} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── CHANNELS ── */}
-      <section className="section" style={{ background: '#000000' }}>
+      {/* ── MULTI-CHANNEL ACCESS ── */}
+      <section className="section" style={{ background: '#030712', padding: '5.5rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem' }}>
-              <span className="section-label">Multi-Channel Access</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(56, 189, 248, 0.1)', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#38bdf8', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
+              Multi-Channel Delivery
             </div>
-            <h2 className="section-title">Reach us however you prefer</h2>
-            <p className="section-subtitle">
-              Same AI intelligence — accessible through website, WhatsApp, or phone.
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '1rem' }}>
+              Reach Us However You Prefer
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '1.15rem', maxWidth: '700px', margin: '0 auto' }}>
+              Same grounded AI intelligence — accessible through website, WhatsApp, or phone dial-in.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.25rem', maxWidth: 1060, margin: '0 auto' }}>
-            {CHANNELS.map((ch, i) => (
-              <div
-                key={i}
-                className="card card-hover"
-                style={{
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', maxWidth: 1100, margin: '0 auto' }}>
+            {CHANNELS.map((ch, i) => {
+              const ChIcon = ch.icon;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    padding: '2.5rem 2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'relative',
+                    background: 'rgba(15, 23, 42, 0.75)',
+                    border: `1px solid ${ch.theme.border}`,
+                    borderRadius: '24px',
+                    boxShadow: `0 12px 35px -5px ${ch.theme.glow}`,
+                    backdropFilter: 'blur(16px)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '1.5rem' }}>
+                    <div style={{
+                      background: ch.theme.bg,
+                      width: 62,
+                      height: 62,
+                      borderRadius: '18px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: `1px solid ${ch.theme.border}`,
+                      boxShadow: `0 6px 18px ${ch.theme.glow}`,
+                    }}>
+                      <ChIcon size={30} style={{ color: ch.theme.primary }} />
+                    </div>
+                    <span style={{
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      padding: '0.3rem 0.8rem',
+                      borderRadius: '9999px',
+                      background: ch.theme.bg,
+                      color: ch.theme.primary,
+                      border: `1px solid ${ch.theme.border}`,
+                    }}>
+                      {ch.status}
+                    </span>
+                  </div>
+
+                  <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem', lineHeight: 1.3 }}>
+                    {ch.name}
+                  </h3>
+                  <p style={{ fontSize: '0.95rem', color: '#cbd5e1', lineHeight: 1.7, marginBottom: '2rem', flex: 1 }}>
+                    {ch.desc}
+                  </p>
+
+                  <div style={{ width: '100%', marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                    <Link
+                      to={ch.link}
+                      style={{
+                        width: '100%',
+                        padding: '0.9rem 1.25rem',
+                        fontWeight: 800,
+                        fontSize: '0.925rem',
+                        display: 'inline-flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        borderRadius: '14px',
+                        color: ch.theme.primary,
+                        borderColor: ch.theme.border,
+                        background: ch.theme.bg,
+                        border: `1px solid ${ch.theme.border}`,
+                        textDecoration: 'none',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <span>{ch.btnText}</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── RESPONSIBLE AI & TRUST ── */}
+      <section className="section" style={{ background: '#020617', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '5.5rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#34d399', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
+              Trust & Responsibility
+            </div>
+            <h2 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em' }}>
+              Responsible AI by Design
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem' }}>
+            {TRUST_ITEMS.map((item, i) => {
+              const TrustIcon = item.icon;
+              return (
+                <div key={i} style={{
+                  background: 'rgba(15, 23, 42, 0.7)',
+                  border: `1px solid ${item.theme}35`,
+                  borderRadius: '20px',
+                  textAlign: 'center',
                   padding: '2.5rem 2rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  textAlign: 'left',
-                  alignItems: 'flex-start',
-                  position: 'relative',
-                  background: '#0c0c12',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: 'var(--radius-xl)',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
-                }}
-              >
-                {/* Top Row: Icon on left, Status Badge on right */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '1.5rem' }}>
+                  boxShadow: `0 8px 25px ${item.theme}15`,
+                  backdropFilter: 'blur(10px)',
+                }}>
                   <div style={{
-                    background: ch.bg,
                     width: 60,
                     height: 60,
-                    borderRadius: '16px',
+                    borderRadius: '18px',
+                    background: `${item.theme}18`,
+                    border: `1px solid ${item.theme}40`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: `1px solid ${ch.color}33`,
+                    margin: '0 auto 1.5rem',
                   }}>
-                    <ch.icon size={28} color={ch.color} />
+                    <TrustIcon size={28} style={{ color: item.theme }} />
                   </div>
-                  <span style={{
-                    fontSize: '0.72rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.06em',
-                    padding: '0.25rem 0.75rem',
-                    borderRadius: '9999px',
-                    background: ch.status.includes('Live') || ch.status.includes('Active') ? 'rgba(16, 185, 129, 0.18)' : 'rgba(59, 130, 246, 0.18)',
-                    color: ch.status.includes('Live') || ch.status.includes('Active') ? '#34d399' : '#60a5fa',
-                    border: `1px solid ${ch.status.includes('Live') || ch.status.includes('Active') ? 'rgba(52, 211, 153, 0.35)' : 'rgba(96, 165, 250, 0.35)'}`,
-                  }}>
-                    {ch.status}
-                  </span>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.75rem', color: '#ffffff', lineHeight: 1.3 }}>{item.title}</h3>
+                  <p style={{ fontSize: '0.925rem', color: '#cbd5e1', lineHeight: 1.75 }}>{item.desc}</p>
                 </div>
-
-                {/* Title & Description Aligned */}
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem', lineHeight: 1.3 }}>
-                  {ch.name}
-                </h3>
-                <p style={{ fontSize: '0.925rem', color: 'var(--gray-400)', lineHeight: 1.7, marginBottom: '2rem', flex: 1 }}>
-                  {ch.desc}
-                </p>
-
-                {/* Full-Width Action Button */}
-                <div style={{ width: '100%', marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                  <Link
-                    to={ch.link}
-                    className="btn btn-outline"
-                    style={{
-                      width: '100%',
-                      padding: '0.85rem 1.25rem',
-                      fontWeight: 700,
-                      fontSize: '0.9rem',
-                      display: 'inline-flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      borderRadius: '12px',
-                      color: ch.color,
-                      borderColor: `${ch.color}55`,
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.background = `${ch.color}15`;
-                      e.currentTarget.style.borderColor = ch.color;
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                      e.currentTarget.style.borderColor = `${ch.color}55`;
-                    }}
-                    aria-label={`${ch.btnText} for ${ch.name}`}
-                  >
-                    <span>{ch.btnText}</span>
-                    <ArrowRight size={15} color={ch.color} />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── TRUST ── */}
-      <section className="section" style={{ background: '#050507', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      {/* ── IMPACT STATS STRIP ── */}
+      <section style={{
+        background: 'linear-gradient(135deg, #059669 0%, #2563eb 50%, #7c3aed 100%)',
+        padding: '3.5rem 0',
+        boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.3)',
+      }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem' }}>
-              <span className="section-label">Why Trust Us</span>
-            </div>
-            <h2 className="section-title">Responsible AI by design</h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.75rem' }}>
-            {TRUST_ITEMS.map((item, i) => (
-              <div key={i} className="card card-hover" style={{ textAlign: 'center', padding: '2.25rem 1.75rem' }}>
-                <div style={{
-                  width: 58, height: 58, borderRadius: 'var(--radius-xl)',
-                  background: 'rgba(16, 185, 129, 0.12)', display: 'flex', alignItems: 'center',
-                  justifyContent: 'center', margin: '0 auto 1.5rem',
-                }}>
-                  <item.icon size={26} color="var(--green-400)" />
-                </div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--gray-900)', lineHeight: 1.4 }}>{item.title}</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--gray-400)', lineHeight: 1.75 }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── STATS ── */}
-      <section className="section" style={{ background: 'linear-gradient(135deg, var(--green-600), var(--green-700))' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '2rem', textAlign: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '2.5rem', textAlign: 'center' }}>
             {[
-              { v: '50+', l: 'Verified FAQs', s: 'Agriculture, Govt, Health' },
-              { v: '3', l: 'Service Areas', s: 'Agri, Schemes, Health' },
-              { v: '3', l: 'Channels', s: 'Web, WhatsApp, Phone' },
-              { v: '108', l: 'Emergency Escalation', s: 'Automatic safety routing' },
+              { v: '50+', l: 'Verified FAQs Indexed', s: 'TNAU & State Portals' },
+              { v: '3', l: 'Core Domains', s: 'Agri, Schemes, Health' },
+              { v: '3', l: 'Delivery Channels', s: 'Web Voice, WhatsApp, IVR' },
+              { v: '108', l: 'Emergency Safety', s: 'Automatic Medical Routing' },
             ].map((s, i) => (
               <div key={i}>
-                <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: '0.5rem' }}>{s.v}</div>
-                <div style={{ fontWeight: 700, color: 'rgba(255,255,255,0.9)', marginBottom: '0.25rem' }}>{s.l}</div>
-                <div style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.55)' }}>{s.s}</div>
+                <div style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', fontWeight: 900, color: '#ffffff', lineHeight: 1, marginBottom: '0.5rem', textShadow: '0 4px 15px rgba(0,0,0,0.3)' }}>{s.v}</div>
+                <div style={{ fontWeight: 800, color: '#ffffff', fontSize: '1.05rem', marginBottom: '0.25rem' }}>{s.l}</div>
+                <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', fontWeight: 600 }}>{s.s}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section id="ask-grama-mitra-cta" className="section" style={{ background: '#000000', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '7.5rem 0' }}>
+      {/* ── BOTTOM CTA ── */}
+      <section id="ask-grama-mitra-cta" className="section" style={{
+        position: 'relative',
+        background: '#030712',
+        textAlign: 'center',
+        padding: '7.5rem 0',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+      }}>
         <div className="container-sm">
-          <div style={{ marginBottom: '1.75rem' }}>
-            <span className="section-label">Start Now</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(52, 211, 153, 0.1)', border: '1px solid rgba(52, 211, 153, 0.3)', color: '#34d399', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+            Get Started Free
           </div>
-          <h2 className="section-title" style={{ marginBottom: '1.5rem' }}>
-            Ask Grama Mitra your first question
+          <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', fontWeight: 900, color: '#ffffff', marginBottom: '1.5rem', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+            Ask Grama Mitra Your First Question
           </h2>
-          <p className="section-subtitle" style={{ margin: '0 auto 3.5rem', lineHeight: 1.8, fontSize: '1.125rem', maxWidth: 640 }}>
-            Voice or text, Tamil or English — get trusted, verified guidance within seconds.
+          <p style={{ margin: '0 auto 3.5rem', lineHeight: 1.8, fontSize: '1.15rem', color: '#94a3b8', maxWidth: 650 }}>
+            Voice or text, Tamil or English — receive verified agricultural and government guidance in seconds.
           </p>
           <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/assistant" className="btn btn-primary btn-lg" style={{ padding: '1.125rem 2.5rem', fontWeight: 700, fontSize: '1.0625rem' }} aria-label="Start Voice Assistant">
+            <Link to="/assistant" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '1.1rem 2.75rem',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              color: '#ffffff',
+              fontWeight: 800,
+              fontSize: '1.05rem',
+              textDecoration: 'none',
+              boxShadow: '0 8px 25px rgba(16, 185, 129, 0.4)',
+            }} aria-label="Start Voice Assistant">
               <Mic size={22} />
               Start Voice Assistant
             </Link>
-            <Link to="/services" className="btn btn-outline btn-lg" style={{ padding: '1.125rem 2.25rem', fontWeight: 700, fontSize: '1.0625rem' }} aria-label="View All Services">
+            <Link to="/services" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '1.1rem 2.5rem',
+              borderRadius: '16px',
+              border: '1px solid rgba(255,255,255,0.25)',
+              background: 'rgba(255,255,255,0.05)',
+              color: '#ffffff',
+              fontWeight: 800,
+              fontSize: '1.05rem',
+              textDecoration: 'none',
+              backdropFilter: 'blur(10px)',
+            }} aria-label="View All Services">
               View All Services
             </Link>
           </div>
@@ -669,3 +797,4 @@ export default function Home() {
     </PublicLayout>
   );
 }
+
