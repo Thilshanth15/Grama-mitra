@@ -34,12 +34,16 @@ AI ஆலோசனைக்காக காத்திருக்க வேண
 ⚠️ **GRAMA MITRA தகவல் சேவை மட்டுமே — அவசரகால சேவை அல்ல.**`;
 
 // Local AI simulation with knowledge base
-async function runLocalAI(message, category) {
+async function runLocalAI(message, category, language = 'ta') {
   const results = searchKnowledge(message, category === 'ALL' ? null : category?.toLowerCase());
   
   if (results.length === 0) {
+    const notFoundText = language === 'en'
+      ? `I couldn't find verified information for this specific question in our knowledge base.\n\n**What I can help with:**\n- 🌾 Agriculture questions (crops, pests, farming)\n- 🏛️ Government schemes (PM-KISAN, PMFBY, KCC, etc.)\n- 🏥 Basic health guidance (non-emergency)\n\nFor personalized assistance, please click **"Request Human Help"** and our support team will assist you.`
+      : `நான் இந்த கேள்விக்கு சரியான தகவல் காண முடியவில்லை.\n\nI couldn't find verified information for this specific question in our knowledge base.\n\n**What I can help with:**\n- 🌾 Agriculture questions (crops, pests, farming)\n- 🏛️ Government schemes (PM-KISAN, PMFBY, KCC, etc.)\n- 🏥 Basic health guidance (non-emergency)\n\nFor personalized assistance, please click **"Request Human Help"** and our support team will assist you.`;
+    
     return {
-      response: `நான் இந்த கேள்விக்கு சரியான தகவல் காண முடியவில்லை.\n\nI couldn't find verified information for this specific question in our knowledge base.\n\n**What I can help with:**\n- 🌾 Agriculture questions (crops, pests, farming)\n- 🏛️ Government schemes (PM-KISAN, PMFBY, KCC, etc.)\n- 🏥 Basic health guidance (non-emergency)\n\nFor personalized assistance, please click **"Request Human Help"** and our support team will assist you.`,
+      response: notFoundText,
       confidence: 0.25,
       source: null,
       needsHandoff: true,
@@ -49,9 +53,10 @@ async function runLocalAI(message, category) {
 
   const best = results[0];
   const confidence = results.length >= 2 ? 0.87 : 0.71;
+  const responseText = (language === 'en' && best.answerEnglish) ? best.answerEnglish : best.answer;
 
   return {
-    response: best.answer,
+    response: responseText,
     confidence,
     source: best.source ? { name: best.source, url: best.sourceUrl, lastUpdated: best.lastUpdated } : null,
     needsHandoff: confidence < 0.6,
@@ -125,7 +130,7 @@ ${cause}
 
 // Main chat function
 export async function sendMessage(message, options = {}) {
-  const { channel = 'Website', sessionId = 'demo', image = null } = options;
+  const { channel = 'Website', sessionId = 'demo', image = null, language = 'ta' } = options;
 
   // Handle crop image upload analysis
   if (image) {
@@ -201,15 +206,15 @@ export async function sendMessage(message, options = {}) {
       const res = await fetch(`${API_BASE}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, channel, intent }),
+        body: JSON.stringify({ message, channel, intent, language }),
       });
       aiResult = await res.json();
     } catch {
       // fallback to local
-      aiResult = await runLocalAI(message, intent);
+      aiResult = await runLocalAI(message, intent, language);
     }
   } else {
-    aiResult = await runLocalAI(message, intent);
+    aiResult = await runLocalAI(message, intent, language);
   }
 
   // 3. Determine status
@@ -263,7 +268,7 @@ export async function sendMessage(message, options = {}) {
 }
 
 // Voice transcription (Web Speech API wrapper — returns promise)
-export function transcribeVoice() {
+export function transcribeVoice(lang = 'ta-IN') {
   return new Promise((resolve, reject) => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       reject(new Error('Speech recognition not supported in this browser'));
@@ -271,7 +276,7 @@ export function transcribeVoice() {
     }
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SR();
-    recognition.lang = 'ta-IN'; // Tamil
+    recognition.lang = lang || 'ta-IN';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -282,18 +287,18 @@ export function transcribeVoice() {
   });
 }
 
-// Text-to-speech (Tamil)
+// Text-to-speech (Multilingual)
 export function speakText(text, lang = 'ta-IN') {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
   const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = lang;
+  utt.lang = lang || 'ta-IN';
   utt.rate = 0.9;
   utt.pitch = 1;
-  // Try to find a Tamil voice
   const voices = window.speechSynthesis.getVoices();
-  const tamilVoice = voices.find(v => v.lang === 'ta-IN' || v.lang.startsWith('ta'));
-  if (tamilVoice) utt.voice = tamilVoice;
+  const targetLang = (lang || 'ta-IN').toLowerCase();
+  const matchedVoice = voices.find(v => v.lang.toLowerCase() === targetLang || v.lang.toLowerCase().startsWith(targetLang.split('-')[0]));
+  if (matchedVoice) utt.voice = matchedVoice;
   window.speechSynthesis.speak(utt);
 }
 

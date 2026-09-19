@@ -31,7 +31,7 @@ async def chat(req: ChatRequest):
         top_k=2,
     )
 
-    ai_result = await generate_response(req.message, context, intent)
+    ai_result = await generate_response(req.message, context, intent, language=req.language)
 
     confidence = ai_result.get("confidence", 0.5)
     needs_handoff = confidence < 0.6

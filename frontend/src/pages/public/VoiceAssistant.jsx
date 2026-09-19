@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 import ResponseCard from '../../components/ResponseCard.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 import { sendMessage, speakText, stopSpeaking } from '../../services/api.js';
 import { useToast } from '../../hooks/useToast.js';
 import { ToastContainer } from '../../components/Toast.jsx';
@@ -38,6 +39,7 @@ const VOICE_STATES = {
 };
 
 export default function VoiceAssistant() {
+  const { language, currentLangObj } = useLanguage();
   const [searchParams] = useSearchParams();
   const [voiceState, setVoiceState] = useState(VOICE_STATES.IDLE);
   const [input, setInput] = useState('');
@@ -89,7 +91,7 @@ export default function VoiceAssistant() {
     setVoiceState(VOICE_STATES.PROCESSING);
     setResult(null);
     try {
-      const res = await sendMessage(text.trim(), { channel: 'Website', image: img });
+      const res = await sendMessage(text.trim(), { channel: 'Website', image: img, language });
       setResult(res);
       setVoiceState(VOICE_STATES.DONE);
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
@@ -124,7 +126,8 @@ export default function VoiceAssistant() {
 
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     const rec = new SR();
-    rec.lang = 'ta-IN';
+    const sttLang = currentLangObj?.sttLang || (language === 'en' ? 'en-IN' : 'ta-IN');
+    rec.lang = sttLang;
     rec.interimResults = false;
     rec.continuous = false;
 
@@ -135,7 +138,7 @@ export default function VoiceAssistant() {
       handleSubmitDirect(transcript);
     };
     rec.onerror = (e) => {
-      if (e.error === 'no-speech') addToast('குரல் கேட்கவில்லை. மீண்டும் முயற்சிக்கவும்.', 'warning');
+      if (e.error === 'no-speech') addToast(language === 'en' ? 'No speech detected. Please try again.' : 'குரல் கேட்கவில்லை. மீண்டும் முயற்சிக்கவும்.', 'warning');
       else addToast(`Voice error: ${e.error}`, 'error');
       setVoiceState(VOICE_STATES.IDLE);
     };
@@ -152,7 +155,8 @@ export default function VoiceAssistant() {
       setSpeaking(false);
       return;
     }
-    speakText(result.response, 'ta-IN');
+    const ttsLang = currentLangObj?.ttsLang || (language === 'en' ? 'en-IN' : 'ta-IN');
+    speakText(result.response, ttsLang);
     setSpeaking(true);
     const utt = new SpeechSynthesisUtterance(result.response);
     utt.onend = () => setSpeaking(false);
@@ -177,11 +181,13 @@ export default function VoiceAssistant() {
   };
 
   const voiceStatusText = {
-    [VOICE_STATES.IDLE]: isSpeechSupported ? 'Tap to speak in Tamil' : 'Voice not supported — type below',
-    [VOICE_STATES.RECORDING]: 'கேட்கிறேன்… (Listening…)',
-    [VOICE_STATES.PROCESSING]: 'உங்கள் கேள்வியை புரிந்துகொள்கிறோம்…',
+    [VOICE_STATES.IDLE]: isSpeechSupported
+      ? (language === 'en' ? `Tap to speak in ${currentLangObj?.name || 'English'}` : 'Tap to speak in Tamil')
+      : 'Voice not supported — type below',
+    [VOICE_STATES.RECORDING]: language === 'en' ? 'Listening...' : 'கேட்கிறேன்… (Listening…)',
+    [VOICE_STATES.PROCESSING]: language === 'en' ? 'Understanding your question...' : 'உங்கள் கேள்வியை புரிந்துகொள்கிறோம்…',
     [VOICE_STATES.DONE]: 'Response ready',
-    [VOICE_STATES.ERROR]: 'மீண்டும் முயற்சிக்கவும்.',
+    [VOICE_STATES.ERROR]: language === 'en' ? 'Please try again.' : 'மீண்டும் முயற்சிக்கவும்.',
   };
 
   return (

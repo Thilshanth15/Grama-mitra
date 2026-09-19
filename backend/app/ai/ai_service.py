@@ -53,21 +53,30 @@ def _get_gemini_model() -> Tuple[Optional[Any], Optional[str]]:
         return None, err_msg
 
 
-async def generate_response(message: str, context: str, intent: str) -> dict:
+async def generate_response(message: str, context: str, intent: str, language: str = "ta") -> dict:
     """Generate a grounded AI response using Gemini or local knowledge fallback."""
     
     model, error_reason = _get_gemini_model()
 
     if model:
+        lang_instruction = (
+            "Respond in simple, clear English suitable for rural farmers."
+            if language == "en"
+            else "Respond in simple Tamil (primary) with clear English translation/summary if appropriate."
+        )
+
         prompt = f"""{SYSTEM_PROMPT}
 
 INTENT: {intent}
+LANGUAGE PREFERENCE: {language}
+LANGUAGE RULE: {lang_instruction}
+
 KNOWLEDGE CONTEXT:
 {context if context else 'No specific verified snippet found. Use general factual knowledge for rural India.'}
 
 USER QUESTION: {message}
 
-Generate a helpful, accurate, Tamil-first response:"""
+Generate a helpful, accurate response:"""
 
         try:
             response = model.generate_content(prompt)
@@ -85,14 +94,15 @@ Generate a helpful, accurate, Tamil-first response:"""
     else:
         logger.info(f"Gemini AI bypassed: {error_reason}. Operating in local RAG fallback mode.")
 
-    return _local_fallback(message, context, intent, gemini_error=error_reason)
+    return _local_fallback(message, context, intent, language=language, gemini_error=error_reason)
 
 
-def _local_fallback(message: str, context: str, intent: str, gemini_error: Optional[str] = None) -> dict:
+def _local_fallback(message: str, context: str, intent: str, language: str = "ta", gemini_error: Optional[str] = None) -> dict:
     """Local rule-based fallback grounded on retrieved knowledge context when Gemini is unavailable."""
     if context:
+        prefix = "Based on verified government and agricultural department information:\n\n" if language == "en" else "அரசு மற்றும் வேளாண்மைத் துறை தகவல்களின் அடிப்படையில்:\n\n"
         return {
-            "response": f"அரசு மற்றும் வேளாண்மைத் துறை தகவல்களின் அடிப்படையில்:\n\n{context}",
+            "response": f"{prefix}{context}",
             "source": "Local Knowledge Base",
             "confidence": 0.78,
         }
@@ -101,13 +111,13 @@ def _local_fallback(message: str, context: str, intent: str, gemini_error: Optio
     err_note = f" (Note: Gemini API key is missing or unconfigured: {gemini_error})" if gemini_error else ""
     return {
         "response": (
-            "இந்த கேள்விக்கான சரிபார்க்கப்பட்ட தகவல் தரவுத்தளத்தில் நேரடியாக கிடைக்கவில்லை.\n\n"
             f"I couldn't find specific verified information for this question in the database.{err_note}\n"
             "Please click 'Request Human Help' to connect with a village officer."
         ),
         "source": None,
         "confidence": 0.3,
     }
+
 
 
 def classify_intent(text: str) -> str:
