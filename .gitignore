@@ -1,0 +1,53 @@
+# Grama Mitra — Git Ignore
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+env/
+.env
+.env.local
+.env.production
+.env.*.local
+
+# --- Secrets (NEVER commit these) ---
+*_credentials.json
+*_serviceaccount.json
+*.pem
+*.key
+*.p12
+
+# --- Node / Frontend ---
+node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# --- IDE ---
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Testing ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
