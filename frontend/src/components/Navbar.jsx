@@ -124,31 +124,6 @@ export default function Navbar() {
             <span>{t('villageOfficer')}</span>
           </Link>
 
-          {/* Try Assistant Button */}
-          <Link
-            to="/assistant"
-            className="btn btn-sm btn-primary"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '38px',
-              padding: '0 1.1rem',
-              borderRadius: '9999px',
-              whiteSpace: 'nowrap',
-              color: '#ffffff',
-              fontWeight: 700,
-              fontSize: '0.82rem',
-              background: 'linear-gradient(135deg, #10b981, #059669)',
-              border: '1px solid rgba(52, 211, 153, 0.4)',
-              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.35)',
-              textDecoration: 'none',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            {t('tryAssistant')}
-          </Link>
-
           <button
             className="mobile-menu-btn"
             onClick={() => setOpen(!open)}
@@ -204,9 +179,6 @@ export default function Navbar() {
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', border: '1px solid rgba(255,255,255,0.15)' }}
             >
               <Home size={14} color="#34d399" /> {t('villageOfficer')}
-            </Link>
-            <Link to="/assistant" className="btn btn-sm btn-primary" onClick={() => setOpen(false)} style={{ textAlign: 'center' }}>
-              {t('tryAssistant')}
             </Link>
           </div>
         </div>
