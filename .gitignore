@@ -33,6 +33,10 @@ frontend/.env
 frontend/.env.local
 frontend/.env.production
 
+# --- Large Media & Static Build Outputs ---
+*.mp4
+backend/app/static/
+
 # --- IDE ---
 .vscode/settings.json
 .idea/

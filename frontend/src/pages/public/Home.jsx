@@ -740,57 +740,188 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BOTTOM CTA ── */}
+      {/* ── BOTTOM CTA WITH CINEMATIC TRACTOR VIDEO & GLASSMORPHISM ── */}
       <section id="ask-grama-mitra-cta" className="section" style={{
         position: 'relative',
-        background: '#030712',
+        minHeight: '520px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'center',
-        padding: '7.5rem 0',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
+        padding: '6rem 0',
+        overflow: 'hidden',
+        background: '#000000',
+        borderTop: '1px solid rgba(255, 255, 255, 0.12)',
       }}>
-        <div className="container-sm">
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(52, 211, 153, 0.1)', border: '1px solid rgba(52, 211, 153, 0.3)', color: '#34d399', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1.5rem' }}>
-            Get Started Free
-          </div>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', fontWeight: 900, color: '#ffffff', marginBottom: '1.5rem', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
-            Ask Grama Mitra Your First Question
-          </h2>
-          <p style={{ margin: '0 auto 3.5rem', lineHeight: 1.8, fontSize: '1.15rem', color: '#94a3b8', maxWidth: 650 }}>
-            Voice or text, Tamil or English — receive verified agricultural and government guidance in seconds.
-          </p>
-          <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/assistant" style={{
+        {/* Cinematic Tractor Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'translate(-50%, -50%) scale(1.1)',
+            zIndex: 0,
+            filter: 'brightness(0.75) contrast(1.1) saturate(1.15)',
+          }}
+          src="/video/Tractor.mp4"
+        />
+
+        {/* Multi-Layer Glass Overlay Gradient */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(circle at center, rgba(3, 7, 18, 0.6) 0%, rgba(2, 6, 23, 0.92) 100%)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          zIndex: 1,
+        }} />
+
+        {/* Ambient Glow Orb Behind Glass Card */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '500px',
+          height: '500px',
+          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(0,0,0,0) 70%)',
+          filter: 'blur(90px)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }} />
+
+        {/* Frosted Glassmorphism Container Card */}
+        <div className="container-sm" style={{ position: 'relative', zIndex: 2 }}>
+          <div style={{
+            background: 'rgba(6, 15, 25, 0.65)',
+            border: '1px solid rgba(52, 211, 153, 0.4)',
+            borderRadius: '28px',
+            padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            boxShadow: '0 30px 70px -10px rgba(0, 0, 0, 0.9), 0 0 50px rgba(16, 185, 129, 0.25), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
+          }}>
+            {/* Pill Badge */}
+            <div style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.75rem',
-              padding: '1.1rem 2.75rem',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #10b981, #059669)',
-              color: '#ffffff',
+              gap: '0.625rem',
+              padding: '0.45rem 1.25rem',
+              borderRadius: '9999px',
+              background: 'rgba(16, 185, 129, 0.15)',
+              border: '1px solid rgba(52, 211, 153, 0.5)',
+              color: '#6ee7b7',
+              fontSize: '0.825rem',
               fontWeight: 800,
-              fontSize: '1.05rem',
-              textDecoration: 'none',
-              boxShadow: '0 8px 25px rgba(16, 185, 129, 0.4)',
-            }} aria-label="Start Voice Assistant">
-              <Mic size={22} />
-              Start Voice Assistant
-            </Link>
-            <Link to="/services" style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              padding: '1.1rem 2.5rem',
-              borderRadius: '16px',
-              border: '1px solid rgba(255,255,255,0.25)',
-              background: 'rgba(255,255,255,0.05)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              marginBottom: '1.75rem',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.2)',
+            }}>
+              <Sparkles size={16} style={{ color: '#34d399' }} />
+              <span>Get Started Free</span>
+            </div>
+
+            {/* Title */}
+            <h2 style={{
+              fontSize: 'clamp(2.2rem, 5.5vw, 3.8rem)',
+              fontWeight: 900,
               color: '#ffffff',
-              fontWeight: 800,
-              fontSize: '1.05rem',
-              textDecoration: 'none',
-              backdropFilter: 'blur(10px)',
-            }} aria-label="View All Services">
-              View All Services
-            </Link>
+              marginBottom: '1.25rem',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.15,
+            }}>
+              Ask Grama Mitra <br />
+              <span style={{
+                background: 'linear-gradient(135deg, #34d399 0%, #60a5fa 50%, #c084fc 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                filter: 'drop-shadow(0 4px 15px rgba(52, 211, 153, 0.4))',
+              }}>
+                Your First Question
+              </span>
+            </h2>
+
+            {/* Subtitle */}
+            <p style={{
+              margin: '0 auto 3rem',
+              lineHeight: 1.75,
+              fontSize: 'clamp(1.05rem, 2vw, 1.2rem)',
+              color: '#e2e8f0',
+              maxWidth: 640,
+              fontWeight: 400,
+            }}>
+              Voice or text, Tamil or English — receive verified agricultural and government guidance in seconds.
+            </p>
+
+            {/* Buttons */}
+            <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link
+                to="/assistant"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '1.1rem 2.75rem',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: '#ffffff',
+                  fontWeight: 800,
+                  fontSize: '1.05rem',
+                  textDecoration: 'none',
+                  boxShadow: '0 12px 35px -4px rgba(16, 185, 129, 0.6), 0 0 25px rgba(52, 211, 153, 0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.5)',
+                  border: '1px solid rgba(255, 255, 255, 0.4)',
+                  transition: 'all 0.25s ease',
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+                aria-label="Start Voice Assistant"
+              >
+                <Mic size={22} style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }} />
+                <span>Start Voice Assistant</span>
+                <ArrowRight size={20} />
+              </Link>
+
+              <Link
+                to="/services"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '1.1rem 2.5rem',
+                  borderRadius: '16px',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  color: '#ffffff',
+                  fontWeight: 800,
+                  fontSize: '1.05rem',
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(16px)',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
+                  transition: 'all 0.25s ease',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                }}
+                aria-label="View All Services"
+              >
+                <span>View All Services</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
