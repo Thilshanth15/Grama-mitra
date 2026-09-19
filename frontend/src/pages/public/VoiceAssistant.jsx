@@ -198,7 +198,7 @@ export default function VoiceAssistant() {
       <div style={{
         position: 'relative',
         background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.25) 0%, rgba(16, 185, 129, 0.15) 45%, rgba(3, 3, 8, 1) 100%)',
-        padding: '5.5rem 0 3rem',
+        padding: '7rem 0 3.5rem',
         borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
         color: '#fff',
         overflow: 'hidden',
@@ -263,7 +263,7 @@ export default function VoiceAssistant() {
         position: 'relative',
         background: 'linear-gradient(180deg, #030308 0%, #080812 50%, #030308 100%)',
         minHeight: '75vh',
-        padding: '3rem 0 5rem',
+        padding: '3.5rem 0 5rem',
         color: '#ffffff',
       }}>
         {/* Secondary ambient glow */}
@@ -275,7 +275,7 @@ export default function VoiceAssistant() {
         }} />
 
         <div className="container-sm" style={{ position: 'relative', zIndex: 2 }}>
-          {/* Category selector — Premium Glass Squircles */}
+          {/* Category selector — Premium Glass Squircles (Symmetrically Centered & Fully Unobstructed) */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginBottom: '3rem', flexWrap: 'wrap' }}>
             {CATEGORIES.map(cat => {
               const isSelected = category === cat.id;
@@ -429,139 +429,212 @@ export default function VoiceAssistant() {
             style={{ display: 'none' }}
           />
 
-          {/* Text & Image Input Form — Frosted Glass Panel */}
+          {/* Gemini-Style Ultra-Premium Vibrant Floating Chat Toolbar */}
           <form onSubmit={handleSubmit} style={{ marginBottom: '2.5rem' }}>
             <div style={{
+              position: 'relative',
               display: 'flex',
-              flexDirection: 'column',
+              alignItems: 'center',
               gap: '0.75rem',
-              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.6) 100%)',
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              border: selectedImage ? '2px solid #10b981' : '1px solid rgba(255, 255, 255, 0.18)',
-              borderRadius: '24px',
-              padding: '1.25rem',
-              boxShadow: '0 25px 65px -10px rgba(0, 0, 0, 0.9), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
+              background: 'linear-gradient(135deg, rgba(20, 20, 30, 0.95) 0%, rgba(10, 10, 18, 0.98) 100%)',
+              backdropFilter: 'blur(28px)',
+              WebkitBackdropFilter: 'blur(28px)',
+              border: selectedImage ? '2px solid #10b981' : '1px solid rgba(56, 189, 248, 0.38)',
+              borderRadius: '9999px',
+              padding: '0.65rem 0.85rem 0.65rem 0.85rem',
+              boxShadow: '0 20px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(56, 189, 248, 0.2), inset 0 1.5px 2px rgba(255, 255, 255, 0.3)',
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             }}>
-              {/* Image Preview Thumbnail if attached */}
+              {/* Left Action: Plus Icon Button with Glowing Blue Dot indicator */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                title="Attach Crop Image or File for AI Diagnosis"
+                style={{
+                  position: 'relative',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  background: selectedImage
+                    ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.2) 100%)'
+                    : 'rgba(255, 255, 255, 0.08)',
+                  border: selectedImage ? '1px solid rgba(52, 211, 153, 0.6)' : '1px solid rgba(255, 255, 255, 0.2)',
+                  color: selectedImage ? '#34d399' : '#ffffff',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.4)',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'scale(1.08)';
+                  e.currentTarget.style.background = 'rgba(56, 189, 248, 0.25)';
+                  e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.6)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.background = selectedImage ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.borderColor = selectedImage ? 'rgba(52, 211, 153, 0.6)' : 'rgba(255, 255, 255, 0.2)';
+                }}
+              >
+                <span style={{ fontSize: '1.4rem', fontWeight: 300, lineHeight: 1 }}>+</span>
+                {/* Glowing Blue Dot Indicator (Gemini style) */}
+                <span style={{
+                  position: 'absolute',
+                  top: '6px',
+                  right: '6px',
+                  width: '9px',
+                  height: '9px',
+                  borderRadius: '50%',
+                  background: '#38bdf8',
+                  boxShadow: '0 0 10px #38bdf8, 0 0 18px #38bdf8',
+                }} />
+              </button>
+
+              {/* Image Thumbnail badge inside floating bar if attached */}
               {imagePreview && (
                 <div style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.75rem',
-                  padding: '0.5rem 0.9rem',
-                  background: 'rgba(16, 185, 129, 0.18)',
-                  border: '1px solid rgba(52, 211, 153, 0.4)',
-                  borderRadius: '16px',
-                  maxWidth: 'fit-content',
+                  gap: '0.5rem',
+                  padding: '0.25rem 0.6rem',
+                  background: 'rgba(16, 185, 129, 0.2)',
+                  border: '1px solid rgba(52, 211, 153, 0.45)',
+                  borderRadius: '9999px',
+                  flexShrink: 0,
                 }}>
                   <img
                     src={imagePreview}
-                    alt="Crop preview"
-                    style={{ width: 42, height: 42, objectFit: 'cover', borderRadius: '10px', border: '1.5px solid #34d399' }}
+                    alt="Crop thumbnail"
+                    style={{ width: 24, height: 24, objectFit: 'cover', borderRadius: '50%' }}
                   />
-                  <div style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: 600 }}>
-                    📷 {selectedImage?.name || 'Crop_Image.jpg'}
-                    <div style={{ fontSize: '0.725rem', color: '#34d399', fontWeight: 500 }}>AI Crop Disease Diagnosis Attached</div>
-                  </div>
+                  <span style={{ fontSize: '0.75rem', color: '#34d399', fontWeight: 700 }}>Image Attached</span>
                   <button
                     type="button"
                     onClick={handleClearImage}
-                    style={{ background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#f87171', borderRadius: '50%', cursor: 'pointer', padding: '0.25rem', marginLeft: '0.35rem' }}
-                    title="Remove image"
+                    style={{ background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', padding: 0 }}
                   >
-                    <X size={14} />
+                    <X size={12} />
                   </button>
                 </div>
               )}
 
-              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                {/* Crop Image Upload Button */}
+              {/* Center Input Textarea */}
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                placeholder={language === 'en' ? 'Ask Grama Mitra...' : 'கேள்வி கேட்கவும்… (Ask Grama Mitra)'}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  outline: 'none',
+                  fontFamily: language === 'en' ? 'var(--font-sans)' : 'var(--font-tamil)',
+                  fontSize: '1.05rem',
+                  fontWeight: 500,
+                  color: '#ffffff',
+                  background: 'transparent',
+                  padding: '0.4rem 0.5rem',
+                  letterSpacing: '0.01em',
+                }}
+                disabled={voiceState === VOICE_STATES.PROCESSING}
+                onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleSubmit(); } }}
+              />
+
+              {/* Right Action Stack: AI Model Pill + Mic Icon Button + Send Button */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', flexShrink: 0 }}>
+                {/* AI Model Badge (Gemini Flash-Lite style) */}
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.35rem 0.75rem',
+                  borderRadius: '9999px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  color: '#e2e8f0',
+                  fontSize: '0.8125rem',
+                  fontWeight: 600,
+                  whiteSpace: 'nowrap',
+                  cursor: 'pointer',
+                }}>
+                  <span style={{ color: '#34d399', fontWeight: 800 }}>Grama-AI 2.0</span>
+                  <ChevronDown size={13} color="#94a3b8" />
+                </div>
+
+                {/* Direct Mic Quick Button inside toolbar */}
                 <button
                   type="button"
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={handleMicClick}
+                  title="Voice Microphone Input"
                   style={{
-                    color: selectedImage ? '#34d399' : '#ffffff',
-                    background: selectedImage ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)',
-                    padding: '0.75rem 1.15rem',
-                    borderRadius: '16px',
-                    border: selectedImage ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255, 255, 255, 0.18)',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.5rem',
+                    justifyContent: 'center',
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '50%',
+                    background: voiceState === VOICE_STATES.RECORDING ? 'rgba(239, 68, 68, 0.25)' : 'rgba(255, 255, 255, 0.08)',
+                    border: voiceState === VOICE_STATES.RECORDING ? '1px solid rgba(239, 68, 68, 0.6)' : '1px solid rgba(255, 255, 255, 0.18)',
+                    color: voiceState === VOICE_STATES.RECORDING ? '#f87171' : '#ffffff',
                     cursor: 'pointer',
-                    flexShrink: 0,
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'rgba(16, 185, 129, 0.28)';
-                    e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.6)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = selectedImage ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.08)';
-                    e.currentTarget.style.borderColor = selectedImage ? '1px solid rgba(52, 211, 153, 0.5)' : '1px solid rgba(255, 255, 255, 0.18)';
                   }}
                 >
-                  <Camera size={18} color={selectedImage ? '#34d399' : '#38bdf8'} />
-                  <span>{selectedImage ? 'Image Attached' : 'Crop Photo'}</span>
+                  <Mic size={18} color={voiceState === VOICE_STATES.RECORDING ? '#f87171' : '#ffffff'} />
                 </button>
 
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={e => setInput(e.target.value)}
-                  placeholder={language === 'en' ? 'Type your question or attach crop photo...' : 'அல்லது இங்கே தட்டச்சு செய்யுங்கள்… (Type question or attach crop photo)'}
+                {/* Send Button */}
+                <button
+                  type="submit"
+                  disabled={(!input.trim() && !selectedImage) || voiceState === VOICE_STATES.PROCESSING}
                   style={{
-                    flex: 1, border: 'none', outline: 'none', resize: 'none',
-                    fontFamily: language === 'en' ? 'var(--font-sans)' : 'var(--font-tamil)', fontSize: '1rem',
-                    color: '#ffffff', background: 'transparent',
-                    minHeight: '46px', maxHeight: '120px',
-                    lineHeight: 1.5, padding: '0.4rem 0.5rem',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.45rem',
+                    height: '42px',
+                    padding: '0 1.35rem',
+                    borderRadius: '9999px',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: '#ffffff',
+                    fontWeight: 700,
+                    fontSize: '0.9rem',
+                    border: '1px solid rgba(255, 255, 255, 0.4)',
+                    boxShadow: '0 6px 20px rgba(16, 185, 129, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.6)',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                    opacity: (!input.trim() && !selectedImage) || voiceState === VOICE_STATES.PROCESSING ? 0.5 : 1,
                   }}
-                  rows={2}
-                  disabled={voiceState === VOICE_STATES.PROCESSING}
-                  onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(); } }}
-                />
-
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  {result && (
-                    <button type="button" onClick={handleReset} className="btn btn-sm btn-ghost" title="Clear" style={{ borderRadius: '12px' }}>
-                      <RefreshCw size={16} />
-                    </button>
+                  onMouseEnter={e => {
+                    if (input.trim() || selectedImage) {
+                      e.currentTarget.style.transform = 'scale(1.04)';
+                      e.currentTarget.style.boxShadow = '0 8px 30px rgba(16, 185, 129, 0.75), inset 0 1.5px 1px rgba(255, 255, 255, 0.8)';
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.6)';
+                  }}
+                >
+                  {voiceState === VOICE_STATES.PROCESSING ? (
+                    <div className="spinner" style={{ width: 16, height: 16 }} />
+                  ) : (
+                    <>
+                      <span>Send</span>
+                      <Send size={15} />
+                    </>
                   )}
-                  <button
-                    type="submit"
-                    disabled={(!input.trim() && !selectedImage) || voiceState === VOICE_STATES.PROCESSING}
-                    style={{
-                      padding: '0.75rem 1.6rem',
-                      borderRadius: '16px',
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                      color: '#ffffff',
-                      fontWeight: 700,
-                      fontSize: '0.925rem',
-                      border: '1px solid rgba(255, 255, 255, 0.4)',
-                      boxShadow: '0 8px 25px rgba(16, 185, 129, 0.45), inset 0 1.5px 1px rgba(255, 255, 255, 0.6)',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease',
-                      opacity: (!input.trim() && !selectedImage) || voiceState === VOICE_STATES.PROCESSING ? 0.5 : 1,
-                    }}
-                  >
-                    {voiceState === VOICE_STATES.PROCESSING ? <div className="spinner" style={{ width: 16, height: 16 }} /> : <><Send size={16} /> Send</>}
-                  </button>
-                </div>
+                </button>
               </div>
             </div>
 
             {/* Quick Crop Image Diagnostics Presets — Centered */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.84rem', color: '#cbd5e1', fontWeight: 700 }}>🌾 Crop Presets:</span>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.85rem', marginTop: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.84rem', color: '#cbd5e1', fontWeight: 700 }}>🌾 Quick Crop Presets:</span>
               <button
                 type="button"
                 onClick={() => {
