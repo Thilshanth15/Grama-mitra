@@ -1,0 +1,37 @@
+services:
+  # -----------------------------------------------------------------------
+  # Grama Mitra — Unified Full-Stack Application (React UI + FastAPI Backend)
+  # -----------------------------------------------------------------------
+  - type: web
+    name: grama-mitra
+    runtime: python
+    region: singapore          # Closest to Tamil Nadu / India
+    plan: starter
+
+    # Build phase — installs frontend dependencies, builds React bundle, installs Python requirements
+    buildCommand: npm install && npm run build && pip install -r backend/requirements.txt
+
+    # Start command — starts FastAPI from backend directory
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT --ws websockets
+
+    # Health check
+    healthCheckPath: /api/health
+
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+
+      - key: LOG_LEVEL
+        value: INFO
+
+      - key: TELEPHONY_ENABLED
+        value: "false"
+
+      - key: TELEPHONY_MOCK_MODE
+        value: "true"
+
+      - key: GEMINI_API_KEY
+        sync: false
+
+      - key: ALLOWED_ORIGINS
+        value: "*"

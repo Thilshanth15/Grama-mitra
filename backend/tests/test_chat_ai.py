@@ -113,3 +113,19 @@ def test_knowledge_search_api():
     assert data["status"] == "ok"
     assert data["count"] > 0
     assert len(data["results"]) > 0
+
+
+def test_root_serves_frontend_spa():
+    """Test that GET / serves the Grama Mitra frontend UI HTML page."""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "html" in response.headers.get("content-type", "").lower()
+    assert "Grama Mitra" in response.text or "<div id=\"root\">" in response.text
+
+
+def test_spa_catch_all_routing():
+    """Test that client-side SPA paths (e.g. /chat, /admin) return the frontend HTML page."""
+    for path in ["/chat", "/knowledge-base", "/admin"]:
+        response = client.get(path)
+        assert response.status_code == 200
+        assert "html" in response.headers.get("content-type", "").lower()

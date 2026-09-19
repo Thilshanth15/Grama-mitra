@@ -2,8 +2,8 @@
 import { searchKnowledge, classifyIntent, detectEmergency } from '../data/knowledgeBase.js';
 import { saveQuery, saveHandoff, saveSafetyAlert } from './firebase.js';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-const USE_LOCAL = import.meta.env.VITE_USE_LOCAL_AI === 'true' || true; // Always use local for demo
+const API_BASE = import.meta.env.VITE_API_URL || '';
+const USE_LOCAL = import.meta.env.VITE_USE_LOCAL_AI === 'true';
 
 // Emergency response template
 const EMERGENCY_RESPONSE = `🚨 **This appears to be a medical emergency situation.**

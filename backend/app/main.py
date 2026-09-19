@@ -3,10 +3,9 @@ Grama Mitra — FastAPI Backend Entry Point (Production-Ready)
 Entry point: uvicorn app.main:app
 
 Key endpoints:
-  GET  /              → Root health check
-  GET  /api/health    → Full service health
-  GET  /api/telephony/health → Telephony health + telemetry
-  POST /api/chat      → Tamil AI chat
+  GET  /              → Grama Mitra Frontend Product UI (React App)
+  GET  /api/health    → Full service health summary & diagnostic metrics
+  POST /api/chat      → Tamil RAG & Gemini AI chat
   WS   /ws/exotel/voice → Exotel Voicebot AgentStream
 """
 
@@ -24,7 +23,8 @@ if backend_dir not in sys.path:
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.routes import chat, voice, knowledge, handoff, whatsapp, ivr, admin, telephony
 
@@ -40,9 +40,6 @@ logger = logging.getLogger("grama_mitra")
 # ---------------------------------------------------------------------------
 # CORS Origins
 # ---------------------------------------------------------------------------
-# In production, restrict to your actual frontend domain(s).
-# Example: ["https://gramamitra.in", "https://www.gramamitra.in"]
-# During development, ["*"] is acceptable.
 _raw_origins = os.getenv("ALLOWED_ORIGINS", "*")
 if _raw_origins == "*":
     ALLOWED_ORIGINS = ["*"]
@@ -87,7 +84,7 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 # ---------------------------------------------------------------------------
-# Routers
+# API Routers
 # ---------------------------------------------------------------------------
 app.include_router(chat.router,      prefix="/api",             tags=["Chat"])
 app.include_router(voice.router,     prefix="/api/voice",       tags=["Voice"])
@@ -104,19 +101,8 @@ app.include_router(telephony.router, prefix="/api/telephony",   tags=["Telephony
 app.add_api_websocket_route("/ws/exotel/voice", telephony.exotel_voice_websocket)
 
 # ---------------------------------------------------------------------------
-# Health Endpoints
+# API Health Check Endpoint
 # ---------------------------------------------------------------------------
-@app.get("/", tags=["Health"])
-async def root_health():
-    """Root health check — used by load balancers and uptime monitors."""
-    return {
-        "status": "ok",
-        "service": "Grama Mitra API",
-        "version": "1.1.0",
-        "docs": "/api/docs",
-    }
-
-
 @app.get("/api/health", tags=["Health"])
 async def api_health():
     """Full service health summary."""
@@ -150,3 +136,44 @@ async def api_health():
         "environment": os.getenv("ENVIRONMENT", "development"),
     }
 
+# ---------------------------------------------------------------------------
+# Static Assets & SPA Catch-All Route (Serves React Frontend Product UI)
+# ---------------------------------------------------------------------------
+frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
+if not frontend_dist.exists():
+    frontend_dist = Path(__file__).resolve().parent.parent / "static"
+
+if (frontend_dist / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+
+
+@app.get("/{full_path:path}", include_in_schema=False)
+async def serve_spa(full_path: str):
+    # Protect API and WebSocket routes
+    if (
+        full_path.startswith("api/")
+        or full_path == "api"
+        or full_path.startswith("ws/")
+        or full_path == "ws"
+    ):
+        return JSONResponse(status_code=404, content={"detail": "API endpoint not found"})
+
+    # Serve static assets if file exists (e.g., favicon, logo, manifest)
+    file_path = frontend_dist / full_path
+    if full_path and file_path.exists() and file_path.is_file():
+        return FileResponse(str(file_path))
+
+    # Fallback to index.html for React SPA client-side routes
+    index_file = frontend_dist / "index.html"
+    if index_file.exists():
+        return FileResponse(str(index_file))
+
+    return JSONResponse(
+        status_code=404,
+        content={
+            "status": "error",
+            "message": "Grama Mitra Frontend UI build not found. Run 'npm run build' in frontend directory.",
+            "api_health": "/api/health",
+            "api_docs": "/api/docs",
+        },
+    )

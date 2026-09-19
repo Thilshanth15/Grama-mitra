@@ -1,6 +1,6 @@
 services:
   # -----------------------------------------------------------------------
-  # Grama Mitra — FastAPI Backend (Render Web Service)
+  # Grama Mitra — Unified Full-Stack Application (React UI + FastAPI Backend)
   # -----------------------------------------------------------------------
   - type: web
     name: grama-mitra-api
@@ -8,35 +8,31 @@ services:
     region: singapore          # Closest to Tamil Nadu / India
     plan: starter              # Free tier available; upgrade for production
 
-    # Build phase
-    buildCommand: pip install -r requirements.txt
+    # Build phase — builds React frontend SPA assets and installs Python requirements
+    buildCommand: npm --prefix ../frontend install && npm --prefix ../frontend run build && pip install -r requirements.txt
 
     # Start command — $PORT is injected automatically by Render
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --ws websockets
 
-    # Health check (Render pings this to verify the service is alive)
-    healthCheckPath: /
+    # Health check (Render pings /api/health to verify service status)
+    healthCheckPath: /api/health
 
     # Environment variables (set values in Render Dashboard → Environment)
     envVars:
-      # ── Mode ──────────────────────────────────────────────────────────
       - key: ENVIRONMENT
         value: production
 
       - key: LOG_LEVEL
         value: INFO
 
-      # Keep telephony disabled until Exotel WSS is fully configured
       - key: TELEPHONY_ENABLED
         value: "false"
 
-      # Mock mode on for safe testing even in production staging
       - key: TELEPHONY_MOCK_MODE
         value: "true"
 
-      # ── Secrets (set these manually in Render Dashboard → Environment) ──
       - key: GEMINI_API_KEY
-        sync: false            # Never auto-sync from repo; enter in dashboard
+        sync: false            # Set in Render Dashboard -> Environment
 
       - key: EXOTEL_ACCOUNT_SID
         sync: false
@@ -47,13 +43,9 @@ services:
       - key: EXOTEL_API_TOKEN
         sync: false
 
-      # ── CORS — update this after you know your frontend URL ─────────────
-      # Example after Vercel deploy: "https://grama-mitra.vercel.app"
-      # Set to * during initial testing, then restrict once frontend is live
       - key: ALLOWED_ORIGINS
         value: "*"
 
-      # ── Audio Specs ───────────────────────────────────────────────────
       - key: TELEPHONY_SAMPLE_RATE
         value: "8000"
 

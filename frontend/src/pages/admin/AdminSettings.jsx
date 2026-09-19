@@ -31,14 +31,14 @@ export default function AdminSettings() {
 
   const fetchTelephonyHealth = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/telephony/health');
+      const res = await fetch('/api/telephony/health');
       if (res.ok) {
         const data = await res.json();
         setTelephonyStats(data);
       }
     } catch (e) {
       // Offline fallback state
-      console.log('Telephony backend not reachable at default port');
+      console.log('Telephony backend not reachable');
     }
   };
 
@@ -50,7 +50,7 @@ export default function AdminSettings() {
     setTesting(true);
     setTestResult(null);
     try {
-      const res = await fetch('http://localhost:8000/api/telephony/test-call', {
+      const res = await fetch('/api/telephony/test-call', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
