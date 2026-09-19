@@ -471,38 +471,26 @@ h1, h2, h3, h4, h5, h6 {
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--gray-300);
+  color: var(--gray-700);
 }
 
 .form-input {
   width: 100%;
-  padding: 0.95rem 1.25rem;
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--radius-xl);
-  font-size: 0.95rem;
-  color: #ffffff;
-  background: rgba(12, 12, 18, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  padding: 0.875rem 1.125rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  color: #f8fafc;
+  background: var(--gray-50);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .form-input:focus {
-  border-color: #38bdf8;
-  background: rgba(15, 23, 42, 0.9);
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.35), 0 0 0 3px rgba(56, 189, 248, 0.2), inset 0 1.5px 2px rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
-  animation: inputGlowPulse 4s infinite alternate ease-in-out;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
-@keyframes inputGlowPulse {
-  0% { border-color: rgba(56, 189, 248, 0.65); box-shadow: 0 0 22px rgba(56, 189, 248, 0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.3); }
-  50% { border-color: rgba(52, 211, 153, 0.65); box-shadow: 0 0 22px rgba(52, 211, 153, 0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.3); }
-  100% { border-color: rgba(192, 132, 252, 0.65); box-shadow: 0 0 22px rgba(192, 132, 252, 0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.3); }
-}
-
-.form-input::placeholder { color: #94a3b8; }
+.form-input::placeholder { color: var(--gray-400); }
 
 .form-textarea {
   resize: vertical;

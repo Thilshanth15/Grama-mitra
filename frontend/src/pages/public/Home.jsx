@@ -17,22 +17,16 @@ const SAMPLE_QUESTIONS = [
 const SERVICES = [
   {
     icon: Leaf,
-    color: '#10b981',
-    bg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.12) 100%)',
-    cardBg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.7) 100%)',
-    border: '1px solid rgba(52, 211, 153, 0.35)',
-    glow: 'rgba(16, 185, 129, 0.3)',
+    color: 'var(--green-600)',
+    bg: 'var(--green-50)',
     title: 'Agriculture Guidance',
     desc: 'Crop advice, pest identification, fertilizer guidance, and farming best practices from TNAU-verified sources.',
     examples: ['Crop disease identification', 'Fertilizer recommendations', 'Irrigation guidance'],
   },
   {
     icon: Building2,
-    color: '#38bdf8',
-    bg: 'linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(2, 132, 199, 0.12) 100%)',
-    cardBg: 'linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(15, 23, 42, 0.7) 100%)',
-    border: '1px solid rgba(56, 189, 248, 0.35)',
-    glow: 'rgba(56, 189, 248, 0.3)',
+    color: 'var(--blue-600)',
+    bg: 'var(--blue-50)',
     title: 'Government Schemes',
     desc: 'Eligibility, documents, and step-by-step application guidance for PM-KISAN, PMFBY, KCC, and more.',
     examples: ['PM-KISAN registration', 'Crop insurance (PMFBY)', 'Kisan Credit Card'],
@@ -40,10 +34,7 @@ const SERVICES = [
   {
     icon: Heart,
     color: '#e11d48',
-    bg: 'linear-gradient(135deg, rgba(225, 29, 72, 0.25) 0%, rgba(190, 18, 60, 0.12) 100%)',
-    cardBg: 'linear-gradient(135deg, rgba(225, 29, 72, 0.1) 0%, rgba(15, 23, 42, 0.7) 100%)',
-    border: '1px solid rgba(251, 113, 133, 0.35)',
-    glow: 'rgba(251, 113, 133, 0.3)',
+    bg: 'rgba(225, 29, 72, 0.15)',
     title: 'Basic Health Guidance',
     desc: 'General health information, vaccination schedules, and immediate escalation for emergencies. Not a replacement for medical care.',
     examples: ['Fever & common illness', 'Child vaccination info', 'Emergency escalation'],
@@ -53,10 +44,8 @@ const SERVICES = [
 const CHANNELS = [
   {
     icon: Globe,
-    color: '#38bdf8',
-    bg: 'linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(2, 132, 199, 0.12) 100%)',
-    border: '1px solid rgba(56, 189, 248, 0.35)',
-    glow: 'rgba(56, 189, 248, 0.3)',
+    color: 'var(--blue-400)',
+    bg: 'var(--blue-50)',
     name: 'Website Assistant',
     desc: 'Tamil voice & text interface with crop image diagnosis and instant verified responses.',
     status: 'Live Channel',
@@ -66,9 +55,7 @@ const CHANNELS = [
   {
     icon: MessageCircle,
     color: '#25D366',
-    bg: 'linear-gradient(135deg, rgba(37, 211, 102, 0.25) 0%, rgba(22, 163, 74, 0.12) 100%)',
-    border: '1px solid rgba(74, 222, 128, 0.35)',
-    glow: 'rgba(74, 222, 128, 0.3)',
+    bg: 'rgba(37, 211, 102, 0.15)',
     name: 'WhatsApp Bot',
     desc: 'Ask questions via WhatsApp chat and voice notes. Instant responses in simple Tamil.',
     status: 'Active Channel',
@@ -77,10 +64,8 @@ const CHANNELS = [
   },
   {
     icon: Phone,
-    color: '#fbbf24',
-    bg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.12) 100%)',
-    border: '1px solid rgba(251, 191, 36, 0.35)',
-    glow: 'rgba(251, 191, 36, 0.3)',
+    color: 'var(--amber-400)',
+    bg: 'var(--amber-50)',
     name: 'Phone / IVR Helpline',
     desc: 'Toll-free voice recognition line designed for farmers with basic feature phones.',
     status: 'Voice Helpline',
@@ -90,21 +75,21 @@ const CHANNELS = [
 ];
 
 const PIPELINE_STEPS = [
-  { n: 1, label: 'User asks', sub: 'Voice or Text', color: '#10b981', border: 'rgba(52, 211, 153, 0.3)' },
-  { n: 2, label: 'Language detection', sub: 'Tamil / English', color: '#a855f7', border: 'rgba(192, 132, 252, 0.3)' },
-  { n: 3, label: 'Intent classification', sub: 'Agri / Govt / Health', color: '#38bdf8', border: 'rgba(125, 211, 252, 0.3)' },
-  { n: 4, label: 'Safety layer', sub: 'Emergency detection', color: '#e11d48', border: 'rgba(253, 164, 175, 0.3)' },
-  { n: 5, label: 'Knowledge search', sub: 'Verified sources', color: '#f59e0b', border: 'rgba(253, 224, 71, 0.3)' },
-  { n: 6, label: 'AI generation', sub: 'Grounded by Gemini', color: '#db2777', border: 'rgba(249, 168, 212, 0.3)' },
-  { n: 7, label: 'Tamil response', sub: 'Text + Audio', color: '#34d399', border: 'rgba(110, 231, 183, 0.3)' },
-  { n: 8, label: 'Human handoff', sub: 'If needed', color: '#60a5fa', border: 'rgba(147, 197, 253, 0.3)' },
+  { n: 1, label: 'User asks', sub: 'Voice or Text', color: 'var(--green-600)' },
+  { n: 2, label: 'Language detection', sub: 'Tamil / English', color: 'var(--blue-600)' },
+  { n: 3, label: 'Intent classification', sub: 'Agri / Govt / Health', color: 'var(--blue-500)' },
+  { n: 4, label: 'Safety layer', sub: 'Emergency detection', color: '#e11d48' },
+  { n: 5, label: 'Knowledge search', sub: 'Verified sources', color: 'var(--amber-600)' },
+  { n: 6, label: 'AI generation', sub: 'Grounded by Gemini', color: 'var(--green-600)' },
+  { n: 7, label: 'Tamil response', sub: 'Text + Audio', color: 'var(--green-700)' },
+  { n: 8, label: 'Human handoff', sub: 'If needed', color: 'var(--gray-600)' },
 ];
 
 const TRUST_ITEMS = [
-  { icon: Shield, title: 'Verified Information', desc: 'Every response is grounded in verified knowledge from trusted government and agricultural sources.', color: '#10b981', bg: 'rgba(16, 185, 129, 0.15)' },
-  { icon: Award, title: 'Safety-First Design', desc: 'Health queries are handled carefully. Emergencies are escalated immediately. No harmful advice.', color: '#a855f7', bg: 'rgba(168, 85, 247, 0.15)' },
-  { icon: Users, title: 'Human Escalation', desc: 'When AI confidence is low or queries are sensitive, real humans step in through the handoff system.', color: '#38bdf8', bg: 'rgba(56, 189, 248, 0.15)' },
-  { icon: Zap, title: 'Honest AI', desc: 'If we don\'t know the answer, we say so — and connect you with help. No hallucinations.', color: '#fbbf24', bg: 'rgba(245, 158, 11, 0.15)' },
+  { icon: Shield, title: 'Verified Information', desc: 'Every response is grounded in verified knowledge from trusted government and agricultural sources.' },
+  { icon: Award, title: 'Safety-First Design', desc: 'Health queries are handled carefully. Emergencies are escalated immediately. No harmful advice.' },
+  { icon: Users, title: 'Human Escalation', desc: 'When AI confidence is low or queries are sensitive, real humans step in through the handoff system.' },
+  { icon: Zap, title: 'Honest AI', desc: 'If we don\'t know the answer, we say so — and connect you with help. No hallucinations.' },
 ];
 
 export default function Home() {
@@ -418,59 +403,32 @@ export default function Home() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.25rem' }}>
             {SERVICES.map((s, i) => (
-              <div
-                key={i}
-                className="card card-hover"
-                style={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  padding: '2.75rem 2rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  background: s.cardBg,
-                  border: s.border,
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
-                  boxShadow: `0 12px 35px -5px ${s.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.25)`,
-                }}
-              >
+              <div key={i} className="card card-hover" style={{ position: 'relative', overflow: 'hidden', padding: '2.75rem 2rem', display: 'flex', flexDirection: 'column' }}>
                 <div style={{
                   position: 'absolute', top: 0, left: 0, right: 0, height: 4,
                   background: s.color, borderRadius: 'var(--radius-xl) var(--radius-xl) 0 0',
-                  boxShadow: `0 2px 10px ${s.color}`,
                 }} />
-                <div style={{
-                  width: 60, height: 60, borderRadius: '18px',
-                  background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginBottom: '1.5rem', border: `1px solid ${s.color}55`,
-                  boxShadow: `0 4px 15px ${s.glow}`,
-                }}>
-                  <s.icon size={28} color={s.color} style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }} />
+                <div style={{ width: 60, height: 60, borderRadius: 'var(--radius-xl)', background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                  <s.icon size={28} color={s.color} />
                 </div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.875rem', color: '#ffffff', lineHeight: 1.35 }}>{s.title}</h3>
-                <p style={{ color: '#cbd5e1', fontSize: '0.925rem', lineHeight: 1.75, marginBottom: '1.5rem' }}>{s.desc}</p>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: '0.875rem', color: 'var(--gray-900)', lineHeight: 1.35 }}>{s.title}</h3>
+                <p style={{ color: 'var(--gray-400)', fontSize: '0.925rem', lineHeight: 1.75, marginBottom: '1.5rem' }}>{s.desc}</p>
                 <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '2rem' }}>
                   {s.examples.map((ex, j) => (
-                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontSize: '0.9rem', color: '#f1f5f9', lineHeight: 1.5 }}>
+                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', fontSize: '0.9rem', color: 'var(--gray-300)', lineHeight: 1.5 }}>
                       <ChevronRight size={15} color={s.color} style={{ flexShrink: 0 }} />
                       {ex}
                     </li>
                   ))}
                 </ul>
-                <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                <div style={{ marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)' }}>
                   <Link
                     to={`/assistant?cat=${s.title.toLowerCase().includes('agri') ? 'agriculture' : s.title.toLowerCase().includes('govt') ? 'government' : 'health'}`}
                     className="btn btn-outline"
-                    style={{
-                      color: s.color, borderColor: s.color, width: '100%', padding: '0.85rem 1.25rem',
-                      fontWeight: 700, fontSize: '0.925rem', display: 'inline-flex', justifyContent: 'center',
-                      alignItems: 'center', gap: '0.5rem', borderRadius: '14px',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      backdropFilter: 'blur(8px)',
-                    }}
+                    style={{ color: s.color, borderColor: s.color, width: '100%', padding: '0.85rem 1.25rem', fontWeight: 700, fontSize: '0.925rem', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}
                     aria-label={`Ask question about ${s.title}`}
                   >
-                    Ask {s.title.split(' ')[0]} Question <ArrowRight size={16} color={s.color} />
+                    Ask {s.title.split(' ')[0]} Question <ArrowRight size={16} />
                   </Link>
                 </div>
               </div>
@@ -498,37 +456,34 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.75rem' }}>
             {PIPELINE_STEPS.map((step, i) => (
               <div key={i} className="card-hover" style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(15, 23, 42, 0.6) 100%)',
-                border: `1px solid ${step.border}`,
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: 'var(--radius-xl)',
                 padding: '1.75rem 1.35rem',
                 display: 'flex',
                 gap: '1.125rem',
                 alignItems: 'flex-start',
-                backdropFilter: 'blur(12px)',
-                boxShadow: `0 8px 25px -5px ${step.color}25, inset 0 1px 1px rgba(255, 255, 255, 0.15)`,
-                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'all 0.2s',
               }}>
                 <div style={{
-                  width: 42, height: 42, borderRadius: '12px',
-                  background: `linear-gradient(135deg, ${step.color}, ${step.color}dd)`, color: '#fff',
+                  width: 40, height: 40, borderRadius: '50%',
+                  background: step.color, color: '#fff',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 800, fontSize: '0.925rem', flexShrink: 0,
-                  boxShadow: `0 6px 18px ${step.color}55, inset 0 1px 1px rgba(255,255,255,0.4)`,
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  fontWeight: 800, fontSize: '0.875rem', flexShrink: 0,
+                  boxShadow: `0 4px 14px ${step.color}40`,
                 }}>
                   {step.n}
                 </div>
                 <div>
                   <div style={{ fontWeight: 700, color: '#fff', marginBottom: '0.45rem', fontSize: '1.05rem', lineHeight: 1.35 }}>{step.label}</div>
-                  <div style={{ fontSize: '0.875rem', color: '#cbd5e1', lineHeight: 1.6 }}>{step.sub}</div>
+                  <div style={{ fontSize: '0.875rem', color: 'var(--gray-400)', lineHeight: 1.6 }}>{step.sub}</div>
                 </div>
               </div>
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem' }}>
-            <Link to="/how-it-works" className="btn btn-outline" style={{ color: '#fff', borderColor: 'rgba(56, 189, 248, 0.45)', padding: '0.9rem 2.25rem', fontWeight: 600, borderRadius: '16px', background: 'rgba(56, 189, 248, 0.1)' }}>
-              Explore Full 9-Step Pipeline Details <ArrowRight size={16} color="#38bdf8" />
+            <Link to="/how-it-works" className="btn btn-outline" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)', padding: '0.9rem 2.25rem', fontWeight: 600 }}>
+              Explore Full 9-Step Pipeline Details <ArrowRight size={16} />
             </Link>
           </div>
         </div>
@@ -558,11 +513,10 @@ export default function Home() {
                   textAlign: 'left',
                   alignItems: 'flex-start',
                   position: 'relative',
-                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(10, 10, 18, 0.95) 100%)',
-                  border: ch.border,
+                  background: '#0c0c12',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                   borderRadius: 'var(--radius-xl)',
-                  backdropFilter: 'blur(16px)',
-                  boxShadow: `0 12px 35px -5px ${ch.glow}, inset 0 1px 1px rgba(255, 255, 255, 0.25)`,
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
                 }}
               >
                 {/* Top Row: Icon on left, Status Badge on right */}
@@ -575,10 +529,9 @@ export default function Home() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: `1px solid ${ch.color}55`,
-                    boxShadow: `0 4px 15px ${ch.glow}`,
+                    border: `1px solid ${ch.color}33`,
                   }}>
-                    <ch.icon size={28} color={ch.color} style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }} />
+                    <ch.icon size={28} color={ch.color} />
                   </div>
                   <span style={{
                     fontSize: '0.72rem',
@@ -587,10 +540,9 @@ export default function Home() {
                     letterSpacing: '0.06em',
                     padding: '0.25rem 0.75rem',
                     borderRadius: '9999px',
-                    background: `${ch.color}25`,
-                    color: ch.color,
-                    border: `1px solid ${ch.color}55`,
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                    background: ch.status.includes('Live') || ch.status.includes('Active') ? 'rgba(16, 185, 129, 0.18)' : 'rgba(59, 130, 246, 0.18)',
+                    color: ch.status.includes('Live') || ch.status.includes('Active') ? '#34d399' : '#60a5fa',
+                    border: `1px solid ${ch.status.includes('Live') || ch.status.includes('Active') ? 'rgba(52, 211, 153, 0.35)' : 'rgba(96, 165, 250, 0.35)'}`,
                   }}>
                     {ch.status}
                   </span>
@@ -600,12 +552,12 @@ export default function Home() {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem', lineHeight: 1.3 }}>
                   {ch.name}
                 </h3>
-                <p style={{ fontSize: '0.925rem', color: '#cbd5e1', lineHeight: 1.7, marginBottom: '2rem', flex: 1 }}>
+                <p style={{ fontSize: '0.925rem', color: 'var(--gray-400)', lineHeight: 1.7, marginBottom: '2rem', flex: 1 }}>
                   {ch.desc}
                 </p>
 
                 {/* Full-Width Action Button */}
-                <div style={{ width: '100%', marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                <div style={{ width: '100%', marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
                   <Link
                     to={ch.link}
                     className="btn btn-outline"
@@ -618,20 +570,19 @@ export default function Home() {
                       justifyContent: 'center',
                       alignItems: 'center',
                       gap: '0.5rem',
-                      borderRadius: '14px',
+                      borderRadius: '12px',
                       color: ch.color,
-                      borderColor: `${ch.color}66`,
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      backdropFilter: 'blur(8px)',
-                      transition: 'all 0.25s ease',
+                      borderColor: `${ch.color}55`,
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      transition: 'all 0.2s ease',
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.background = `${ch.color}25`;
+                      e.currentTarget.style.background = `${ch.color}15`;
                       e.currentTarget.style.borderColor = ch.color;
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                      e.currentTarget.style.borderColor = `${ch.color}66`;
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                      e.currentTarget.style.borderColor = `${ch.color}55`;
                     }}
                     aria-label={`${ch.btnText} for ${ch.name}`}
                   >
@@ -656,29 +607,16 @@ export default function Home() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.75rem' }}>
             {TRUST_ITEMS.map((item, i) => (
-              <div
-                key={i}
-                className="card card-hover"
-                style={{
-                  textAlign: 'center',
-                  padding: '2.25rem 1.75rem',
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(15, 23, 42, 0.6) 100%)',
-                  border: `1px solid ${item.color}35`,
-                  backdropFilter: 'blur(12px)',
-                  boxShadow: `0 8px 25px -5px ${item.color}25, inset 0 1px 1px rgba(255, 255, 255, 0.2)`,
-                }}
-              >
+              <div key={i} className="card card-hover" style={{ textAlign: 'center', padding: '2.25rem 1.75rem' }}>
                 <div style={{
-                  width: 58, height: 58, borderRadius: '18px',
-                  background: item.bg, display: 'flex', alignItems: 'center',
+                  width: 58, height: 58, borderRadius: 'var(--radius-xl)',
+                  background: 'rgba(16, 185, 129, 0.12)', display: 'flex', alignItems: 'center',
                   justifyContent: 'center', margin: '0 auto 1.5rem',
-                  border: `1px solid ${item.color}44`,
-                  boxShadow: `0 4px 14px ${item.color}33`,
                 }}>
-                  <item.icon size={26} color={item.color} />
+                  <item.icon size={26} color="var(--green-400)" />
                 </div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.75rem', color: '#ffffff', lineHeight: 1.4 }}>{item.title}</h3>
-                <p style={{ fontSize: '0.9rem', color: '#cbd5e1', lineHeight: 1.75 }}>{item.desc}</p>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--gray-900)', lineHeight: 1.4 }}>{item.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--gray-400)', lineHeight: 1.75 }}>{item.desc}</p>
               </div>
             ))}
           </div>
