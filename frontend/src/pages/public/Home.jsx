@@ -791,34 +791,53 @@ export default function Home() {
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-          {/* Top Right Corner: Title in Glass Card */}
+          {/* Top Right Corner: Ultra-Premium Glass Title Card */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '3.5rem' }}>
             <div style={{
-              maxWidth: '560px',
+              maxWidth: '580px',
               textAlign: 'right',
-              background: 'rgba(6, 11, 20, 0.7)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '24px',
-              padding: '2rem 2.5rem',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.3)',
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.78) 0%, rgba(6, 11, 25, 0.68) 100%)',
+              backdropFilter: 'blur(28px)',
+              WebkitBackdropFilter: 'blur(28px)',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
+              borderRadius: '28px',
+              padding: '2.25rem 2.75rem',
+              boxShadow: '0 30px 70px -10px rgba(0, 0, 0, 0.9), 0 0 45px rgba(52, 211, 153, 0.25), inset 0 1.5px 2px rgba(255, 255, 255, 0.4)',
+              position: 'relative',
+              overflow: 'hidden',
             }}>
+              {/* Metallic Accent Highlight Line */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                right: '15%',
+                width: '130px',
+                height: '3px',
+                background: 'linear-gradient(90deg, #34d399, #fbbf24, #f59e0b)',
+                borderRadius: '9999px',
+              }} />
+
+              {/* Mini Pill Badge */}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.35rem 0.9rem', borderRadius: '9999px', background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.45)', color: '#fbbf24', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1rem', boxShadow: '0 4px 15px rgba(245, 158, 11, 0.2)' }}>
+                <Sparkles size={13} style={{ color: '#fbbf24' }} />
+                AI Rural Assistant
+              </div>
+
               <h2 style={{
-                fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
+                fontSize: 'clamp(2rem, 4.2vw, 3rem)',
                 fontWeight: 900,
                 color: '#ffffff',
-                lineHeight: 1.25,
-                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
+                letterSpacing: '-0.025em',
                 margin: 0,
-                textShadow: '0 4px 20px rgba(0,0,0,0.8)',
+                textShadow: '0 4px 25px rgba(0,0,0,0.85)',
               }}>
                 Ask Grama Mitra <br />
                 <span style={{
-                  background: 'linear-gradient(135deg, #34d399 0%, #fde047 50%, #fbbf24 100%)',
+                  background: 'linear-gradient(135deg, #34d399 0%, #fde047 50%, #f59e0b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 2px 10px rgba(245, 158, 11, 0.4))',
+                  filter: 'drop-shadow(0 4px 18px rgba(245, 158, 11, 0.5))',
                 }}>
                   Your First Question
                 </span>
@@ -826,56 +845,76 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bottom Left Corner: Action Buttons in Glass Card */}
+          {/* Bottom Left Corner: Action Buttons in Ultra-Premium Glass Container */}
           <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <div style={{
               display: 'flex',
               gap: '1.25rem',
               flexWrap: 'wrap',
               alignItems: 'center',
-              background: 'rgba(6, 11, 20, 0.7)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '24px',
-              padding: '1.25rem 1.75rem',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.3)',
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.78) 0%, rgba(6, 11, 25, 0.7) 100%)',
+              backdropFilter: 'blur(28px)',
+              WebkitBackdropFilter: 'blur(28px)',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
+              borderRadius: '28px',
+              padding: '1.35rem 1.85rem',
+              boxShadow: '0 30px 70px -10px rgba(0, 0, 0, 0.9), 0 0 45px rgba(16, 185, 129, 0.3), inset 0 1.5px 2px rgba(255, 255, 255, 0.4)',
+              position: 'relative',
+              overflow: 'hidden',
             }}>
+              {/* Primary Voice AI CTA */}
               <Link to="/assistant" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.75rem',
-                padding: '1rem 2.25rem',
-                borderRadius: '16px',
-                background: 'linear-gradient(135deg, #10b981, #047857)',
+                gap: '0.85rem',
+                padding: '1.05rem 2.35rem 1.05rem 1.35rem',
+                borderRadius: '18px',
+                background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
                 fontSize: '1.05rem',
                 textDecoration: 'none',
-                boxShadow: '0 10px 30px rgba(16, 185, 129, 0.6), 0 0 20px rgba(245, 158, 11, 0.3)',
-                border: '1px solid rgba(255, 255, 255, 0.4)',
+                boxShadow: '0 12px 35px -4px rgba(16, 185, 129, 0.7), 0 0 25px rgba(52, 211, 153, 0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.6)',
+                border: '1px solid rgba(255, 255, 255, 0.5)',
                 transition: 'all 0.25s ease',
+                letterSpacing: '0.01em',
               }} aria-label="Start Voice Assistant">
-                <Mic size={22} />
-                Start Voice Assistant
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '12px',
+                  background: 'rgba(255, 255, 255, 0.3)',
+                  border: '1px solid rgba(255, 255, 255, 0.6)',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                }}>
+                  <Mic size={20} color="#ffffff" />
+                </span>
+                <span style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Start Voice Assistant</span>
+                <ArrowRight size={20} color="#ffffff" />
               </Link>
+
+              {/* Secondary Discovery CTA */}
               <Link to="/services" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.75rem',
-                padding: '1rem 2.25rem',
-                borderRadius: '16px',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
-                background: 'rgba(15, 23, 42, 0.85)',
+                padding: '1.05rem 2.25rem',
+                borderRadius: '18px',
+                border: '1px solid rgba(245, 158, 11, 0.5)',
+                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.5) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
                 fontSize: '1.05rem',
                 textDecoration: 'none',
                 backdropFilter: 'blur(16px)',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                boxShadow: '0 10px 30px -5px rgba(245, 158, 11, 0.35), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
                 transition: 'all 0.25s ease',
               }} aria-label="View All Services">
-                View All Services
+                <span>View All Services</span>
+                <ChevronRight size={20} color="#fbbf24" />
               </Link>
             </div>
           </div>
