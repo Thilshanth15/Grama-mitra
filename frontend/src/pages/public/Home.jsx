@@ -145,28 +145,28 @@ export default function Home() {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '1rem',
+              gap: '1.15rem',
               flexWrap: 'wrap',
-              padding: '0.5rem',
-              background: 'rgba(0, 0, 0, 0.45)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255, 255, 255, 0.14)',
+              padding: '0.65rem',
+              background: 'rgba(6, 11, 20, 0.65)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.22)',
               borderRadius: '9999px',
-              boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
+              boxShadow: '0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
             }}>
-              {/* Primary Voice AI CTA */}
+              {/* Primary Voice AI CTA — Ultra-Premium Emerald & Jade Glow */}
               <Link
                 to="/assistant"
                 style={{
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 60%, #047857 100%)',
+                  background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%)',
                   color: '#ffffff',
                   fontWeight: 700,
-                  fontSize: '0.975rem',
-                  padding: '0.85rem 1.85rem 0.85rem 1.15rem',
+                  fontSize: '1rem',
+                  padding: '0.9rem 2rem 0.9rem 1.25rem',
                   borderRadius: '9999px',
-                  boxShadow: 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), 0 8px 25px -4px rgba(16, 185, 129, 0.6)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  boxShadow: '0 10px 30px -5px rgba(16, 185, 129, 0.65), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6)',
+                  border: '1px solid rgba(255, 255, 255, 0.45)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.75rem',
@@ -176,64 +176,67 @@ export default function Home() {
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.6), 0 12px 32px -4px rgba(16, 185, 129, 0.8)';
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 16px 40px -4px rgba(16, 185, 129, 0.85), 0 0 25px rgba(52, 211, 153, 0.5), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.8)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), 0 8px 25px -4px rgba(16, 185, 129, 0.6)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px -5px rgba(16, 185, 129, 0.65), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6)';
                 }}
               >
                 <span style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '34px',
-                  height: '34px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '50%',
-                  background: 'rgba(255, 255, 255, 0.22)',
-                  backdropFilter: 'blur(4px)',
-                  boxShadow: 'inset 0 1px 1px rgba(255, 255, 255, 0.4)',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15))',
+                  backdropFilter: 'blur(6px)',
+                  border: '1px solid rgba(255, 255, 255, 0.5)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
                 }}>
-                  <Mic size={18} color="#ffffff" />
+                  <Mic size={19} color="#ffffff" style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }} />
                 </span>
-                <span>{t('talkToGrama')}</span>
-                <ArrowRight size={18} />
+                <span style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{t('talkToGrama')}</span>
+                <ArrowRight size={19} color="#ffffff" />
               </Link>
 
-              {/* Secondary Discovery CTA: Smoothly glides to the Ask Grama Mitra CTA */}
+              {/* Secondary Discovery CTA — Ultra-Premium Sapphire & Cyan Glass */}
               <button
                 type="button"
                 onClick={scrollToCTA}
                 style={{
-                  background: 'rgba(12, 16, 24, 0.7)',
-                  color: '#f8fafc',
-                  fontWeight: 600,
-                  fontSize: '0.975rem',
-                  padding: '0.85rem 1.85rem 0.85rem 1.15rem',
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 58, 138, 0.4) 100%)',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '1rem',
+                  padding: '0.9rem 2rem 0.9rem 1.25rem',
                   borderRadius: '9999px',
-                  border: '1px solid rgba(255, 255, 255, 0.18)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(56, 189, 248, 0.45)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
                   letterSpacing: '0.02em',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.75rem',
                   cursor: 'pointer',
                   textDecoration: 'none',
-                  boxShadow: 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.15), 0 8px 25px -4px rgba(0, 0, 0, 0.5)',
+                  boxShadow: '0 10px 30px -5px rgba(14, 165, 233, 0.35), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.25)',
                   transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.35)';
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(14, 165, 233, 0.35) 100%)';
+                  e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.75)';
+                  e.currentTarget.style.boxShadow = '0 16px 40px -4px rgba(56, 189, 248, 0.55), 0 0 20px rgba(56, 189, 248, 0.4), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.4)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.background = 'rgba(12, 16, 24, 0.7)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.18)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(30, 58, 138, 0.4) 100%)';
+                  e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.45)';
+                  e.currentTarget.style.boxShadow = '0 10px 30px -5px rgba(14, 165, 233, 0.35), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.25)';
                 }}
                 aria-label="Explore Services - Scroll to Ask Grama Mitra"
               >
@@ -241,16 +244,17 @@ export default function Home() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '34px',
-                  height: '34px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '50%',
-                  background: 'rgba(56, 189, 248, 0.15)',
-                  border: '1px solid rgba(56, 189, 248, 0.3)',
+                  background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.35), rgba(14, 165, 233, 0.15))',
+                  border: '1px solid rgba(56, 189, 248, 0.5)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
                 }}>
-                  <Layers size={18} color="#38bdf8" />
+                  <Layers size={19} color="#38bdf8" />
                 </span>
-                <span>{t('exploreServices')}</span>
-                <ChevronRight size={18} color="#94a3b8" />
+                <span style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{t('exploreServices')}</span>
+                <ChevronRight size={19} color="#38bdf8" />
               </button>
             </div>
           </div>
