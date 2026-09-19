@@ -155,17 +155,17 @@ export default function Home() {
               borderRadius: '9999px',
               boxShadow: '0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(16, 185, 129, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
             }}>
-              {/* Primary Voice AI CTA — Electric Cyan & Emerald Glass */}
+              {/* Primary Voice AI CTA — Royal Violet & Purple Glow */}
               <Link
                 to="/assistant"
                 style={{
-                  background: 'linear-gradient(135deg, #06b6d4 0%, #10b981 50%, #0d9488 100%)',
+                  background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #6d28d9 100%)',
                   color: '#ffffff',
                   fontWeight: 700,
                   fontSize: '1rem',
                   padding: '0.9rem 2rem 0.9rem 1.25rem',
                   borderRadius: '9999px',
-                  boxShadow: '0 10px 32px -4px rgba(6, 182, 212, 0.65), 0 0 22px rgba(16, 185, 129, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)',
+                  boxShadow: '0 10px 32px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)',
                   border: '1px solid rgba(255, 255, 255, 0.5)',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -177,13 +177,13 @@ export default function Home() {
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #22d3ee 0%, #34d399 50%, #14b8a6 100%)';
-                  e.currentTarget.style.boxShadow = '0 16px 45px -4px rgba(6, 182, 212, 0.85), 0 0 30px rgba(52, 211, 153, 0.6), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #8b5cf6 0%, #c084fc 50%, #7c3aed 100%)';
+                  e.currentTarget.style.boxShadow = '0 16px 45px -4px rgba(124, 58, 237, 0.85), 0 0 32px rgba(192, 132, 252, 0.6), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.9)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #06b6d4 0%, #10b981 50%, #0d9488 100%)';
-                  e.currentTarget.style.boxShadow = '0 10px 32px -4px rgba(6, 182, 212, 0.65), 0 0 22px rgba(16, 185, 129, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #6d28d9 100%)';
+                  e.currentTarget.style.boxShadow = '0 10px 32px -4px rgba(124, 58, 237, 0.65), 0 0 25px rgba(168, 85, 247, 0.45), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7)';
                 }}
               >
                 <span style={{
