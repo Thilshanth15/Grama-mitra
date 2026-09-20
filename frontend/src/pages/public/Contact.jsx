@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DemoCallModal from '../../components/DemoCallModal.jsx';
 import { Mail, Phone, Globe, MessageCircle, MapPin, Send, CheckCircle, X, CheckCircle2, Mic, Volume2 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 
@@ -168,75 +169,12 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ── TOLL-FREE CALL MODAL ── */}
-      {showCallModal && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(2, 6, 15, 0.88)', backdropFilter: 'blur(20px)', zIndex: 99999,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem',
-        }}>
-          <div style={{
-            width: '100%', maxWidth: '480px', background: 'linear-gradient(135deg, #0f172a 0%, #090d16 100%)',
-            border: '2px solid rgba(245, 158, 11, 0.6)', borderRadius: '28px', padding: '2.5rem 2rem',
-            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(245, 158, 11, 0.35)', color: '#ffffff',
-            position: 'relative', textAlign: 'center',
-          }}>
-            <button
-              onClick={() => setShowCallModal(false)}
-              style={{
-                position: 'absolute', top: 18, right: 18, background: 'rgba(255,255,255,0.1)',
-                border: 'none', color: '#94a3b8', borderRadius: '50%', width: 36, height: 36,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-              }}
-            >
-              <X size={20} />
-            </button>
-            <div style={{
-              width: 72, height: 72, borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4))',
-              border: '2px solid #f59e0b', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              marginBottom: '1rem', boxShadow: '0 0 35px rgba(245, 158, 11, 0.5)',
-            }}>
-              <Phone size={36} color="#fbbf24" />
-            </div>
-            <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.35rem' }}>
-              Toll-Free AI Voice Helpline
-            </div>
-            <h2 style={{ fontSize: '1.85rem', fontWeight: 900, color: '#ffffff', marginBottom: '0.25rem' }}>
-              1800-180-1551
-            </h2>
-            <div style={{ fontSize: '0.85rem', color: '#34d399', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.45rem' }}>
-              <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 10px #34d399' }}></span>
-              Line Active • Grama Mitra Voice IVR
-            </div>
-            <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText('18001801551');
-                  setCopyToast('Copied 1800-180-1551 to clipboard!');
-                  setTimeout(() => setCopyToast(''), 3000);
-                }}
-                style={{
-                  padding: '0.85rem 1.5rem', borderRadius: '14px', background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                  border: 'none', color: '#ffffff', fontWeight: 900, fontSize: '0.92rem', cursor: 'pointer',
-                  boxShadow: '0 6px 20px rgba(245, 158, 11, 0.45)',
-                }}
-              >
-                Copy Helpline Number
-              </button>
-              <button
-                onClick={() => setShowCallModal(false)}
-                style={{
-                  padding: '0.85rem 1.35rem', borderRadius: '14px', background: 'rgba(255, 255, 255, 0.1)',
-                  border: '1px solid rgba(255,255,255,0.2)', color: '#ffffff', fontWeight: 800, fontSize: '0.92rem', cursor: 'pointer',
-                }}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ── TOLL-FREE CALL DEMO MODAL ── */}
+      <DemoCallModal
+        isOpen={showCallModal}
+        onClose={() => setShowCallModal(false)}
+        initialLang="ta"
+      />
 
       {/* ── OFFICIAL EMAIL INQUIRY MODAL ── */}
       {showEmailModal && (

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 import ResponseCard from '../../components/ResponseCard.jsx';
+import DemoCallModal from '../../components/DemoCallModal.jsx';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { sendMessage, speakText, stopSpeaking } from '../../services/api.js';
 import { useToast } from '../../hooks/useToast.js';
@@ -1239,168 +1240,12 @@ export default function VoiceAssistant() {
               </div>
             </form>
           </div>
-          {/* ── LIVE INTERACTIVE TOLL-FREE AI HELPLINE CALL MODAL ── */}
-          {showCallModal && (
-            <div style={{
-              position: 'fixed',
-              top: 0, left: 0, right: 0, bottom: 0,
-              background: 'rgba(2, 6, 15, 0.88)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              zIndex: 99999,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1.5rem',
-            }}>
-              <div style={{
-                width: '100%',
-                maxWidth: '480px',
-                background: 'linear-gradient(135deg, #091524 0%, #050d18 100%)',
-                border: '2px solid rgba(245, 158, 11, 0.6)',
-                borderRadius: '28px',
-                padding: '2.5rem 2rem',
-                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(245, 158, 11, 0.35)',
-                textAlign: 'center',
-                color: '#ffffff',
-                position: 'relative',
-              }}>
-                {/* Top Close Button */}
-                <button
-                  onClick={() => {
-                    setShowCallModal(false);
-                    stopSpeaking();
-                  }}
-                  style={{
-                    position: 'absolute', top: 18, right: 18,
-                    background: 'rgba(255,255,255,0.1)', border: 'none',
-                    color: '#94a3b8', borderRadius: '50%', width: 36, height: 36,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer', transition: 'all 0.2s',
-                  }}
-                >
-                  <X size={20} />
-                </button>
-
-                {/* Pulsing Phone Icon */}
-                <div style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.4))',
-                  border: '3px solid #f59e0b',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '1.25rem',
-                  boxShadow: '0 0 35px rgba(245, 158, 11, 0.6)',
-                }}>
-                  <Phone size={38} color="#fbbf24" />
-                </div>
-
-                <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.35rem' }}>
-                  Toll-Free AI Voice Helpline
-                </div>
-                <h2 style={{ fontSize: '1.85rem', fontWeight: 900, color: '#ffffff', marginBottom: '0.25rem' }}>
-                  1800-180-1551
-                </h2>
-                <div style={{ fontSize: '0.85rem', color: '#34d399', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.45rem' }}>
-                  <span style={{ width: 9, height: 9, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 10px #34d399' }}></span>
-                  Line Active • Connected to Grama Mitra IVR
-                </div>
-
-                {/* Audio Prompt Card */}
-                <div style={{
-                  background: 'rgba(15, 23, 42, 0.85)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  borderRadius: '18px',
-                  padding: '1.35rem',
-                  marginBottom: '1.75rem',
-                  textAlign: 'left',
-                  fontSize: '0.925rem',
-                  color: '#e2e8f0',
-                  lineHeight: 1.6,
-                }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 900, color: '#f59e0b', textTransform: 'uppercase', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <Volume2 size={15} color="#f59e0b" /> IVR Voice Helpline Prompt / குரல் சேவை:
-                  </div>
-                  <p style={{ margin: 0, fontStyle: 'italic', color: '#ffffff', fontWeight: 700 }}>
-                    "வணக்கம்! கிராம மித்ரா இலவச தொலைபேசி சேவைக்கு நல்வரவு. பயிர் நோய், அரசு திட்டங்கள், உரம் குறித்து பேசவும்..."
-                  </p>
-                  <div style={{ marginTop: '0.65rem', fontSize: '0.82rem', color: '#94a3b8' }}>
-                    (English: "Welcome to Grama Mitra 1800 Toll-Free Helpline. Speak your agricultural question now...")
-                  </div>
-                </div>
-
-                {/* Interactive Call Buttons */}
-                <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button
-                    onClick={() => {
-                      handleMicClick();
-                    }}
-                    style={{
-                      padding: '0.85rem 1.5rem',
-                      borderRadius: '14px',
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                      border: 'none',
-                      color: '#ffffff',
-                      fontWeight: 900,
-                      fontSize: '0.92rem',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.55rem',
-                      boxShadow: '0 6px 20px rgba(16, 185, 129, 0.45)',
-                    }}
-                  >
-                    <Mic size={18} /> Speak to Helpline
-                  </button>
-
-                  <a
-                    href="tel:18001801551"
-                    style={{
-                      padding: '0.85rem 1.25rem',
-                      borderRadius: '14px',
-                      background: 'rgba(245, 158, 11, 0.18)',
-                      border: '1px solid rgba(245, 158, 11, 0.4)',
-                      color: '#fbbf24',
-                      fontWeight: 800,
-                      fontSize: '0.92rem',
-                      textDecoration: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.55rem',
-                    }}
-                  >
-                    Direct Mobile Call
-                  </a>
-
-                  <button
-                    onClick={() => {
-                      setShowCallModal(false);
-                      stopSpeaking();
-                    }}
-                    style={{
-                      padding: '0.85rem 1.35rem',
-                      borderRadius: '14px',
-                      background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                      border: 'none',
-                      color: '#ffffff',
-                      fontWeight: 900,
-                      fontSize: '0.92rem',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.55rem',
-                      boxShadow: '0 6px 20px rgba(239, 68, 68, 0.45)',
-                    }}
-                  >
-                    <Phone size={18} style={{ transform: 'rotate(135deg)' }} /> End Call
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* ── LIVE INTERACTIVE TOLL-FREE AI HELPLINE CALL DEMO MODAL ── */}
+          <DemoCallModal
+            isOpen={showCallModal}
+            onClose={() => setShowCallModal(false)}
+            initialLang={language}
+          />
           {/* ── OFFICIAL EMAIL INQUIRY MODAL ── */}
           {showEmailModal && (
             <div style={{
