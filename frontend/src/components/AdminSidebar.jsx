@@ -1,27 +1,24 @@
 import React from 'react';
 import { NavLink, useNavigate, Link } from 'react-router-dom';
 import {
-  Leaf, LayoutDashboard, BookOpen,
-  Shield, Phone, BarChart2, Settings, LogOut, ChevronRight, MapPin
+  LayoutDashboard, Activity, Bug, MapPin, FileText,
+  ShieldCheck, TestTube, Target, BarChart2, MessageSquare,
+  Bell, LogOut, ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth.js';
 
-const sections = [
-  { label: 'Overview', items: [
-    { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/admin/hotspots', icon: MapPin, label: 'Risk Hotspots' },
-    { to: '/admin/analytics', icon: BarChart2, label: 'Analytics' },
-  ]},
-  { label: 'Management', items: [
-    { to: '/admin/knowledge', icon: BookOpen, label: 'Knowledge Base' },
-  ]},
-  { label: 'Safety', items: [
-    { to: '/admin/safety', icon: Shield, label: 'Safety Alerts' },
-    { to: '/admin/calls', icon: Phone, label: 'Call Logs' },
-  ]},
-  { label: 'System', items: [
-    { to: '/admin/settings', icon: Settings, label: 'Settings' },
-  ]},
+const navItems = [
+  { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/admin/safety', icon: Activity, label: 'Disease Surveillance' },
+  { to: '/admin/pest', icon: Bug, label: 'Pest Surveillance' },
+  { to: '/admin/hotspots', icon: MapPin, label: 'Hotspot Map' },
+  { to: '/admin/queries', icon: FileText, label: 'Farmer Reports' },
+  { to: '/admin/handoffs', icon: ShieldCheck, label: 'Expert Validation' },
+  { to: '/admin/calls', icon: TestTube, label: 'Lab Referrals' },
+  { to: '/admin/knowledge', icon: Target, label: 'Preventive Planning' },
+  { to: '/admin/analytics', icon: BarChart2, label: 'Analytics' },
+  { to: '/admin/communication', icon: MessageSquare, label: 'Communication' },
+  { to: '/admin/settings', icon: Bell, label: 'Notifications' },
 ];
 
 export default function AdminSidebar({ isOpen, onClose }) {
@@ -48,97 +45,134 @@ export default function AdminSidebar({ isOpen, onClose }) {
         />
       )}
 
-      <aside className={`admin-sidebar ${isOpen ? 'open' : ''}`}>
-        {/* Logo */}
-        <div className="sidebar-logo">
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }} title="Back to Home Dashboard">
-            <div className="logo-mark">
-              <img 
-                src="/grama-mitra-emblem-white.png" 
-                alt="Grama Mitra" 
-                style={{ width: '22px', height: '22px', objectFit: 'contain' }} 
-              />
-            </div>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: '#fff' }}>Grama Mitra</div>
-              <div style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>Officer Dashboard</div>
-            </div>
-          </Link>
+      <aside className={`admin-sidebar ${isOpen ? 'open' : ''}`} style={{
+        background: '#040d07',
+        borderRight: '1px solid rgba(16, 185, 129, 0.15)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}>
+        <div>
+          {/* Logo Header */}
+          <div className="sidebar-logo" style={{
+            padding: '1.25rem 1.25rem 1rem',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          }}>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+              <div style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)',
+              }}>
+                <img 
+                  src="/grama-mitra-emblem-white.png" 
+                  alt="Grama Mitra" 
+                  style={{ width: '22px', height: '22px', objectFit: 'contain' }} 
+                />
+              </div>
+              <div>
+                <div style={{ fontWeight: 900, fontSize: '1rem', color: '#ffffff', letterSpacing: '0.04em', lineHeight: 1.1 }}>
+                  UZHAVAN
+                </div>
+                <div style={{ fontSize: '0.65rem', color: '#34d399', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '2px' }}>
+                  OFFICER PANEL
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* Navigation Links */}
+          <nav style={{ padding: '0.75rem 0.75rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+            {navItems.map((item) => (
+              <NavLink
+                key={item.label}
+                to={item.to}
+                end={item.to === '/admin'}
+                onClick={onClose}
+                className={({ isActive }) => `sidebar-link-pill ${isActive ? 'active' : ''}`}
+                style={({ isActive }) => ({
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.65rem 0.95rem',
+                  borderRadius: '12px',
+                  color: isActive ? '#34d399' : '#94a3b8',
+                  background: isActive ? 'rgba(16, 185, 129, 0.16)' : 'transparent',
+                  border: isActive ? '1px solid rgba(52, 211, 153, 0.35)' : '1px solid transparent',
+                  fontWeight: isActive ? 700 : 500,
+                  fontSize: '0.875rem',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease',
+                  boxShadow: isActive ? '0 4px 20px rgba(16, 185, 129, 0.25)' : 'none',
+                })}
+              >
+                <item.icon size={18} style={{ flexShrink: 0 }} />
+                <span style={{ flex: 1, whiteSpace: 'nowrap' }}>{item.label}</span>
+              </NavLink>
+            ))}
+          </nav>
         </div>
 
-        {/* Navigation */}
-        <nav className="sidebar-nav">
-          {sections.map(sec => (
-            <div key={sec.label}>
-              <div className="sidebar-section-label">{sec.label}</div>
-              {sec.items.map(item => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === '/admin'}
-                  className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
-                  onClick={onClose}
-                >
-                  <item.icon size={17} />
-                  <span style={{ flex: 1 }}>{item.label}</span>
-                  <ChevronRight size={14} style={{ opacity: 0.3 }} />
-                </NavLink>
-              ))}
-            </div>
-          ))}
-        </nav>
-
-        {/* User info + logout */}
+        {/* User Info & Logout Footer */}
         <div style={{
-          padding: '1rem 1.25rem',
-          borderTop: '1px solid rgba(255,255,255,0.1)',
+          padding: '1rem 1.1rem',
+          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          background: 'rgba(0, 0, 0, 0.3)',
           display: 'flex',
           alignItems: 'center',
           gap: '0.75rem',
-          background: 'rgba(255,255,255,0.02)',
         }}>
           <div style={{
-            width: 36, height: 36, borderRadius: '50%',
-            background: 'linear-gradient(135deg, var(--green-600), var(--blue-600))',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0,
+            width: '38px',
+            height: '38px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#ffffff',
+            fontWeight: 800,
+            fontSize: '0.9rem',
+            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
+            flexShrink: 0,
           }}>
-            {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || 'O'}
+            {user?.displayName?.[0] || 'D'}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ color: '#ffffff', fontSize: '0.8125rem', fontWeight: 600, truncate: true }}>
-              {user?.displayName || 'Officer'}
+            <div style={{ color: '#ffffff', fontSize: '0.85rem', fontWeight: 800, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {user?.displayName || 'Dr. Priya Sharma'}
             </div>
-            <div style={{ color: '#cbd5e1', fontSize: '0.725rem' }}>
-              {user?.email || 'officer@gramaMitra.in'}
+            <div style={{ color: '#94a3b8', fontSize: '0.7rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              Agriculture Extension Officer
             </div>
           </div>
           <button
             onClick={handleLogout}
-            title="Exit to Home Dashboard"
-            aria-label="Exit to Home Dashboard"
+            title="Logout"
+            aria-label="Logout"
             style={{
-              color: '#f87171',
+              background: 'transparent',
+              border: 'none',
+              color: '#94a3b8',
               cursor: 'pointer',
-              background: 'rgba(239, 68, 68, 0.12)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              borderRadius: 'var(--radius-md)',
-              padding: '0.45rem',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.15s ease-in-out',
+              gap: '0.35rem',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              padding: '0.35rem',
+              transition: 'color 0.2s ease',
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
-              e.currentTarget.style.color = '#ffffff';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.12)';
-              e.currentTarget.style.color = '#f87171';
-            }}
+            onMouseEnter={e => e.currentTarget.style.color = '#ef4444'}
+            onMouseLeave={e => e.currentTarget.style.color = '#94a3b8'}
           >
-            <LogOut size={16} />
+            <LogOut size={15} />
+            <span>Logout</span>
           </button>
         </div>
       </aside>
