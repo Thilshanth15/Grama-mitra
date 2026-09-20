@@ -139,6 +139,15 @@ export default function VoiceAssistant() {
         } else if (field === 'farmerPhone') {
           setFarmerPhone('+91 98421 44510');
           addToast('✅ Phone number populated by Voice!', 'success');
+        } else if (field === 'district') {
+          setFormDistrict('Thanjavur');
+          addToast('✅ District selected by Voice: Thanjavur / தஞ்சாவூர்', 'success');
+        } else if (field === 'block') {
+          setFormBlock('Kumbakonam');
+          addToast('✅ Block selected by Voice: Kumbakonam / கும்பகோணம்', 'success');
+        } else if (field === 'village') {
+          setFormVillage('Kovilur');
+          addToast('✅ Village selected by Voice: Kovilur / கோவிலூர்', 'success');
         } else if (field === 'master') {
           setFarmerName('K. Ramasamy / கே. இராமசாமி');
           setFarmerPhone('+91 98421 44510');
@@ -150,7 +159,7 @@ export default function VoiceAssistant() {
         }
         setActiveFormMic(null);
         setFormVoiceStatus('filled');
-      }, 2200);
+      }, 2000);
       return;
     }
 
@@ -172,12 +181,37 @@ export default function VoiceAssistant() {
           .join(' ');
 
         setFormVoiceTranscript(transcript);
+        const lower = transcript.toLowerCase();
 
         if (field === 'farmerName') {
           setFarmerName(transcript);
         } else if (field === 'farmerPhone') {
           const numOnly = transcript.replace(/\D/g, '');
           setFarmerPhone(numOnly || transcript);
+        } else if (field === 'district') {
+          const match = districts.find(d => lower.includes(d.toLowerCase()));
+          if (match) {
+            setFormDistrict(match);
+            addToast(`✅ District matched by Voice: ${match}`, 'success');
+          } else if (districts.length > 0) {
+            setFormDistrict(districts[0]);
+          }
+        } else if (field === 'block') {
+          const match = availableBlocks.find(b => lower.includes(b.toLowerCase()));
+          if (match) {
+            setFormBlock(match);
+            addToast(`✅ Block matched by Voice: ${match}`, 'success');
+          } else if (availableBlocks.length > 0) {
+            setFormBlock(availableBlocks[0]);
+          }
+        } else if (field === 'village') {
+          const match = availableVillages.find(v => lower.includes(v.toLowerCase()));
+          if (match) {
+            setFormVillage(match);
+            addToast(`✅ Village matched by Voice: ${match}`, 'success');
+          } else if (availableVillages.length > 0) {
+            setFormVillage(availableVillages[0]);
+          }
         } else if (field === 'master') {
           parseMasterVoiceToForm(transcript);
         }
@@ -197,6 +231,15 @@ export default function VoiceAssistant() {
         } else if (field === 'farmerPhone') {
           setFarmerPhone('+91 98421 44510');
           addToast('✅ Phone populated!', 'success');
+        } else if (field === 'district') {
+          setFormDistrict('Thanjavur');
+          addToast('✅ District selected by Voice: Thanjavur', 'success');
+        } else if (field === 'block') {
+          setFormBlock('Kumbakonam');
+          addToast('✅ Block selected by Voice: Kumbakonam', 'success');
+        } else if (field === 'village') {
+          setFormVillage('Kovilur');
+          addToast('✅ Village selected by Voice: Kovilur', 'success');
         } else if (field === 'master') {
           setFarmerName('K. Ramasamy / கே. இராமசாமி');
           setFarmerPhone('+91 98421 44510');
@@ -1497,83 +1540,224 @@ export default function VoiceAssistant() {
 
                 {/* District */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#c084fc', marginBottom: '0.5rem', letterSpacing: '0.02em' }}>
-                    District / மாவட்டம்
-                  </label>
-                  <select
-                    value={formDistrict}
-                    onChange={(e) => setFormDistrict(e.target.value)}
-                    style={{
-                      width: '100%',
-                      background: 'rgba(2, 6, 23, 0.7)',
-                      border: '1.5px solid rgba(255, 255, 255, 0.16)',
-                      borderRadius: '12px',
-                      padding: '0.8rem 1.1rem',
-                      color: '#ffffff',
-                      fontSize: '0.95rem',
-                      outline: 'none',
-                      boxSizing: 'border-box',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.5)',
-                    }}
-                  >
-                    {districts.map((d) => <option key={d} value={d} style={{ background: '#0f172a', color: '#ffffff' }}>{d}</option>)}
-                  </select>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.88rem', fontWeight: 800, color: '#c084fc', letterSpacing: '0.02em', margin: 0 }}>
+                      District / மாவட்டம் *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => toggleFormMic('district')}
+                      style={{
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: '6px',
+                        background: activeFormMic === 'district' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(192, 132, 252, 0.15)',
+                        border: activeFormMic === 'district' ? '1px solid #ef4444' : '1px solid rgba(192, 132, 252, 0.3)',
+                        color: activeFormMic === 'district' ? '#f87171' : '#c084fc',
+                        fontSize: '0.74rem',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                      }}
+                    >
+                      {activeFormMic === 'district' ? <MicOff size={12} /> : <Mic size={12} />}
+                      <span>{activeFormMic === 'district' ? 'Listening...' : 'Voice Input'}</span>
+                    </button>
+                  </div>
+                  <div style={{ position: 'relative' }}>
+                    <select
+                      value={formDistrict}
+                      onChange={(e) => setFormDistrict(e.target.value)}
+                      style={{
+                        width: '100%',
+                        background: 'rgba(2, 6, 23, 0.7)',
+                        border: activeFormMic === 'district' ? '1.5px solid #ef4444' : '1.5px solid rgba(255, 255, 255, 0.16)',
+                        borderRadius: '12px',
+                        padding: '0.8rem 2.75rem 0.8rem 1.1rem',
+                        color: '#ffffff',
+                        fontSize: '0.95rem',
+                        outline: 'none',
+                        boxSizing: 'border-box',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.5)',
+                        transition: 'all 0.25s ease',
+                      }}
+                      onFocus={e => e.currentTarget.style.borderColor = '#c084fc'}
+                      onBlur={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.16)'}
+                    >
+                      {districts.map((d) => <option key={d} value={d} style={{ background: '#0f172a', color: '#ffffff' }}>{d}</option>)}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={() => toggleFormMic('district')}
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'transparent',
+                        border: 'none',
+                        color: activeFormMic === 'district' ? '#ef4444' : '#c084fc',
+                        cursor: 'pointer',
+                        padding: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                      title="Speak District Name"
+                    >
+                      {activeFormMic === 'district' ? <MicOff size={18} /> : <Mic size={18} />}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Block */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#60a5fa', marginBottom: '0.5rem', letterSpacing: '0.02em' }}>
-                    Block / வட்டம்
-                  </label>
-                  <select
-                    value={formBlock}
-                    onChange={(e) => setFormBlock(e.target.value)}
-                    style={{
-                      width: '100%',
-                      background: 'rgba(2, 6, 23, 0.7)',
-                      border: '1.5px solid rgba(255, 255, 255, 0.16)',
-                      borderRadius: '12px',
-                      padding: '0.8rem 1.1rem',
-                      color: '#ffffff',
-                      fontSize: '0.95rem',
-                      outline: 'none',
-                      boxSizing: 'border-box',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.5)',
-                    }}
-                  >
-                    {availableBlocks.map((b) => <option key={b} value={b} style={{ background: '#0f172a', color: '#ffffff' }}>{b}</option>)}
-                  </select>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.88rem', fontWeight: 800, color: '#60a5fa', letterSpacing: '0.02em', margin: 0 }}>
+                      Block / தொகுதி *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => toggleFormMic('block')}
+                      style={{
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: '6px',
+                        background: activeFormMic === 'block' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(96, 165, 250, 0.15)',
+                        border: activeFormMic === 'block' ? '1px solid #ef4444' : '1px solid rgba(96, 165, 250, 0.3)',
+                        color: activeFormMic === 'block' ? '#f87171' : '#60a5fa',
+                        fontSize: '0.74rem',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                      }}
+                    >
+                      {activeFormMic === 'block' ? <MicOff size={12} /> : <Mic size={12} />}
+                      <span>{activeFormMic === 'block' ? 'Listening...' : 'Voice Input'}</span>
+                    </button>
+                  </div>
+                  <div style={{ position: 'relative' }}>
+                    <select
+                      value={formBlock}
+                      onChange={(e) => setFormBlock(e.target.value)}
+                      style={{
+                        width: '100%',
+                        background: 'rgba(2, 6, 23, 0.7)',
+                        border: activeFormMic === 'block' ? '1.5px solid #ef4444' : '1.5px solid rgba(255, 255, 255, 0.16)',
+                        borderRadius: '12px',
+                        padding: '0.8rem 2.75rem 0.8rem 1.1rem',
+                        color: '#ffffff',
+                        fontSize: '0.95rem',
+                        outline: 'none',
+                        boxSizing: 'border-box',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.5)',
+                        transition: 'all 0.25s ease',
+                      }}
+                      onFocus={e => e.currentTarget.style.borderColor = '#60a5fa'}
+                      onBlur={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.16)'}
+                    >
+                      {availableBlocks.map((b) => <option key={b} value={b} style={{ background: '#0f172a', color: '#ffffff' }}>{b}</option>)}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={() => toggleFormMic('block')}
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'transparent',
+                        border: 'none',
+                        color: activeFormMic === 'block' ? '#ef4444' : '#60a5fa',
+                        cursor: 'pointer',
+                        padding: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                      title="Speak Block Name"
+                    >
+                      {activeFormMic === 'block' ? <MicOff size={18} /> : <Mic size={18} />}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Village */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#34d399', marginBottom: '0.5rem', letterSpacing: '0.02em' }}>
-                    Village / கிராமம்
-                  </label>
-                  <select
-                    value={formVillage}
-                    onChange={(e) => setFormVillage(e.target.value)}
-                    style={{
-                      width: '100%',
-                      background: 'rgba(2, 6, 23, 0.7)',
-                      border: '1.5px solid rgba(255, 255, 255, 0.16)',
-                      borderRadius: '12px',
-                      padding: '0.8rem 1.1rem',
-                      color: '#ffffff',
-                      fontSize: '0.95rem',
-                      outline: 'none',
-                      boxSizing: 'border-box',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.5)',
-                    }}
-                  >
-                    {availableVillages.map((v) => <option key={v} value={v} style={{ background: '#0f172a', color: '#ffffff' }}>{v}</option>)}
-                  </select>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.88rem', fontWeight: 800, color: '#34d399', letterSpacing: '0.02em', margin: 0 }}>
+                      Village / கிராமம் *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => toggleFormMic('village')}
+                      style={{
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: '6px',
+                        background: activeFormMic === 'village' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(52, 211, 153, 0.15)',
+                        border: activeFormMic === 'village' ? '1px solid #ef4444' : '1px solid rgba(52, 211, 153, 0.3)',
+                        color: activeFormMic === 'village' ? '#f87171' : '#34d399',
+                        fontSize: '0.74rem',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                      }}
+                    >
+                      {activeFormMic === 'village' ? <MicOff size={12} /> : <Mic size={12} />}
+                      <span>{activeFormMic === 'village' ? 'Listening...' : 'Voice Input'}</span>
+                    </button>
+                  </div>
+                  <div style={{ position: 'relative' }}>
+                    <select
+                      value={formVillage}
+                      onChange={(e) => setFormVillage(e.target.value)}
+                      style={{
+                        width: '100%',
+                        background: 'rgba(2, 6, 23, 0.7)',
+                        border: activeFormMic === 'village' ? '1.5px solid #ef4444' : '1.5px solid rgba(255, 255, 255, 0.16)',
+                        borderRadius: '12px',
+                        padding: '0.8rem 2.75rem 0.8rem 1.1rem',
+                        color: '#ffffff',
+                        fontSize: '0.95rem',
+                        outline: 'none',
+                        boxSizing: 'border-box',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.5)',
+                        transition: 'all 0.25s ease',
+                      }}
+                      onFocus={e => e.currentTarget.style.borderColor = '#34d399'}
+                      onBlur={e => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.16)'}
+                    >
+                      {availableVillages.map((v) => <option key={v} value={v} style={{ background: '#0f172a', color: '#ffffff' }}>{v}</option>)}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={() => toggleFormMic('village')}
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'transparent',
+                        border: 'none',
+                        color: activeFormMic === 'village' ? '#ef4444' : '#34d399',
+                        cursor: 'pointer',
+                        padding: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                      title="Speak Village Name"
+                    >
+                      {activeFormMic === 'village' ? <MicOff size={18} /> : <Mic size={18} />}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Scheme Choice */}
