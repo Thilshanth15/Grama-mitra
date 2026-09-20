@@ -235,11 +235,12 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #071217 0%, #04090d 100%)',
+      background: 'linear-gradient(135deg, rgba(10, 22, 36, 0.95) 0%, rgba(5, 12, 22, 0.98) 100%)',
       borderRadius: '24px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      padding: '1.5rem',
-      boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+      border: '1px solid rgba(52, 211, 153, 0.35)',
+      padding: '1.75rem',
+      boxShadow: '0 25px 60px rgba(0,0,0,0.8), 0 0 45px rgba(16, 185, 129, 0.15)',
+      backdropFilter: 'blur(20px)',
       color: '#ffffff',
     }}>
       {/* ── HEADER TITLE BAR ── */}
@@ -249,61 +250,76 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '1rem',
-        marginBottom: '1.5rem',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        marginBottom: '1.75rem',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
         paddingBottom: '1.25rem',
       }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.25rem 0.75rem', borderRadius: '9999px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#34d399', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-            <Sparkles size={13} /> DYNAMIC ALL-INDIA STT & GEOCODING ACTIVE
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', borderRadius: '9999px',
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
+            border: '1px solid rgba(52, 211, 153, 0.5)', color: '#34d399', fontSize: '0.78rem', fontWeight: 800,
+            textTransform: 'uppercase', marginBottom: '0.65rem', boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)',
+          }}>
+            <Sparkles size={14} color="#34d399" /> DYNAMIC ALL-INDIA STT & GEOCODING ACTIVE
           </div>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#ffffff', margin: 0, letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <Compass size={24} color="#34d399" /> Universal AI Voice Satellite Navigation
+          <h2 style={{
+            fontSize: '1.75rem', fontWeight: 900, margin: 0, letterSpacing: '-0.02em',
+            display: 'flex', alignItems: 'center', gap: '0.65rem',
+            background: 'linear-gradient(135deg, #ffffff 0%, #6ee7b7 40%, #38bdf8 100%)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          }}>
+            <Compass size={28} color="#34d399" style={{ filter: 'drop-shadow(0 0 10px rgba(52, 211, 153, 0.6))' }} />
+            Universal AI Voice Satellite Navigation
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '0.88rem', margin: '0.25rem 0 0' }}>
+          <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '0.35rem 0 0', fontWeight: 500 }}>
             Speak or type ANY state, district, block, or village across India to automatically pan, zoom, and display satellite surveillance data.
           </p>
         </div>
 
         {/* Satellite vs Street Map Mode Toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ display: 'inline-flex', background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '12px', padding: '0.25rem' }}>
+          <div style={{ display: 'inline-flex', background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '14px', padding: '0.3rem', boxShadow: '0 4px 15px rgba(0,0,0,0.4)' }}>
             <button
               onClick={() => setMapMode('satellite')}
               style={{
-                padding: '0.45rem 0.95rem',
-                borderRadius: '8px',
+                padding: '0.5rem 1.1rem',
+                borderRadius: '10px',
                 border: 'none',
-                background: mapMode === 'satellite' ? 'linear-gradient(135deg, #10b981, #059669)' : 'transparent',
+                background: mapMode === 'satellite' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'transparent',
                 color: mapMode === 'satellite' ? '#ffffff' : '#94a3b8',
-                fontWeight: 700,
-                fontSize: '0.82rem',
+                fontWeight: 800,
+                fontSize: '0.85rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.45rem',
+                boxShadow: mapMode === 'satellite' ? '0 4px 15px rgba(16, 185, 129, 0.4)' : 'none',
+                transition: 'all 0.2s ease',
               }}
             >
-              <Globe size={14} /> Satellite Mode
+              <Globe size={15} /> Satellite Mode
             </button>
 
             <button
               onClick={() => setMapMode('street')}
               style={{
-                padding: '0.45rem 0.95rem',
-                borderRadius: '8px',
+                padding: '0.5rem 1.1rem',
+                borderRadius: '10px',
                 border: 'none',
-                background: mapMode === 'street' ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)' : 'transparent',
+                background: mapMode === 'street' ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' : 'transparent',
                 color: mapMode === 'street' ? '#ffffff' : '#94a3b8',
-                fontWeight: 700,
-                fontSize: '0.82rem',
+                fontWeight: 800,
+                fontSize: '0.85rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.45rem',
+                boxShadow: mapMode === 'street' ? '0 4px 15px rgba(59, 130, 246, 0.4)' : 'none',
+                transition: 'all 0.2s ease',
               }}
             >
-              <Layers size={14} /> Street Map
+              <Layers size={15} /> Street Map
             </button>
           </div>
         </div>
@@ -311,56 +327,60 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
 
       {/* ── AI VOICE & SEARCH CONTROL PANEL ── */}
       <div style={{
-        background: 'rgba(12, 34, 41, 0.7)',
-        border: '1px solid rgba(56, 189, 248, 0.25)',
-        borderRadius: '18px',
-        padding: '1.25rem 1.5rem',
+        background: 'linear-gradient(135deg, rgba(12, 34, 52, 0.8) 0%, rgba(8, 22, 36, 0.8) 100%)',
+        border: '1px solid rgba(56, 189, 248, 0.35)',
+        borderRadius: '20px',
+        padding: '1.35rem 1.65rem',
         marginBottom: '1.5rem',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '1rem',
+        gap: '1.15rem',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
           {/* Main Animated Mic AI Button */}
           <button
             onClick={toggleVoiceRecognition}
             style={{
-              padding: '0.85rem 1.75rem',
+              padding: '0.9rem 1.85rem',
               borderRadius: '16px',
-              border: isListening ? '2px solid #ef4444' : '1px solid rgba(52, 211, 153, 0.6)',
+              border: isListening ? '2px solid #ef4444' : '1px solid rgba(52, 211, 153, 0.8)',
               background: isListening
                 ? 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)'
-                : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                : 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
               color: '#ffffff',
-              fontWeight: 800,
-              fontSize: '0.98rem',
+              fontWeight: 900,
+              fontSize: '1rem',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.65rem',
+              gap: '0.7rem',
               cursor: 'pointer',
-              boxShadow: isListening ? '0 0 25px rgba(239, 68, 68, 0.8)' : '0 10px 25px rgba(16, 185, 129, 0.4)',
+              boxShadow: isListening
+                ? '0 0 30px rgba(239, 68, 68, 0.9)'
+                : '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)',
               transition: 'all 0.25s ease',
             }}
           >
-            <Mic size={20} className={isListening ? 'animate-pulse' : ''} />
+            <Mic size={22} className={isListening ? 'animate-pulse' : ''} />
             <span>{isListening ? 'Listening Voice Input...' : 'Speak India Location'}</span>
           </button>
 
           {/* Voice Language Selector */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 600 }}>STT Language:</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <span style={{ fontSize: '0.82rem', color: '#38bdf8', fontWeight: 700 }}>STT Language:</span>
             <select
               value={voiceLang}
               onChange={(e) => setVoiceLang(e.target.value)}
               style={{
-                background: '#09181f',
-                border: '1px solid rgba(255,255,255,0.2)',
+                background: '#0a192f',
+                border: '1px solid rgba(56, 189, 248, 0.4)',
                 color: '#ffffff',
-                padding: '0.45rem 0.75rem',
-                borderRadius: '10px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
+                padding: '0.5rem 0.85rem',
+                borderRadius: '12px',
+                fontSize: '0.85rem',
+                fontWeight: 800,
                 outline: 'none',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
               }}
             >
               <option value="en-IN">English (India)</option>
@@ -369,9 +389,9 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
           </div>
 
           {/* Fallback Text Search Input */}
-          <form onSubmit={handleTextSubmit} style={{ flex: 1, minWidth: '260px', display: 'flex', gap: '0.5rem' }}>
+          <form onSubmit={handleTextSubmit} style={{ flex: 1, minWidth: '280px', display: 'flex', gap: '0.6rem' }}>
             <div style={{ position: 'relative', flex: 1 }}>
-              <Search size={18} color="#94a3b8" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
+              <Search size={18} color="#38bdf8" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="text"
                 value={locationQuery}
@@ -379,14 +399,15 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
                 placeholder="Or type any Indian State, District, Block, or Village..."
                 style={{
                   width: '100%',
-                  background: '#07161c',
-                  border: '1px solid rgba(255,255,255,0.15)',
-                  borderRadius: '12px',
-                  padding: '0.65rem 1rem 0.65rem 2.75rem',
+                  background: '#071728',
+                  border: '1px solid rgba(56, 189, 248, 0.35)',
+                  borderRadius: '14px',
+                  padding: '0.7rem 1rem 0.7rem 2.85rem',
                   color: '#ffffff',
-                  fontSize: '0.9rem',
+                  fontSize: '0.92rem',
                   outline: 'none',
                   boxSizing: 'border-box',
+                  boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.5)',
                 }}
               />
             </div>
@@ -395,17 +416,18 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
               type="submit"
               disabled={isGeocoding}
               style={{
-                padding: '0.65rem 1.25rem',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #0284c7, #0369a1)',
-                border: 'none',
+                padding: '0.7rem 1.4rem',
+                borderRadius: '14px',
+                background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+                border: '1px solid rgba(56, 189, 248, 0.5)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '0.88rem',
+                fontSize: '0.9rem',
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.45rem',
+                boxShadow: '0 4px 15px rgba(2, 132, 199, 0.4)',
               }}
             >
               {isGeocoding ? <Loader2 size={16} className="animate-spin" /> : <Navigation size={16} />}
@@ -417,19 +439,20 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
         {/* Live Voice Status Feedback Bar */}
         {(isListening || transcript || isGeocoding) && (
           <div style={{
-            background: 'rgba(6, 182, 212, 0.15)',
-            border: '1px solid rgba(6, 182, 212, 0.3)',
-            borderRadius: '12px',
-            padding: '0.65rem 1rem',
+            background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2))',
+            border: '1px solid rgba(56, 189, 248, 0.5)',
+            borderRadius: '14px',
+            padding: '0.75rem 1.15rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.6rem',
+            gap: '0.75rem',
             color: '#38bdf8',
-            fontSize: '0.85rem',
-            fontWeight: 600,
+            fontSize: '0.88rem',
+            fontWeight: 700,
+            boxShadow: '0 4px 15px rgba(6, 182, 212, 0.2)',
           }}>
-            {isListening && <Volume2 size={18} className="animate-bounce" />}
-            {isGeocoding && <Loader2 size={18} className="animate-spin" />}
+            {isListening && <Volume2 size={20} className="animate-bounce" color="#38bdf8" />}
+            {isGeocoding && <Loader2 size={20} className="animate-spin" color="#38bdf8" />}
             <span>
               {isListening && 'Listening to speech... Say any Indian place (e.g., "Open Maharashtra", "Show Coimbatore", "Zoom into Kumbakonam").'}
               {isGeocoding && `Geocoding location coordinates for "${locationQuery}" across India database...`}
@@ -441,18 +464,18 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
         {/* Error / Alert Feedback */}
         {errorMsg && (
           <div style={{
-            background: 'rgba(239, 68, 68, 0.15)',
-            border: '1px solid rgba(239, 68, 68, 0.4)',
-            borderRadius: '12px',
-            padding: '0.65rem 1rem',
+            background: 'rgba(239, 68, 68, 0.2)',
+            border: '1px solid rgba(239, 68, 68, 0.5)',
+            borderRadius: '14px',
+            padding: '0.75rem 1.15rem',
             color: '#fca5a5',
-            fontSize: '0.85rem',
-            fontWeight: 600,
+            fontSize: '0.88rem',
+            fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.6rem',
           }}>
-            <AlertTriangle size={18} />
+            <AlertTriangle size={20} />
             <span>{errorMsg}</span>
           </div>
         )}
@@ -460,25 +483,25 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
         {/* Clarification Info Feedback */}
         {clarificationMsg && (
           <div style={{
-            background: 'rgba(245, 158, 11, 0.15)',
-            border: '1px solid rgba(245, 158, 11, 0.3)',
-            borderRadius: '12px',
-            padding: '0.65rem 1rem',
+            background: 'rgba(245, 158, 11, 0.2)',
+            border: '1px solid rgba(245, 158, 11, 0.5)',
+            borderRadius: '14px',
+            padding: '0.75rem 1.15rem',
             color: '#fbbf24',
-            fontSize: '0.82rem',
-            fontWeight: 600,
+            fontSize: '0.85rem',
+            fontWeight: 700,
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.6rem',
           }}>
-            <Info size={16} />
+            <Info size={18} />
             <span>{clarificationMsg}</span>
           </div>
         )}
 
         {/* Recommended Sample Voice Command Chips */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>Sample Voice Commands:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sample Voice Commands:</span>
           {[
             'Show Tamil Nadu',
             'Open Maharashtra',
@@ -491,23 +514,28 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
               key={cmd}
               onClick={() => handleQuickCommand(cmd)}
               style={{
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)',
+                border: '1px solid rgba(52, 211, 153, 0.4)',
                 borderRadius: '9999px',
-                padding: '0.25rem 0.75rem',
-                color: '#cbd5e1',
-                fontSize: '0.78rem',
-                fontWeight: 600,
+                padding: '0.35rem 0.95rem',
+                color: '#6ee7b7',
+                fontSize: '0.82rem',
+                fontWeight: 700,
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
               }}
               onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(6, 182, 212, 0.35) 100%)';
                 e.currentTarget.style.borderColor = '#34d399';
-                e.currentTarget.style.color = '#34d399';
+                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.transform = 'translateY(-1px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                e.currentTarget.style.color = '#cbd5e1';
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%)';
+                e.currentTarget.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+                e.currentTarget.style.color = '#6ee7b7';
+                e.currentTarget.style.transform = 'none';
               }}
             >
               🎤 "{cmd}"
@@ -518,40 +546,45 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
 
       {/* ── GEOCODED LOCATION HIERARCHY BADGE CARD ── */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%)',
-        border: '1px solid rgba(16, 185, 129, 0.3)',
-        borderRadius: '16px',
-        padding: '1rem 1.25rem',
-        marginBottom: '1.25rem',
+        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%)',
+        border: '1px solid rgba(52, 211, 153, 0.45)',
+        borderRadius: '18px',
+        padding: '1.15rem 1.5rem',
+        marginBottom: '1.35rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '1rem',
+        boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid rgba(16, 185, 129, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <MapPin size={20} color="#34d399" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', border: '1px solid #34d399', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}>
+            <MapPin size={22} color="#ffffff" />
           </div>
           <div>
-            <div style={{ fontSize: '0.75rem', color: '#34d399', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: '0.78rem', color: '#34d399', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               RESOLVED HIERARCHY ({geocodedData.level})
             </div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#ffffff', marginTop: '0.1rem' }}>
-              India &rarr; {geocodedData.state} {geocodedData.district ? `\u2192 ${geocodedData.district}` : ''} {geocodedData.block ? `\u2192 ${geocodedData.block}` : ''} {geocodedData.village ? `\u2192 ${geocodedData.village}` : ''}
+            <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem', display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+              <span>India</span> <span style={{ color: '#34d399' }}>&rarr;</span>
+              <span>{geocodedData.state}</span>
+              {geocodedData.district && <><span style={{ color: '#38bdf8' }}>&rarr;</span><span>{geocodedData.district}</span></>}
+              {geocodedData.block && <><span style={{ color: '#a78bfa' }}>&rarr;</span><span>{geocodedData.block}</span></>}
+              {geocodedData.village && <><span style={{ color: '#f472b6' }}>&rarr;</span><span>{geocodedData.village}</span></>}
             </div>
-            <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.15rem' }}>
+            <div style={{ fontSize: '0.8rem', color: '#cbd5e1', marginTop: '0.2rem' }}>
               Full Geocoded Name: {geocodedData.displayName}
             </div>
           </div>
         </div>
 
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: '0.82rem', color: '#38bdf8', fontWeight: 700 }}>
+        <div style={{ textAlign: 'right', background: 'rgba(15, 23, 42, 0.6)', padding: '0.6rem 1rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ fontSize: '0.85rem', color: '#38bdf8', fontWeight: 800 }}>
             Lat: {geocodedData.lat.toFixed(4)} | Lon: {geocodedData.lon.toFixed(4)}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.2rem' }}>
-            Zoom Level: <strong style={{ color: '#ffffff' }}>{geocodedData.zoom}x</strong>
+          <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.2rem' }}>
+            Zoom Level: <strong style={{ color: '#34d399' }}>{geocodedData.zoom}x</strong>
           </div>
         </div>
       </div>
@@ -559,12 +592,12 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
       {/* ── LEAFLET SATELLITE MAP RENDERER ── */}
       <div style={{
         position: 'relative',
-        height: '520px',
+        height: '540px',
         width: '100%',
-        borderRadius: '20px',
+        borderRadius: '22px',
         overflow: 'hidden',
-        border: '1px solid rgba(255,255,255,0.15)',
-        boxShadow: '0 15px 40px rgba(0,0,0,0.7)',
+        border: '2px solid rgba(56, 189, 248, 0.4)',
+        boxShadow: '0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(14, 165, 233, 0.2)',
       }}>
         <MapContainer
           center={[geocodedData.lat, geocodedData.lon]}

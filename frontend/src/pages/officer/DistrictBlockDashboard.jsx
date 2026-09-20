@@ -119,62 +119,75 @@ export default function DistrictBlockDashboard() {
   }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#090d16', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
-      {/* ── LEFT SIDEBAR (Red Rectangle Box Area) ── */}
+    <div style={{
+      display: 'flex',
+      minHeight: '100vh',
+      background: 'radial-gradient(ellipse at 15% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 85% 85%, rgba(14, 165, 233, 0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%), #040914',
+      color: '#f8fafc',
+      fontFamily: 'Inter, sans-serif',
+    }}>
+      {/* ── LEFT SIDEBAR ── */}
       <aside style={{
-        width: '270px',
-        minWidth: '270px',
-        background: 'linear-gradient(180deg, #0f172a 0%, #090d16 100%)',
-        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+        width: '280px',
+        minWidth: '280px',
+        background: 'linear-gradient(180deg, rgba(11, 20, 36, 0.95) 0%, rgba(6, 12, 22, 0.98) 100%)',
+        borderRight: '1px solid rgba(56, 189, 248, 0.25)',
+        backdropFilter: 'blur(20px)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '1.5rem 1.15rem',
+        padding: '1.65rem 1.25rem',
         position: 'sticky',
         top: 0,
         height: '100vh',
         boxSizing: 'border-box',
         zIndex: 100,
+        boxShadow: '10px 0 30px rgba(0,0,0,0.5)',
       }}>
         <div>
           {/* Brand Header */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', marginBottom: '2rem' }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none', marginBottom: '2.25rem' }}>
             <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              width: '44px',
+              height: '44px',
+              borderRadius: '14px',
+              background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+              boxShadow: '0 4px 20px rgba(16, 185, 129, 0.5)',
             }}>
-              <Building2 size={22} color="#ffffff" />
+              <Building2 size={24} color="#ffffff" />
             </div>
             <div>
-              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#ffffff', letterSpacing: '-0.02em' }}>
+              <div style={{
+                fontWeight: 900, fontSize: '1.25rem', letterSpacing: '-0.02em',
+                background: 'linear-gradient(135deg, #ffffff 0%, #34d399 50%, #38bdf8 100%)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              }}>
                 Grama Mitra
               </div>
-              <span style={{ fontSize: '0.68rem', fontWeight: 800, color: '#38bdf8', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 900, color: '#38bdf8', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                 Officer Panel
               </span>
             </div>
           </Link>
 
           {/* Sidebar Category Subheading Label */}
-          <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.85rem', paddingLeft: '0.5rem' }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: 900, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.95rem', paddingLeft: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 8px #34d399' }}></span>
             Officer Scopes & Portals
           </div>
 
           {/* Subheadings Nav List */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
             {[
-              { id: 'villages', label: 'Assigned Villages', icon: Building2 },
-              { id: 'handoffs', label: 'Handoff Escalations', icon: AlertTriangle, count: handoffs.filter(h => h.status !== 'Resolved').length || 8 },
-              { id: 'agri', label: 'Area Crop Alerts', icon: Activity, count: 4 },
-              { id: 'hotspot-map', label: 'Hotspot Mapping', icon: MapPin },
-              { id: 'schemes', label: 'Scheme Approvals', icon: FileText, count: 34 },
-              { id: 'analytics', label: 'Reports & Trends', icon: BarChart },
+              { id: 'villages', label: 'Assigned Villages', icon: Building2, activeBg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.05))', activeBorder: 'rgba(16, 185, 129, 0.5)', activeColor: '#34d399', glow: 'rgba(16, 185, 129, 0.25)' },
+              { id: 'handoffs', label: 'Handoff Escalations', icon: AlertTriangle, count: handoffs.filter(h => h.status !== 'Resolved').length || 8, activeBg: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.05))', activeBorder: 'rgba(245, 158, 11, 0.5)', activeColor: '#fbbf24', glow: 'rgba(245, 158, 11, 0.25)' },
+              { id: 'agri', label: 'Area Crop Alerts', icon: Activity, count: 4, activeBg: 'linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(56, 189, 248, 0.05))', activeBorder: 'rgba(56, 189, 248, 0.5)', activeColor: '#38bdf8', glow: 'rgba(56, 189, 248, 0.25)' },
+              { id: 'hotspot-map', label: 'Hotspot Mapping', icon: MapPin, activeBg: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.3))', activeBorder: '#34d399', activeColor: '#34d399', glow: 'rgba(52, 211, 153, 0.4)' },
+              { id: 'schemes', label: 'Scheme Approvals', icon: FileText, count: 34, activeBg: 'linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(168, 85, 247, 0.05))', activeBorder: 'rgba(168, 85, 247, 0.5)', activeColor: '#c084fc', glow: 'rgba(168, 85, 247, 0.25)' },
+              { id: 'analytics', label: 'Reports & Trends', icon: BarChart, activeBg: 'linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(236, 72, 153, 0.05))', activeBorder: 'rgba(236, 72, 153, 0.5)', activeColor: '#f472b6', glow: 'rgba(236, 72, 153, 0.25)' },
             ].map((tab) => {
               const IconComp = tab.icon;
               const isActive = activeTab === tab.id;
@@ -186,43 +199,44 @@ export default function DistrictBlockDashboard() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '0.8rem 0.95rem',
-                    borderRadius: '12px',
-                    background: isActive ? 'rgba(16, 185, 129, 0.15)' : 'transparent',
-                    border: isActive ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid transparent',
-                    color: isActive ? '#34d399' : '#94a3b8',
+                    padding: '0.85rem 1rem',
+                    borderRadius: '14px',
+                    background: isActive ? tab.activeBg : 'rgba(255, 255, 255, 0.02)',
+                    border: isActive ? `1px solid ${tab.activeBorder}` : '1px solid rgba(255, 255, 255, 0.05)',
+                    color: isActive ? tab.activeColor : '#94a3b8',
                     fontWeight: isActive ? 800 : 600,
-                    fontSize: '0.88rem',
+                    fontSize: '0.9rem',
                     cursor: 'pointer',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.25s ease',
                     textAlign: 'left',
                     width: '100%',
+                    boxShadow: isActive ? `0 4px 20px ${tab.glow}` : 'none',
                   }}
                   onMouseEnter={e => {
                     if (!isActive) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
                       e.currentTarget.style.color = '#ffffff';
                     }
                   }}
                   onMouseLeave={e => {
                     if (!isActive) {
-                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
                       e.currentTarget.style.color = '#94a3b8';
                     }
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <IconComp size={18} color={isActive ? '#34d399' : '#64748b'} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                    <IconComp size={19} color={isActive ? tab.activeColor : '#64748b'} />
                     <span>{tab.label}</span>
                   </div>
                   {tab.count > 0 && (
                     <span style={{
-                      padding: '0.15rem 0.5rem',
+                      padding: '0.15rem 0.55rem',
                       borderRadius: '9999px',
-                      background: isActive ? '#10b981' : 'rgba(255, 255, 255, 0.12)',
-                      color: '#ffffff',
-                      fontSize: '0.72rem',
-                      fontWeight: 800,
+                      background: isActive ? tab.activeColor : 'rgba(255, 255, 255, 0.12)',
+                      color: isActive ? '#090d16' : '#ffffff',
+                      fontSize: '0.74rem',
+                      fontWeight: 900,
                     }}>
                       {tab.count}
                     </span>
@@ -234,27 +248,28 @@ export default function DistrictBlockDashboard() {
         </div>
 
         {/* Bottom of Sidebar: User Profile & Logout Section */}
-        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1.15rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.85rem', padding: '0.25rem 0.4rem' }}>
+        <div style={{ borderTop: '1px solid rgba(56, 189, 248, 0.2)', paddingTop: '1.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.95rem', padding: '0.35rem 0.5rem', background: 'rgba(15, 23, 42, 0.6)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.08)' }}>
             <div style={{
-              width: '38px',
-              height: '38px',
+              width: '40px',
+              height: '40px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
-              fontWeight: 800,
-              fontSize: '0.95rem',
+              fontWeight: 900,
+              fontSize: '1rem',
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
             }}>
               {(user?.displayName || 'D')[0].toUpperCase()}
             </div>
             <div style={{ overflow: 'hidden' }}>
-              <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#ffffff', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#ffffff', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                 {user?.displayName || 'District Officer'}
               </div>
-              <div style={{ fontSize: '0.72rem', color: '#38bdf8', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', fontWeight: 600 }}>
+              <div style={{ fontSize: '0.74rem', color: '#38bdf8', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', fontWeight: 700 }}>
                 {selectedDistrict} ({selectedBlock})
               </div>
             </div>
@@ -267,27 +282,30 @@ export default function DistrictBlockDashboard() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.55rem',
-              padding: '0.75rem 1rem',
-              borderRadius: '12px',
-              background: 'rgba(239, 68, 68, 0.12)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              gap: '0.6rem',
+              padding: '0.8rem 1rem',
+              borderRadius: '14px',
+              background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(185, 28, 28, 0.2) 100%)',
+              border: '1px solid rgba(239, 68, 68, 0.4)',
               color: '#fca5a5',
-              fontSize: '0.88rem',
-              fontWeight: 700,
+              fontSize: '0.9rem',
+              fontWeight: 800,
               cursor: 'pointer',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.25s ease',
+              boxShadow: '0 4px 15px rgba(239, 68, 68, 0.15)',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(185, 28, 28, 0.35) 100%)';
               e.currentTarget.style.borderColor = '#ef4444';
+              e.currentTarget.style.color = '#ffffff';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.12)';
-              e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(185, 28, 28, 0.2) 100%)';
+              e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+              e.currentTarget.style.color = '#fca5a5';
             }}
           >
-            <LogOut size={16} />
+            <LogOut size={17} />
             <span>Logout</span>
           </button>
         </div>
@@ -297,94 +315,122 @@ export default function DistrictBlockDashboard() {
       <main style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
         {/* Top Header Bar */}
         <header style={{
-          background: '#0f172a',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          padding: '0.85rem 2rem',
+          background: 'rgba(11, 20, 36, 0.85)',
+          borderBottom: '1px solid rgba(56, 189, 248, 0.2)',
+          padding: '0.95rem 2.25rem',
           position: 'sticky',
           top: 0,
           zIndex: 90,
-          backdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(20px)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
               <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-                padding: '0.3rem 0.85rem', background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '9999px',
-                fontSize: '0.8rem', fontWeight: 700, color: '#34d399',
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                padding: '0.4rem 1rem', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
+                border: '1px solid rgba(52, 211, 153, 0.4)', borderRadius: '9999px',
+                fontSize: '0.85rem', fontWeight: 800, color: '#34d399',
+                boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)',
               }}>
-                <Building2 size={14} />
+                <Building2 size={16} color="#34d399" />
                 <span>District / Block Officer Dashboard</span>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{ fontSize: '0.82rem', color: '#94a3b8', fontWeight: 600 }}>
-                ID: <span style={{ color: '#ffffff' }}>{user?.officerId || 'THILSHANTH45'}</span> | {selectedDistrict} District ({selectedBlock} Block)
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.15rem' }}>
+              <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 700 }}>
+                ID: <span style={{ color: '#ffffff', fontWeight: 900, background: 'rgba(56, 189, 248, 0.15)', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid rgba(56, 189, 248, 0.3)' }}>{user?.officerId || 'THILSHANTH45'}</span> | <span style={{ color: '#38bdf8' }}>{selectedDistrict} District ({selectedBlock} Block)</span>
               </div>
               <button
                 onClick={loadDashboardData}
                 className="btn btn-sm btn-ghost"
-                style={{ color: '#94a3b8', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px' }}
+                style={{ color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '10px', background: 'rgba(56, 189, 248, 0.1)', padding: '0.4rem' }}
                 title="Refresh Dashboard Data"
               >
-                <RefreshCw size={15} />
+                <RefreshCw size={16} />
               </button>
             </div>
           </div>
         </header>
 
-        <div style={{ padding: '1.75rem 2rem', maxWidth: '1440px', margin: '0 auto' }}>
+        <div style={{ padding: '2rem 2.25rem', maxWidth: '1480px', margin: '0 auto' }}>
         {/* Toast Notification */}
         {actionMessage && (
           <div style={{
-            padding: '0.85rem 1.25rem', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10b981',
-            borderRadius: '12px', color: '#34d399', fontSize: '0.88rem', fontWeight: 600, marginBottom: '1.25rem',
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            padding: '0.95rem 1.35rem', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%)',
+            border: '1px solid #10b981', borderRadius: '14px', color: '#34d399', fontSize: '0.92rem', fontWeight: 700, marginBottom: '1.5rem',
+            display: 'flex', alignItems: 'center', gap: '0.6rem', boxShadow: '0 4px 20px rgba(16, 185, 129, 0.3)',
           }}>
-            <CheckCircle size={18} /> {actionMessage}
+            <CheckCircle size={20} /> {actionMessage}
           </div>
         )}
 
         {/* Global Filter Bar */}
         <div style={{
-          background: '#0f172a', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px',
-          padding: '1.25rem 1.5rem', marginBottom: '1.75rem', display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem',
+          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(26, 38, 64, 0.85) 100%)',
+          border: '1px solid rgba(56, 189, 248, 0.35)',
+          borderRadius: '20px',
+          padding: '1.35rem 1.65rem',
+          marginBottom: '1.85rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1.25rem',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(16px)',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', fontWeight: 700, color: '#34d399' }}>
-            <Filter size={18} /> Administrative Scope & Filters:
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.98rem', fontWeight: 900 }}>
+            <Filter size={20} color="#34d399" />
+            <span style={{
+              background: 'linear-gradient(90deg, #34d399, #38bdf8)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            }}>
+              Administrative Scope & Filters:
+            </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
             <div>
-              <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginRight: '0.5rem' }}>District:</span>
+              <span style={{ fontSize: '0.82rem', color: '#94a3b8', marginRight: '0.6rem', fontWeight: 700 }}>District:</span>
               <select
                 value={selectedDistrict}
                 onChange={e => setSelectedDistrict(e.target.value)}
-                style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0.4rem 0.75rem', borderRadius: '8px', fontSize: '0.85rem', outline: 'none' }}
+                style={{
+                  background: '#0d1829', border: '1px solid rgba(56, 189, 248, 0.4)', color: '#fff',
+                  padding: '0.5rem 0.85rem', borderRadius: '12px', fontSize: '0.88rem', fontWeight: 800, outline: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                }}
               >
                 {districts.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
 
             <div>
-              <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginRight: '0.5rem' }}>Block:</span>
+              <span style={{ fontSize: '0.82rem', color: '#94a3b8', marginRight: '0.6rem', fontWeight: 700 }}>Block:</span>
               <select
                 value={selectedBlock}
                 onChange={e => setSelectedBlock(e.target.value)}
-                style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0.4rem 0.75rem', borderRadius: '8px', fontSize: '0.85rem', outline: 'none' }}
+                style={{
+                  background: '#0d1829', border: '1px solid rgba(56, 189, 248, 0.4)', color: '#fff',
+                  padding: '0.5rem 0.85rem', borderRadius: '12px', fontSize: '0.88rem', fontWeight: 800, outline: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                }}
               >
                 {blocks.map(b => <option key={b} value={b}>{b}</option>)}
               </select>
             </div>
 
             <div>
-              <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginRight: '0.5rem' }}>Village:</span>
+              <span style={{ fontSize: '0.82rem', color: '#94a3b8', marginRight: '0.6rem', fontWeight: 700 }}>Village:</span>
               <select
                 value={selectedVillageFilter}
                 onChange={e => setSelectedVillageFilter(e.target.value)}
-                style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0.4rem 0.75rem', borderRadius: '8px', fontSize: '0.85rem', outline: 'none' }}
+                style={{
+                  background: '#0d1829', border: '1px solid rgba(56, 189, 248, 0.4)', color: '#fff',
+                  padding: '0.5rem 0.85rem', borderRadius: '12px', fontSize: '0.88rem', fontWeight: 800, outline: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                }}
               >
                 <option value="ALL">All Villages ({selectedBlock})</option>
                 {getVillages(selectedDistrict, selectedBlock).map(v => <option key={v} value={v}>{v}</option>)}
@@ -392,11 +438,15 @@ export default function DistrictBlockDashboard() {
             </div>
 
             <div>
-              <span style={{ fontSize: '0.78rem', color: '#94a3b8', marginRight: '0.5rem' }}>Time Period:</span>
+              <span style={{ fontSize: '0.82rem', color: '#94a3b8', marginRight: '0.6rem', fontWeight: 700 }}>Time Period:</span>
               <select
                 value={dateRange}
                 onChange={e => setDateRange(e.target.value)}
-                style={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '0.4rem 0.75rem', borderRadius: '8px', fontSize: '0.85rem', outline: 'none' }}
+                style={{
+                  background: '#0d1829', border: '1px solid rgba(56, 189, 248, 0.4)', color: '#fff',
+                  padding: '0.5rem 0.85rem', borderRadius: '12px', fontSize: '0.88rem', fontWeight: 800, outline: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                }}
               >
                 <option value="7d">Last 7 Days</option>
                 <option value="30d">Last 30 Days</option>
