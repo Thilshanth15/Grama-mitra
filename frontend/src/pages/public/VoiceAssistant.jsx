@@ -887,19 +887,19 @@ export default function VoiceAssistant() {
               </div>
             )}
 
-            {/* Form Card Container */}
+            {/* Form Card Container (White Theme with Rich Color Palettes) */}
             <form onSubmit={handleSchemeSubmit} style={{
-              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 20, 36, 0.98) 100%)',
-              border: '1px solid rgba(56, 189, 248, 0.35)',
+              background: '#ffffff',
+              border: '2px solid #38bdf8',
               borderRadius: '24px',
               padding: '2.5rem',
-              boxShadow: '0 25px 60px rgba(0,0,0,0.8), 0 0 30px rgba(14, 165, 233, 0.15)',
-              backdropFilter: 'blur(20px)',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35), 0 0 40px rgba(56, 189, 248, 0.25)',
+              position: 'relative',
             }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.75rem' }}>
                 {/* Farmer Name */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0284c7', marginBottom: '0.5rem' }}>
                     Farmer Full Name / விவசாயி பெயர் *
                   </label>
                   <input
@@ -909,16 +909,17 @@ export default function VoiceAssistant() {
                     onChange={(e) => setFarmerName(e.target.value)}
                     placeholder="e.g. K. Ramasamy / கே. இராமசாமி"
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
-                      outline: 'none', boxSizing: 'border-box', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                      boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)',
                     }}
                   />
                 </div>
 
                 {/* Mobile Number */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0d9488', marginBottom: '0.5rem' }}>
                     Mobile / Phone Number / தொலைபேசி எண் *
                   </label>
                   <input
@@ -928,106 +929,114 @@ export default function VoiceAssistant() {
                     onChange={(e) => setFarmerPhone(e.target.value)}
                     placeholder="e.g. +91 98421 44510"
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
-                      outline: 'none', boxSizing: 'border-box', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                      boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)',
                     }}
                   />
                 </div>
 
                 {/* District */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#7c3aed', marginBottom: '0.5rem' }}>
                     District / மாவட்டம்
                   </label>
                   <select
                     value={formDistrict}
                     onChange={(e) => setFormDistrict(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
-                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    {districts.map((d) => <option key={d} value={d}>{d}</option>)}
+                    {districts.map((d) => <option key={d} value={d} style={{ background: '#ffffff', color: '#0f172a' }}>{d}</option>)}
                   </select>
                 </div>
 
                 {/* Block */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#2563eb', marginBottom: '0.5rem' }}>
                     Block / வட்டம்
                   </label>
                   <select
                     value={formBlock}
                     onChange={(e) => setFormBlock(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
-                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    {availableBlocks.map((b) => <option key={b} value={b}>{b}</option>)}
+                    {availableBlocks.map((b) => <option key={b} value={b} style={{ background: '#ffffff', color: '#0f172a' }}>{b}</option>)}
                   </select>
                 </div>
 
                 {/* Village */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#059669', marginBottom: '0.5rem' }}>
                     Village / கிராமம்
                   </label>
                   <select
                     value={formVillage}
                     onChange={(e) => setFormVillage(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
-                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    {availableVillages.map((v) => <option key={v} value={v}>{v}</option>)}
+                    {availableVillages.map((v) => <option key={v} value={v} style={{ background: '#ffffff', color: '#0f172a' }}>{v}</option>)}
                   </select>
                 </div>
 
                 {/* Scheme Choice */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#d97706', marginBottom: '0.5rem' }}>
                     Target Scheme & Service / திட்டம் தேர்வு *
                   </label>
                   <select
                     value={selectedScheme}
                     onChange={(e) => setSelectedScheme(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
-                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    <option value="PM-KISAN installment verification">PM-KISAN installment verification (ரூ. 6,000 / ஆண்டு)</option>
-                    <option value="PMFBY Crop Insurance Claim (Kharif)">PMFBY Crop Insurance Claim / பயிர் காப்பீடு</option>
-                    <option value="Kisan Credit Card (KCC) Loan Subvention">Kisan Credit Card (KCC) Loan Subvention / கிசான் கடன் அட்டை</option>
-                    <option value="Drip Irrigation Subsidized Kit (PMKSY)">Drip Irrigation Subsidized Kit (PMKSY) / சொட்டு நீர் பாசனம்</option>
-                    <option value="Subsidized Fertilizer & Quality Seed Supply">Subsidized Fertilizer & Quality Seed Supply / மானிய உரம்</option>
+                    <option value="PM-KISAN installment verification" style={{ background: '#ffffff', color: '#0f172a' }}>PM-KISAN installment verification (ரூ. 6,000 / ஆண்டு)</option>
+                    <option value="PMFBY Crop Insurance Claim (Kharif)" style={{ background: '#ffffff', color: '#0f172a' }}>PMFBY Crop Insurance Claim / பயிர் காப்பீடு</option>
+                    <option value="Kisan Credit Card (KCC) Loan Subvention" style={{ background: '#ffffff', color: '#0f172a' }}>Kisan Credit Card (KCC) Loan Subvention / கிசான் கடன் அட்டை</option>
+                    <option value="Drip Irrigation Subsidized Kit (PMKSY)" style={{ background: '#ffffff', color: '#0f172a' }}>Drip Irrigation Subsidized Kit (PMKSY) / சொட்டு நீர் பாசனம்</option>
+                    <option value="Subsidized Fertilizer & Quality Seed Supply" style={{ background: '#ffffff', color: '#0f172a' }}>Subsidized Fertilizer & Quality Seed Supply / மானிய உரம்</option>
                   </select>
                 </div>
               </div>
 
               {/* Document Verification Checkboxes */}
-              <div style={{ background: 'rgba(9, 21, 36, 0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '1.25rem 1.5rem', marginBottom: '2rem' }}>
-                <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%)',
+                border: '1.5px solid #6ee7b7',
+                borderRadius: '16px',
+                padding: '1.25rem 1.5rem',
+                marginBottom: '2rem',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.08)',
+              }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#047857', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
                   Document Checklist & Verification Status / இணைக்கப்பட்ட சான்றுகள்:
                 </div>
                 <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
-                    <input type="checkbox" checked={docPatta} onChange={(e) => setDocPatta(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#0f172a', fontWeight: 700 }}>
+                    <input type="checkbox" checked={docPatta} onChange={(e) => setDocPatta(e.target.checked)} style={{ accentColor: '#059669', width: 18, height: 18 }} />
                     <span>Patta / Chitta Land Record (பட்டா / சிட்டா)</span>
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
-                    <input type="checkbox" checked={docAadhar} onChange={(e) => setDocAadhar(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#0f172a', fontWeight: 700 }}>
+                    <input type="checkbox" checked={docAadhar} onChange={(e) => setDocAadhar(e.target.checked)} style={{ accentColor: '#059669', width: 18, height: 18 }} />
                     <span>Aadhar eKYC Linked (ஆதார் இணைப்பு)</span>
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
-                    <input type="checkbox" checked={docBank} onChange={(e) => setDocBank(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#0f172a', fontWeight: 700 }}>
+                    <input type="checkbox" checked={docBank} onChange={(e) => setDocBank(e.target.checked)} style={{ accentColor: '#059669', width: 18, height: 18 }} />
                     <span>Bank Passbook NOC (வங்கி கணக்கு நகல்)</span>
                   </label>
                 </div>
@@ -1040,8 +1049,8 @@ export default function VoiceAssistant() {
                   style={{
                     padding: '1rem 2.5rem',
                     borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
-                    border: '1px solid rgba(52, 211, 153, 0.6)',
+                    background: 'linear-gradient(135deg, #059669 0%, #0284c7 100%)',
+                    border: 'none',
                     color: '#ffffff',
                     fontWeight: 900,
                     fontSize: '1.05rem',
@@ -1049,16 +1058,16 @@ export default function VoiceAssistant() {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    boxShadow: '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)',
+                    boxShadow: '0 8px 25px rgba(2, 132, 199, 0.4), 0 4px 12px rgba(5, 150, 105, 0.3)',
                     transition: 'all 0.25s ease',
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.7)';
+                    e.currentTarget.style.boxShadow = '0 12px 35px rgba(2, 132, 199, 0.55)';
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.transform = 'none';
-                    e.currentTarget.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(2, 132, 199, 0.4), 0 4px 12px rgba(5, 150, 105, 0.3)';
                   }}
                 >
                   <Send size={20} color="#ffffff" />
