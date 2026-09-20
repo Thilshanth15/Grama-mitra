@@ -89,74 +89,221 @@ export default function VillageOfficerDashboard() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#051317', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
-      {/* Top Header Bar */}
-      <header style={{
-        background: '#0a1e24',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-        padding: '0.85rem 2rem',
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#051317', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
+      {/* ── LEFT SIDEBAR (Red Rectangle Box Area) ── */}
+      <aside style={{
+        width: '270px',
+        minWidth: '270px',
+        background: 'linear-gradient(180deg, #0a1e24 0%, #051317 100%)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: '1.5rem 1.15rem',
         position: 'sticky',
         top: 0,
+        height: '100vh',
+        boxSizing: 'border-box',
         zIndex: 100,
-        backdropFilter: 'blur(12px)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-          {/* Logo & Village Tag */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none' }}>
-              <div style={{ width: 34, height: 34, borderRadius: '10px', background: 'linear-gradient(135deg, #0284c7, #0369a1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Home size={20} color="#fff" />
-              </div>
-              <span style={{ fontWeight: 800, fontSize: '1.15rem', color: '#fff' }}>Grama Mitra</span>
-            </Link>
-            <span style={{ height: 20, width: 1, background: 'rgba(255,255,255,0.2)' }} />
+        <div>
+          {/* Brand Header */}
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', marginBottom: '2rem' }}>
             <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-              padding: '0.25rem 0.75rem', background: 'rgba(56, 189, 248, 0.15)',
-              border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '9999px',
-              fontSize: '0.78rem', fontWeight: 700, color: '#38bdf8',
+              width: '40px',
+              height: '40px',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
             }}>
-              <Home size={13} />
-              <span>Village Officer Dashboard</span>
+              <Home size={22} color="#ffffff" />
             </div>
+            <div>
+              <div style={{ fontWeight: 900, fontSize: '1.15rem', color: '#ffffff', letterSpacing: '-0.02em' }}>
+                Grama Mitra
+              </div>
+              <span style={{ fontSize: '0.68rem', fontWeight: 800, color: '#38bdf8', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                Village Panel
+              </span>
+            </div>
+          </Link>
+
+          {/* Sidebar Category Subheading Label */}
+          <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.85rem', paddingLeft: '0.5rem' }}>
+            Navigation & Subheadings
           </div>
 
-          {/* Officer Details & Location Scope */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#ffffff' }}>
-                {user?.displayName || `Village Officer (${assignedVillage})`}
-              </div>
-              <div style={{ fontSize: '0.75rem', color: '#34d399', fontWeight: 600 }}>
-                Village: <span style={{ color: '#fff', textDecoration: 'underline' }}>{assignedVillage}</span> | Block: {assignedBlock} | District: {assignedDistrict}
-              </div>
-            </div>
-
-            <button
-              onClick={loadData}
-              className="btn btn-sm btn-ghost"
-              style={{ color: '#94a3b8', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px' }}
-              title="Refresh Dashboard"
-            >
-              <RefreshCw size={15} />
-            </button>
-
-            <button
-              onClick={handleLogout}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-                padding: '0.45rem 0.85rem', borderRadius: '8px',
-                background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)',
-                color: '#fca5a5', fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer',
-              }}
-            >
-              <LogOut size={14} /> Logout
-            </button>
-          </div>
+          {/* Subheadings Nav List */}
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+            {[
+              { id: 'farmers', label: 'Farmers Directory', icon: Users },
+              { id: 'requests', label: 'Assistance Requests', icon: Clock, count: 14 },
+              { id: 'crop-issues', label: 'Area Crop Alerts', icon: Leaf, count: villageAgriIssues.length || 2 },
+              { id: 'schemes', label: 'Scheme Approvals', icon: FileText },
+              { id: 'activity', label: 'Reports & Feed', icon: Activity },
+            ].map((tab) => {
+              const IconComp = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0.8rem 0.95rem',
+                    borderRadius: '12px',
+                    background: isActive ? 'rgba(16, 185, 129, 0.15)' : 'transparent',
+                    border: isActive ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid transparent',
+                    color: isActive ? '#34d399' : '#94a3b8',
+                    fontWeight: isActive ? 800 : 600,
+                    fontSize: '0.88rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'left',
+                    width: '100%',
+                  }}
+                  onMouseEnter={e => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.color = '#ffffff';
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.color = '#94a3b8';
+                    }
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <IconComp size={18} color={isActive ? '#34d399' : '#64748b'} />
+                    <span>{tab.label}</span>
+                  </div>
+                  {tab.count > 0 && (
+                    <span style={{
+                      padding: '0.15rem 0.5rem',
+                      borderRadius: '9999px',
+                      background: isActive ? '#10b981' : 'rgba(255, 255, 255, 0.12)',
+                      color: '#ffffff',
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                    }}>
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
         </div>
-      </header>
 
-      <div style={{ padding: '1.75rem 2rem', maxWidth: '1440px', margin: '0 auto' }}>
+        {/* Bottom of Sidebar: User Profile & Logout Section */}
+        <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1.15rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.85rem', padding: '0.25rem 0.4rem' }}>
+            <div style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffffff',
+              fontWeight: 800,
+              fontSize: '0.95rem',
+            }}>
+              {(user?.displayName || 'V')[0].toUpperCase()}
+            </div>
+            <div style={{ overflow: 'hidden' }}>
+              <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#ffffff', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                {user?.displayName || `Officer (${assignedVillage})`}
+              </div>
+              <div style={{ fontSize: '0.72rem', color: '#38bdf8', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', fontWeight: 600 }}>
+                {assignedVillage} Village
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.55rem',
+              padding: '0.75rem 1rem',
+              borderRadius: '12px',
+              background: 'rgba(239, 68, 68, 0.12)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              color: '#fca5a5',
+              fontSize: '0.88rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)';
+              e.currentTarget.style.borderColor = '#ef4444';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'rgba(239, 68, 68, 0.12)';
+              e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+            }}
+          >
+            <LogOut size={16} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* ── MAIN CONTENT AREA ── */}
+      <main style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
+        {/* Top Header Bar */}
+        <header style={{
+          background: '#0a1e24',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          padding: '0.85rem 2rem',
+          position: 'sticky',
+          top: 0,
+          zIndex: 90,
+          backdropFilter: 'blur(12px)',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                padding: '0.3rem 0.85rem', background: 'rgba(56, 189, 248, 0.15)',
+                border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '9999px',
+                fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8',
+              }}>
+                <Home size={14} />
+                <span>Village Officer Dashboard</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ fontSize: '0.82rem', color: '#94a3b8', fontWeight: 600 }}>
+                Village: <span style={{ color: '#34d399', fontWeight: 700 }}>{assignedVillage}</span> ({assignedBlock} Block, {assignedDistrict} District)
+              </div>
+              <button
+                onClick={loadData}
+                className="btn btn-sm btn-ghost"
+                style={{ color: '#94a3b8', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px' }}
+                title="Refresh Dashboard"
+              >
+                <RefreshCw size={15} />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div style={{ padding: '1.75rem 2rem', maxWidth: '1440px', margin: '0 auto' }}>
         {/* Page Title & Subheading Header Block (Matching Image 2) */}
         <div style={{
           display: 'flex',
@@ -718,6 +865,7 @@ export default function VillageOfficerDashboard() {
           </div>
         )}
       </div>
+      </main>
     </div>
   );
 }
