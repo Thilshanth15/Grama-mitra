@@ -233,12 +233,40 @@ export default function Services() {
         overflow: 'hidden',
         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
       }}>
+        {/* Full-Screen Rural Farming Background Video */}
+        <video
+          key="services-snki-video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+          }}
+          src="/video/snki.mp4"
+        />
+
+        {/* Subtle Dark Overlay for Text Readability */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.45)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }} />
+
         {/* Colorful Glowing Orbs */}
         <div className="glow-orb" style={{ top: '-10%', left: '15%', width: '450px', height: '450px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%)' }} />
         <div className="glow-orb" style={{ top: '20%', right: '10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0,0,0,0) 70%)' }} />
         <div className="glow-orb" style={{ bottom: '-10%', left: '40%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(244, 63, 94, 0.18) 0%, rgba(0,0,0,0) 70%)' }} />
 
-        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.625rem', padding: '0.5rem 1.25rem', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.15)', backdropFilter: 'blur(10px)', marginBottom: '2rem', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
             <Sparkles size={16} style={{ color: '#34d399' }} />
             <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(90deg, #34d399, #60a5fa, #fca5a5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
