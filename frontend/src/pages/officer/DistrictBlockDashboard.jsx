@@ -872,7 +872,7 @@ export default function DistrictBlockDashboard() {
 
         {/* Tab Content: Universal AI Voice Satellite Hotspot Mapping */}
         {activeTab === 'hotspot-map' && (
-          <OfficerSatelliteMap officerDistrict={selectedDistrict} officerBlock={selectedBlock} />
+          <OfficerSatelliteMap officerDistrict={selectedDistrict} officerBlock={selectedBlock} officerVillage={selectedVillageFilter} />
         )}
       </div>
       </main>

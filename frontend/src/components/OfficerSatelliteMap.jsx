@@ -46,7 +46,7 @@ function DynamicMapController({ center, zoom }) {
   return null;
 }
 
-export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', officerBlock = 'Kumbakonam' }) {
+export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', officerBlock = 'Kumbakonam', officerVillage = 'ALL' }) {
   // Voice & Navigation State
   const [locationQuery, setLocationQuery] = useState('');
   const [transcript, setTranscript] = useState('');
@@ -56,6 +56,8 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
   const [mapMode, setMapMode] = useState('satellite'); // 'satellite' | 'street'
   const [errorMsg, setErrorMsg] = useState('');
   const [clarificationMsg, setClarificationMsg] = useState('');
+
+  const lastSyncedRef = useRef('');
 
   // Geocoded Result (Default to Thanjavur / Kumbakonam area, expandable to ALL India)
   const [geocodedData, setGeocodedData] = useState({
@@ -106,6 +108,15 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
       const data = await response.json();
 
       if (!data || data.length === 0) {
+        // Fallback retry if sub-location failed
+        if (rawQuery.includes(',')) {
+          const parts = rawQuery.split(',');
+          const fallbackQuery = parts.slice(1).join(',').trim();
+          if (fallbackQuery) {
+            setIsGeocoding(false);
+            return geocodeIndiaLocation(fallbackQuery);
+          }
+        }
         setErrorMsg(`No Indian location matching "${rawQuery}" could be found. Try speaking a state, district, block, or village name.`);
         setIsGeocoding(false);
         return;
@@ -220,6 +231,24 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
       setErrorMsg('Speech recognition engine failed to start.');
     }
   };
+
+  // Synchronize Satellite Map automatically when Officer Scope (District, Block, Village) changes
+  useEffect(() => {
+    let target = '';
+    if (officerVillage && officerVillage !== 'ALL') {
+      target = `${officerVillage}, ${officerBlock}, ${officerDistrict}, Tamil Nadu`;
+    } else if (officerBlock && officerBlock !== 'ALL') {
+      target = `${officerBlock}, ${officerDistrict}, Tamil Nadu`;
+    } else if (officerDistrict) {
+      target = `${officerDistrict} District, Tamil Nadu`;
+    }
+
+    if (target && target !== lastSyncedRef.current) {
+      lastSyncedRef.current = target;
+      setLocationQuery(target);
+      geocodeIndiaLocation(target);
+    }
+  }, [officerDistrict, officerBlock, officerVillage]);
 
   const handleTextSubmit = (e) => {
     e.preventDefault();
