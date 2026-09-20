@@ -190,15 +190,16 @@ export default function Home() {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '1.15rem',
-              flexWrap: 'wrap',
-              padding: '0.85rem',
+              gap: '0.85rem',
+              flexWrap: 'nowrap',
+              padding: '0.75rem 1rem',
               background: 'rgba(6, 11, 20, 0.8)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.22)',
               borderRadius: '24px',
               boxShadow: '0 25px 65px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(124, 58, 237, 0.35)',
+              maxWidth: '100%',
             }}>
               {/* Primary Voice AI CTA */}
               <Link
@@ -207,15 +208,15 @@ export default function Home() {
                   background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #6d28d9 100%)',
                   color: '#ffffff',
                   fontWeight: 800,
-                  fontSize: '1.05rem',
-                  padding: '0.95rem 2.25rem 0.95rem 1.35rem',
+                  fontSize: '0.95rem',
+                  padding: '0.85rem 1.6rem 0.85rem 1.1rem',
                   borderRadius: '16px',
                   boxShadow: '0 12px 35px -4px rgba(124, 58, 237, 0.7), 0 0 25px rgba(168, 85, 247, 0.5)',
                   border: '1px solid rgba(255, 255, 255, 0.5)',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.75rem',
-                  letterSpacing: '0.02em',
+                  gap: '0.65rem',
+                  letterSpacing: '0.01em',
                   textDecoration: 'none',
                   transition: 'all 0.25s ease',
                   whiteSpace: 'nowrap',
@@ -233,16 +234,17 @@ export default function Home() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '12px',
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '10px',
                   background: 'rgba(255, 255, 255, 0.3)',
                   border: '1px solid rgba(255, 255, 255, 0.6)',
+                  flexShrink: 0,
                 }}>
-                  <Mic size={20} color="#ffffff" />
+                  <Mic size={18} color="#ffffff" />
                 </span>
                 <span>{t('talkToGrama')}</span>
-                <ArrowRight size={20} color="#ffffff" />
+                <ArrowRight size={18} color="#ffffff" style={{ flexShrink: 0 }} />
               </Link>
 
               {/* Secondary Discovery CTA */}
@@ -253,15 +255,15 @@ export default function Home() {
                   background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.45) 100%)',
                   color: '#ffffff',
                   fontWeight: 800,
-                  fontSize: '1.05rem',
-                  padding: '0.95rem 2.25rem 0.95rem 1.35rem',
+                  fontSize: '0.95rem',
+                  padding: '0.85rem 1.6rem 0.85rem 1.1rem',
                   borderRadius: '16px',
                   border: '1px solid rgba(56, 189, 248, 0.5)',
                   backdropFilter: 'blur(16px)',
-                  letterSpacing: '0.02em',
+                  letterSpacing: '0.01em',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.75rem',
+                  gap: '0.65rem',
                   cursor: 'pointer',
                   textDecoration: 'none',
                   boxShadow: '0 10px 30px -5px rgba(14, 165, 233, 0.4)',
@@ -282,16 +284,17 @@ export default function Home() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '12px',
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '10px',
                   background: 'rgba(56, 189, 248, 0.25)',
                   border: '1px solid rgba(56, 189, 248, 0.5)',
+                  flexShrink: 0,
                 }}>
-                  <Layers size={20} color="#38bdf8" />
+                  <Layers size={18} color="#38bdf8" />
                 </span>
                 <span>{t('exploreServices')}</span>
-                <ChevronRight size={20} color="#38bdf8" />
+                <ChevronRight size={18} color="#38bdf8" style={{ flexShrink: 0 }} />
               </button>
             </div>
           </div>
@@ -870,7 +873,7 @@ export default function Home() {
             <div style={{
               display: 'inline-flex',
               gap: '0.75rem',
-              flexWrap: 'wrap',
+              flexWrap: 'nowrap',
               alignItems: 'center',
               background: 'linear-gradient(135deg, rgba(6, 11, 20, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%)',
               backdropFilter: 'blur(24px)',
