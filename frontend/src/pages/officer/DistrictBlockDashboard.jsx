@@ -13,6 +13,7 @@ import {
   getDistricts, getBlocks, getVillages, VILLAGES_MASTER, DEMO_FARMERS, DEMO_AGRI_ISSUES, DEMO_SCHEME_REQUESTS
 } from '../../data/locationData.js';
 import { getHandoffs, getQueries, getSafetyAlerts } from '../../services/firebase.js';
+import OfficerSatelliteMap from '../../components/OfficerSatelliteMap.jsx';
 
 const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
 
@@ -171,6 +172,7 @@ export default function DistrictBlockDashboard() {
               { id: 'villages', label: 'Assigned Villages', icon: Building2 },
               { id: 'handoffs', label: 'Handoff Escalations', icon: AlertTriangle, count: handoffs.filter(h => h.status !== 'Resolved').length || 8 },
               { id: 'agri', label: 'Area Crop Alerts', icon: Activity, count: 4 },
+              { id: 'hotspot-map', label: 'Hotspot Mapping', icon: MapPin },
               { id: 'schemes', label: 'Scheme Approvals', icon: FileText, count: 34 },
               { id: 'analytics', label: 'Reports & Trends', icon: BarChart },
             ].map((tab) => {
@@ -717,6 +719,11 @@ export default function DistrictBlockDashboard() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Tab Content: Universal AI Voice Satellite Hotspot Mapping */}
+        {activeTab === 'hotspot-map' && (
+          <OfficerSatelliteMap officerDistrict={selectedDistrict} officerBlock={selectedBlock} />
         )}
       </div>
       </main>
