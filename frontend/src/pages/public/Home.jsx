@@ -122,12 +122,31 @@ export default function Home() {
   const { t } = useLanguage();
   const scrollToCTA = (e) => {
     if (e) e.preventDefault();
-    const target = document.getElementById('ask-grama-mitra-cta');
+    const target = document.getElementById('impact-stats-section') || document.getElementById('ask-grama-mitra-cta');
     if (!target) return;
 
-    const navOffset = 60;
+    const navOffset = 76;
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 1200; // 1.2s smooth slow scroll
+    let start = null;
+
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1);
+      const percent = Math.min(progress / duration, 1);
+
+      window.scrollTo(0, startPosition + distance * easeInOutCubic(percent));
+
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
   };
 
   return (
@@ -717,7 +736,7 @@ export default function Home() {
       </section>
 
       {/* ── IMPACT STATS STRIP (Harmonized with Harvest Video Palette) ── */}
-      <section style={{
+      <section id="impact-stats-section" style={{
         position: 'relative',
         background: 'linear-gradient(135deg, #042f2e 0%, #064e3b 30%, #78350f 70%, #451a03 100%)',
         padding: '3.75rem 0',
