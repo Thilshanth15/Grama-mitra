@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Leaf, Building2, Heart, ArrowRight, MessageSquare, CheckCircle, 
@@ -21,7 +21,7 @@ const SERVICES = [
       border: 'rgba(16, 185, 129, 0.3)',
       pillBg: 'rgba(16, 185, 129, 0.1)',
       pillText: '#6ee7b7',
-      cardBg: 'rgba(6, 30, 20, 0.7)',
+      cardBg: 'rgba(6, 30, 20, 0.75)',
     },
     title: 'Agriculture & Pest Guidance',
     tagline: 'Science-backed farming support powered by TNAU knowledge base',
@@ -57,7 +57,7 @@ const SERVICES = [
       border: 'rgba(59, 130, 246, 0.3)',
       pillBg: 'rgba(59, 130, 246, 0.1)',
       pillText: '#93c5fd',
-      cardBg: 'rgba(10, 25, 47, 0.7)',
+      cardBg: 'rgba(10, 25, 47, 0.75)',
     },
     title: 'Government Schemes & Subsidies',
     tagline: 'Eligibility checks, document checklists & step-by-step applications',
@@ -93,7 +93,7 @@ const SERVICES = [
       border: 'rgba(244, 63, 94, 0.3)',
       pillBg: 'rgba(244, 63, 94, 0.1)',
       pillText: '#fca5a5',
-      cardBg: 'rgba(38, 12, 20, 0.7)',
+      cardBg: 'rgba(38, 12, 20, 0.75)',
     },
     title: 'Rural Health & Hygiene Awareness',
     tagline: 'Preventive healthcare advice with automated 108 emergency detection',
@@ -130,7 +130,7 @@ const SERVICES = [
       border: 'rgba(245, 158, 11, 0.3)',
       pillBg: 'rgba(245, 158, 11, 0.1)',
       pillText: '#fde68a',
-      cardBg: 'rgba(35, 23, 6, 0.7)',
+      cardBg: 'rgba(35, 23, 6, 0.75)',
     },
     title: 'Toll-Free Phone IVR & Voice Calls',
     tagline: 'Zero-internet accessibility for basic feature phone users',
@@ -163,7 +163,7 @@ const SERVICES = [
       border: 'rgba(168, 85, 247, 0.3)',
       pillBg: 'rgba(168, 85, 247, 0.1)',
       pillText: '#e9d5ff',
-      cardBg: 'rgba(28, 14, 42, 0.7)',
+      cardBg: 'rgba(28, 14, 42, 0.75)',
     },
     title: 'Officer Escalation & Verification',
     tagline: 'Seamless routing of complex queries to District Officers & VAOs',
@@ -194,6 +194,15 @@ const COMPARISON_FEATURES = [
 
 export default function Services() {
   const [activeTab, setActiveTab] = useState('all');
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(err => {
+        console.log("Video autoplay initialized:", err);
+      });
+    }
+  }, []);
 
   const filteredServices = activeTab === 'all' 
     ? SERVICES 
@@ -201,6 +210,45 @@ export default function Services() {
 
   return (
     <PublicLayout>
+      {/* Fixed Full-Screen Running Background Video */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none',
+        overflow: 'hidden',
+      }}>
+        <video
+          ref={videoRef}
+          key="services-snki-bg-video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            filter: 'brightness(1.1) contrast(1.05)',
+          }}
+          src="/video/snki.mp4"
+        >
+          <source src="/video/snki.mp4" type="video/mp4" />
+          <source src="/video/snki'.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle Dark Translucent Gradient Overlay for Text Readability */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(180deg, rgba(3, 7, 18, 0.45) 0%, rgba(3, 7, 18, 0.25) 50%, rgba(3, 7, 18, 0.55) 100%)',
+          pointerEvents: 'none',
+        }} />
+      </div>
+
       {/* Dynamic Glow Styles */}
       <style>{`
         @keyframes pulseGlow {
@@ -225,50 +273,23 @@ export default function Services() {
         }
       `}</style>
 
-      {/* Hero Section */}
-      <section style={{
-        position: 'relative',
-        background: '#030712',
-        padding: '5rem 0 4rem',
-        overflow: 'hidden',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-        minHeight: '85vh',
-        display: 'flex',
-        alignItems: 'center',
-      }}>
-        {/* Full-Screen Rural Farming Background Video */}
-        <video
-          key="services-snki-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            zIndex: 0,
-            filter: 'brightness(1.12) contrast(1.08)',
-          }}
-          src="/video/snki.mp4"
-        />
-
-        {/* Light Translucent Overlay to ensure text legibility while keeping video clearly visible */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(180deg, rgba(3, 7, 18, 0.3) 0%, rgba(3, 7, 18, 0.15) 50%, rgba(3, 7, 18, 0.45) 100%)',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }} />
-
-        {/* Colorful Glowing Orbs for ambiance */}
-        <div className="glow-orb" style={{ top: '-10%', left: '15%', width: '450px', height: '450px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(0,0,0,0) 70%)' }} />
-        <div className="glow-orb" style={{ top: '20%', right: '10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(0,0,0,0) 70%)' }} />
-        <div className="glow-orb" style={{ bottom: '-10%', left: '40%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(0,0,0,0) 70%)' }} />
+      {/* Main Content Wrapper sitting above running video */}
+      <div style={{ position: 'relative', zIndex: 1, background: 'transparent' }}>
+        {/* Hero Section */}
+        <section style={{
+          position: 'relative',
+          background: 'transparent',
+          padding: '5rem 0 4rem',
+          overflow: 'hidden',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+          minHeight: '85vh',
+          display: 'flex',
+          alignItems: 'center',
+        }}>
+          {/* Colorful Glowing Orbs for ambiance */}
+          <div className="glow-orb" style={{ top: '-10%', left: '15%', width: '450px', height: '450px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(0,0,0,0) 70%)' }} />
+          <div className="glow-orb" style={{ top: '20%', right: '10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(0,0,0,0) 70%)' }} />
+          <div className="glow-orb" style={{ bottom: '-10%', left: '40%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(0,0,0,0) 70%)' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
           {/* Central Ultra-Premium Glassmorphism Card Wrapper */}
@@ -387,7 +408,7 @@ export default function Services() {
       </section>
 
       {/* Services List Section */}
-      <div style={{ background: '#020617', padding: '4rem 0' }}>
+      <div style={{ background: 'rgba(2, 6, 23, 0.35)', padding: '4rem 0', backdropFilter: 'blur(10px)' }}>
         <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
           {filteredServices.map((service, idx) => {
             const IconComp = service.icon;
@@ -586,7 +607,7 @@ export default function Services() {
       </div>
 
       {/* Service Capability Comparison Matrix for Judges */}
-      <section className="section" style={{ background: '#030712', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '5rem 0' }}>
+      <section className="section" style={{ background: 'rgba(3, 7, 18, 0.45)', backdropFilter: 'blur(10px)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', padding: '5rem 0' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', color: '#60a5fa', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
@@ -601,8 +622,9 @@ export default function Services() {
           </div>
 
           <div style={{
-            background: 'rgba(15, 23, 42, 0.6)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: 'rgba(15, 23, 42, 0.65)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
             borderRadius: '24px',
             overflow: 'hidden',
             boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
@@ -643,7 +665,8 @@ export default function Services() {
       {/* Bottom CTA Banner */}
       <section className="section" style={{
         position: 'relative',
-        background: 'linear-gradient(135deg, #064e3b 0%, #0284c7 50%, #4c1d95 100%)',
+        background: 'linear-gradient(135deg, rgba(6, 78, 59, 0.85) 0%, rgba(2, 132, 199, 0.85) 50%, rgba(76, 29, 149, 0.85) 100%)',
+        backdropFilter: 'blur(16px)',
         textAlign: 'center',
         padding: '5rem 0',
         overflow: 'hidden',
@@ -687,6 +710,7 @@ export default function Services() {
           </div>
         </div>
       </section>
+      </div>
     </PublicLayout>
   );
 }
