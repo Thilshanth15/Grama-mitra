@@ -51,6 +51,7 @@ export default function VoiceAssistant() {
   const [speaking, setSpeaking] = useState(false);
   const [isVoiceChatMode, setIsVoiceChatMode] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]);
   const [recognition, setRecognition] = useState(null);
   const [isSpeechSupported, setIsSpeechSupported] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
@@ -294,13 +295,21 @@ export default function VoiceAssistant() {
     setVoiceState(VOICE_STATES.PROCESSING);
     setResult(null);
     try {
-      const res = await sendMessage(text.trim(), { channel: 'Website', image: img, language });
+      const res = await sendMessage(text.trim(), {
+        channel: 'Website',
+        image: img,
+        language: null, // Allow auto detection
+        history: chatHistory,
+      });
       setResult(res);
       setVoiceState(VOICE_STATES.DONE);
 
+      // Save into conversation history for follow-ups
+      setChatHistory(prev => [...prev, { message: text.trim(), response: res.response }]);
+
       if (isVoiceChatMode && !isMuted && res?.response) {
-        const ttsLang = currentLangObj?.ttsLang || (language === 'en' ? 'en-IN' : 'ta-IN');
-        speakText(res.response, ttsLang);
+        const spokenTtsLang = res.ttsLang || (res.detectedLang === 'en' ? 'en-IN' : 'ta-IN');
+        speakText(res.response, spokenTtsLang);
         setSpeaking(true);
       }
 
@@ -485,169 +494,157 @@ export default function VoiceAssistant() {
         }} />
 
         <div className="container-sm" style={{ position: 'relative', zIndex: 2 }}>
-          {/* Top Bar Container with Centered Categories & Top-Right "Voice Chat" Toggle Button */}
+          {/* Category selector + Voice Chat Toggle horizontally beside Health button */}
           <div style={{
             display: 'flex',
+            justify: 'center',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-            marginBottom: '2.5rem',
+            gap: '0.65rem',
+            marginBottom: '3rem',
             flexWrap: 'wrap',
-            position: 'relative',
+            width: '100%',
           }}>
-            {/* Left AI Mode Badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{
-                fontSize: '0.8rem',
-                fontWeight: 800,
-                color: '#38bdf8',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                background: 'rgba(56, 189, 248, 0.12)',
-                padding: '0.35rem 0.85rem',
-                borderRadius: '9999px',
-                border: '1px solid rgba(56, 189, 248, 0.3)',
-              }}>
-                💬 {language === 'en' ? 'ChatGPT AI Mode' : 'பொது அறிவு AI'}
-              </span>
-            </div>
-
-            {/* Category selector — Centered */}
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
-              {CATEGORIES.map(cat => {
-                const isSelected = category === cat.id;
-                const catGlowColor = cat.id === 'all' ? '#a855f7' : cat.id === 'agriculture' ? '#10b981' : cat.id === 'government' ? '#38bdf8' : '#e11d48';
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => setCategory(cat.id)}
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '0.55rem',
-                      padding: '0.65rem 1.35rem',
-                      borderRadius: '16px',
-                      border: `1.5px solid ${isSelected ? catGlowColor : 'rgba(255, 255, 255, 0.14)'}`,
-                      background: isSelected
-                        ? `linear-gradient(135deg, ${catGlowColor}28 0%, rgba(15, 23, 42, 0.8) 100%)`
-                        : 'rgba(255, 255, 255, 0.04)',
-                      backdropFilter: 'blur(16px)',
-                      color: isSelected ? '#ffffff' : 'var(--gray-300)',
-                      fontWeight: isSelected ? 700 : 600,
-                      fontSize: '0.9rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                      boxShadow: isSelected
-                        ? `0 8px 25px -4px ${catGlowColor}66, inset 0 1.5px 1px rgba(255, 255, 255, 0.4)`
-                        : '0 2px 10px rgba(0,0,0,0.3)',
-                      transform: isSelected ? 'translateY(-2px)' : 'none',
-                    }}
-                    onMouseEnter={e => {
-                      if (!isSelected) {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.borderColor = `${catGlowColor}66`;
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                      }
-                    }}
-                    onMouseLeave={e => {
-                      if (!isSelected) {
-                        e.currentTarget.style.transform = 'none';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                      }
-                    }}
-                  >
-                    <span style={{
-                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                      width: '24px', height: '24px', borderRadius: '8px',
-                      background: isSelected ? `${catGlowColor}44` : 'rgba(255,255,255,0.08)',
-                      border: `1px solid ${isSelected ? catGlowColor : 'rgba(255,255,255,0.15)'}`
-                    }}>
-                      <cat.icon size={13} color={isSelected ? catGlowColor : '#ffffff'} />
-                    </span>
-                    <span>{cat.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Right: Top-Right "Voice Chat Mode" Toggle Switch Button (User's red circled feature) */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <button
-                type="button"
-                onClick={() => {
-                  const nextState = !isVoiceChatMode;
-                  setIsVoiceChatMode(nextState);
-                  if (nextState) {
-                    addToast(
-                      language === 'en'
-                        ? '🎙️ Voice Chat Mode ON: AI will read all responses out loud automatically!'
-                        : '🎙️ வாய்ஸ் சாட் பயன்முறை ஆன்: AI பதில்கள் அனைத்தும் உரக்கப் பேசப்படும்!',
-                      'success'
-                    );
-                    if (result?.response) {
-                      const ttsLang = currentLangObj?.ttsLang || (language === 'en' ? 'en-IN' : 'ta-IN');
-                      speakText(result.response, ttsLang);
-                      setSpeaking(true);
-                      setIsMuted(false);
+            {CATEGORIES.map(cat => {
+              const isSelected = category === cat.id;
+              const catGlowColor = cat.id === 'all' ? '#a855f7' : cat.id === 'agriculture' ? '#10b981' : cat.id === 'government' ? '#38bdf8' : '#e11d48';
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setCategory(cat.id)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.55rem',
+                    padding: '0.65rem 1.35rem',
+                    borderRadius: '16px',
+                    border: `1.5px solid ${isSelected ? catGlowColor : 'rgba(255, 255, 255, 0.14)'}`,
+                    background: isSelected
+                      ? `linear-gradient(135deg, ${catGlowColor}28 0%, rgba(15, 23, 42, 0.8) 100%)`
+                      : 'rgba(255, 255, 255, 0.04)',
+                    backdropFilter: 'blur(16px)',
+                    color: isSelected ? '#ffffff' : 'var(--gray-300)',
+                    fontWeight: isSelected ? 700 : 600,
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: isSelected
+                      ? `0 8px 25px -4px ${catGlowColor}66, inset 0 1.5px 1px rgba(255, 255, 255, 0.4)`
+                      : '0 2px 10px rgba(0,0,0,0.3)',
+                    transform: isSelected ? 'translateY(-2px)' : 'none',
+                  }}
+                  onMouseEnter={e => {
+                    if (!isSelected) {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.borderColor = `${catGlowColor}66`;
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
                     }
-                  } else {
-                    stopSpeaking();
-                    setSpeaking(false);
-                    addToast(
-                      language === 'en' ? '⌨️ Switched to Text Mode' : '⌨️ எழுத்து பயன்முறைக்கு மாறப்பட்டது',
-                      'info'
-                    );
+                  }}
+                  onMouseLeave={e => {
+                    if (!isSelected) {
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                    }
+                  }}
+                >
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    width: '24px', height: '24px', borderRadius: '8px',
+                    background: isSelected ? `${catGlowColor}44` : 'rgba(255,255,255,0.08)',
+                    border: `1px solid ${isSelected ? catGlowColor : 'rgba(255,255,255,0.15)'}`
+                  }}>
+                    <cat.icon size={13} color={isSelected ? catGlowColor : '#ffffff'} />
+                  </span>
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
+
+            {/* Voice Chat ON/OFF Toggle Button — Placed Horizontally Beside Health Button */}
+            <button
+              type="button"
+              onClick={() => {
+                const nextState = !isVoiceChatMode;
+                setIsVoiceChatMode(nextState);
+                if (nextState) {
+                  addToast(
+                    language === 'en'
+                      ? '🎙️ Voice Chat Mode ON: AI will read responses out loud in detected language!'
+                      : '🎙️ வாய்ஸ் சாட் பயன்முறை ஆன்: AI பதில்கள் குரல் வழியில் பேசப்படும்!',
+                    'success'
+                  );
+                  if (result?.response) {
+                    const ttsLang = result.ttsLang || (result.detectedLang === 'en' ? 'en-IN' : 'ta-IN');
+                    speakText(result.response, ttsLang);
+                    setSpeaking(true);
+                    setIsMuted(false);
                   }
-                }}
-                title="Toggle Full Voice Chat Mode (Auto-Speech Output)"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.65rem',
-                  padding: '0.65rem 1.25rem',
-                  borderRadius: '9999px',
-                  background: isVoiceChatMode
-                    ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(168, 85, 247, 0.35) 100%)'
-                    : 'rgba(255, 255, 255, 0.08)',
-                  border: isVoiceChatMode
-                    ? '1.5px solid rgba(248, 113, 113, 0.95)'
-                    : '1.5px solid rgba(255, 255, 255, 0.22)',
-                  backdropFilter: 'blur(20px)',
-                  color: isVoiceChatMode ? '#ffffff' : '#e2e8f0',
-                  fontSize: '0.9rem',
-                  fontWeight: 800,
-                  cursor: 'pointer',
-                  boxShadow: isVoiceChatMode
-                    ? '0 0 30px rgba(239, 68, 68, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.6)'
-                    : '0 4px 15px rgba(0,0,0,0.4)',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                }}
-              >
-                <span style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '26px',
-                  height: '26px',
-                  borderRadius: '50%',
-                  background: isVoiceChatMode ? '#ef4444' : 'rgba(255, 255, 255, 0.15)',
-                  boxShadow: isVoiceChatMode ? '0 0 14px #ef4444' : 'none'
-                }}>
-                  {isVoiceChatMode ? <Volume2 size={14} color="#ffffff" /> : <Mic size={14} color="#e2e8f0" />}
-                </span>
-                <span>{language === 'en' ? 'Voice Chat' : 'வாய்ஸ் சாட்'}</span>
-                <span style={{
-                  fontSize: '0.72rem',
-                  padding: '0.2rem 0.5rem',
-                  borderRadius: '9999px',
-                  background: isVoiceChatMode ? '#22c55e' : 'rgba(255, 255, 255, 0.2)',
-                  color: '#ffffff',
-                  fontWeight: 900,
-                  letterSpacing: '0.04em'
-                }}>
-                  {isVoiceChatMode ? 'ON 🟢' : 'OFF ⚪'}
-                </span>
-              </button>
-            </div>
+                } else {
+                  stopSpeaking();
+                  setSpeaking(false);
+                  addToast(
+                    language === 'en' ? '⌨️ Switched to Text Mode' : '⌨️ எழுத்து பயன்முறைக்கு மாறப்பட்டது',
+                    'info'
+                  );
+                }
+              }}
+              title="Toggle Voice Chat Mode (Auto Speech Output)"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.55rem',
+                padding: '0.65rem 1.35rem',
+                borderRadius: '16px',
+                border: isVoiceChatMode
+                  ? '1.5px solid rgba(248, 113, 113, 0.95)'
+                  : '1.5px solid rgba(255, 255, 255, 0.14)',
+                background: isVoiceChatMode
+                  ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(168, 85, 247, 0.35) 100%)'
+                  : 'rgba(255, 255, 255, 0.04)',
+                backdropFilter: 'blur(16px)',
+                color: isVoiceChatMode ? '#ffffff' : 'var(--gray-300)',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: isVoiceChatMode
+                  ? '0 8px 25px -4px rgba(239, 68, 68, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.4)'
+                  : '0 2px 10px rgba(0,0,0,0.3)',
+              }}
+              onMouseEnter={e => {
+                if (!isVoiceChatMode) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                }
+              }}
+              onMouseLeave={e => {
+                if (!isVoiceChatMode) {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                }
+              }}
+            >
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                width: '24px', height: '24px', borderRadius: '8px',
+                background: isVoiceChatMode ? '#ef4444' : 'rgba(255,255,255,0.08)',
+                border: `1px solid ${isVoiceChatMode ? '#ef4444' : 'rgba(255,255,255,0.15)'}`
+              }}>
+                {isVoiceChatMode ? <Volume2 size={13} color="#ffffff" /> : <Mic size={13} color="#ffffff" />}
+              </span>
+              <span>{language === 'en' ? 'Voice Chat' : 'வாய்ஸ் சாட்'}</span>
+              <span style={{
+                fontSize: '0.72rem',
+                padding: '0.15rem 0.45rem',
+                borderRadius: '9999px',
+                background: isVoiceChatMode ? '#22c55e' : 'rgba(255, 255, 255, 0.2)',
+                color: '#ffffff',
+                fontWeight: 900,
+                letterSpacing: '0.04em'
+              }}>
+                {isVoiceChatMode ? 'ON 🟢' : 'OFF ⚪'}
+              </span>
+            </button>
           </div>
 
           {/* Central Voice Mic Orb */}

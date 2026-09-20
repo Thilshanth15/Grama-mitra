@@ -59,16 +59,17 @@ async def generate_response(message: str, context: str, intent: str, language: s
     model, error_reason = _get_gemini_model()
 
     if model:
-        lang_instruction = (
-            "Respond in simple, clear English suitable for rural farmers."
-            if language == "en"
-            else "Respond in simple Tamil (primary) with clear English translation/summary if appropriate."
-        )
+        if language == "en":
+            lang_instruction = "IMPORTANT: Respond COMPLETELY in clear, simple English. Do NOT use Tamil script."
+        elif language == "tanglish":
+            lang_instruction = "IMPORTANT: Respond in simple Tanglish (Tamil language written using Latin/English script) or clear Tamil script with simple explanations."
+        else:
+            lang_instruction = "IMPORTANT: Respond COMPLETELY in clear, simple Tamil script. Do NOT respond in English unless specifically requested by the user."
 
         prompt = f"""{SYSTEM_PROMPT}
 
 INTENT: {intent}
-LANGUAGE PREFERENCE: {language}
+USER LANGUAGE: {language}
 LANGUAGE RULE: {lang_instruction}
 
 KNOWLEDGE CONTEXT:
