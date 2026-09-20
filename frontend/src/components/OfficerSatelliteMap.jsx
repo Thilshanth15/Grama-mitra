@@ -235,12 +235,12 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, rgba(10, 22, 36, 0.95) 0%, rgba(5, 12, 22, 0.98) 100%)',
+      background: 'linear-gradient(135deg, rgba(10, 26, 42, 0.96) 0%, rgba(5, 15, 26, 0.98) 100%)',
       borderRadius: '24px',
-      border: '1px solid rgba(52, 211, 153, 0.35)',
-      padding: '1.75rem',
-      boxShadow: '0 25px 60px rgba(0,0,0,0.8), 0 0 45px rgba(16, 185, 129, 0.15)',
-      backdropFilter: 'blur(20px)',
+      border: '2px solid rgba(52, 211, 153, 0.45)',
+      padding: '1.85rem',
+      boxShadow: '0 25px 60px rgba(0,0,0,0.85), 0 0 50px rgba(16, 185, 129, 0.25)',
+      backdropFilter: 'blur(24px)',
       color: '#ffffff',
     }}>
       {/* ── HEADER TITLE BAR ── */}
@@ -251,75 +251,76 @@ export default function OfficerSatelliteMap({ officerDistrict = 'Thanjavur', off
         flexWrap: 'wrap',
         gap: '1rem',
         marginBottom: '1.75rem',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-        paddingBottom: '1.25rem',
+        borderBottom: '1px solid rgba(56, 189, 248, 0.2)',
+        paddingBottom: '1.35rem',
       }}>
         <div>
           <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.85rem', borderRadius: '9999px',
-            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
-            border: '1px solid rgba(52, 211, 153, 0.5)', color: '#34d399', fontSize: '0.78rem', fontWeight: 800,
-            textTransform: 'uppercase', marginBottom: '0.65rem', boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)',
+            display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.95rem', borderRadius: '9999px',
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25))',
+            border: '1px solid #34d399', color: '#34d399', fontSize: '0.8rem', fontWeight: 900,
+            textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.7rem',
+            boxShadow: '0 0 20px rgba(16, 185, 129, 0.35)',
           }}>
-            <Sparkles size={14} color="#34d399" /> DYNAMIC ALL-INDIA STT & GEOCODING ACTIVE
+            <Sparkles size={15} color="#34d399" /> DYNAMIC ALL-INDIA AI VOICE & GEOCODING ENGINE ACTIVE
           </div>
           <h2 style={{
-            fontSize: '1.75rem', fontWeight: 900, margin: 0, letterSpacing: '-0.02em',
-            display: 'flex', alignItems: 'center', gap: '0.65rem',
-            background: 'linear-gradient(135deg, #ffffff 0%, #6ee7b7 40%, #38bdf8 100%)',
+            fontSize: '1.85rem', fontWeight: 900, margin: 0, letterSpacing: '-0.02em',
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            background: 'linear-gradient(135deg, #ffffff 0%, #6ee7b7 35%, #38bdf8 70%, #c084fc 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
           }}>
-            <Compass size={28} color="#34d399" style={{ filter: 'drop-shadow(0 0 10px rgba(52, 211, 153, 0.6))' }} />
-            Universal AI Voice Satellite Navigation
+            <Compass size={30} color="#34d399" style={{ filter: 'drop-shadow(0 0 12px rgba(52, 211, 153, 0.7))' }} />
+            Universal AI Voice Satellite Navigation & Hotspot Surveillance
           </h2>
-          <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: '0.35rem 0 0', fontWeight: 500 }}>
-            Speak or type ANY state, district, block, or village across India to automatically pan, zoom, and display satellite surveillance data.
+          <p style={{ color: '#cbd5e1', fontSize: '0.92rem', margin: '0.4rem 0 0', fontWeight: 500, lineHeight: 1.5 }}>
+            Autonomous All-India Spatial Intelligence Engine: Speak or type ANY Indian state, district, block, or village to instantly pan, zoom, and inspect real-time satellite telemetry.
           </p>
         </div>
 
         {/* Satellite vs Street Map Mode Toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ display: 'inline-flex', background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '14px', padding: '0.3rem', boxShadow: '0 4px 15px rgba(0,0,0,0.4)' }}>
+          <div style={{ display: 'inline-flex', background: 'rgba(11, 20, 36, 0.95)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '14px', padding: '0.35rem', boxShadow: '0 6px 20px rgba(0,0,0,0.5)' }}>
             <button
               onClick={() => setMapMode('satellite')}
               style={{
-                padding: '0.5rem 1.1rem',
+                padding: '0.55rem 1.25rem',
                 borderRadius: '10px',
                 border: 'none',
-                background: mapMode === 'satellite' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'transparent',
+                background: mapMode === 'satellite' ? 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)' : 'transparent',
                 color: mapMode === 'satellite' ? '#ffffff' : '#94a3b8',
-                fontWeight: 800,
-                fontSize: '0.85rem',
+                fontWeight: 900,
+                fontSize: '0.88rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.45rem',
-                boxShadow: mapMode === 'satellite' ? '0 4px 15px rgba(16, 185, 129, 0.4)' : 'none',
-                transition: 'all 0.2s ease',
+                gap: '0.5rem',
+                boxShadow: mapMode === 'satellite' ? '0 4px 20px rgba(16, 185, 129, 0.5)' : 'none',
+                transition: 'all 0.25s ease',
               }}
             >
-              <Globe size={15} /> Satellite Mode
+              <Globe size={16} /> Satellite Mode
             </button>
 
             <button
               onClick={() => setMapMode('street')}
               style={{
-                padding: '0.5rem 1.1rem',
+                padding: '0.55rem 1.25rem',
                 borderRadius: '10px',
                 border: 'none',
-                background: mapMode === 'street' ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' : 'transparent',
+                background: mapMode === 'street' ? 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)' : 'transparent',
                 color: mapMode === 'street' ? '#ffffff' : '#94a3b8',
-                fontWeight: 800,
-                fontSize: '0.85rem',
+                fontWeight: 900,
+                fontSize: '0.88rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.45rem',
-                boxShadow: mapMode === 'street' ? '0 4px 15px rgba(59, 130, 246, 0.4)' : 'none',
-                transition: 'all 0.2s ease',
+                gap: '0.5rem',
+                boxShadow: mapMode === 'street' ? '0 4px 20px rgba(59, 130, 246, 0.5)' : 'none',
+                transition: 'all 0.25s ease',
               }}
             >
-              <Layers size={15} /> Street Map
+              <Layers size={16} /> Street Map
             </button>
           </div>
         </div>

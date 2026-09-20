@@ -315,39 +315,41 @@ export default function DistrictBlockDashboard() {
       <main style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
         {/* Top Header Bar */}
         <header style={{
-          background: 'rgba(11, 20, 36, 0.85)',
-          borderBottom: '1px solid rgba(56, 189, 248, 0.2)',
+          background: 'rgba(11, 22, 40, 0.9)',
+          borderBottom: '1px solid rgba(56, 189, 248, 0.25)',
           padding: '0.95rem 2.25rem',
           position: 'sticky',
           top: 0,
           zIndex: 90,
-          backdropFilter: 'blur(20px)',
+          backdropFilter: 'blur(24px)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
               <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.4rem 1rem', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
-                border: '1px solid rgba(52, 211, 153, 0.4)', borderRadius: '9999px',
-                fontSize: '0.85rem', fontWeight: 800, color: '#34d399',
-                boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)',
+                display: 'inline-flex', alignItems: 'center', gap: '0.55rem',
+                padding: '0.45rem 1.1rem', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25))',
+                border: '1px solid #34d399', borderRadius: '9999px',
+                fontSize: '0.88rem', fontWeight: 900, color: '#34d399',
+                boxShadow: '0 0 18px rgba(16, 185, 129, 0.3)',
+                letterSpacing: '0.02em',
               }}>
-                <Building2 size={16} color="#34d399" />
-                <span>District / Block Officer Dashboard</span>
+                <Building2 size={17} color="#34d399" />
+                <span>NATIONAL COMMAND PORTAL — DISTRICT & BLOCK ADMINISTRATION</span>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.15rem' }}>
-              <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 700 }}>
-                ID: <span style={{ color: '#ffffff', fontWeight: 900, background: 'rgba(56, 189, 248, 0.15)', padding: '0.2rem 0.5rem', borderRadius: '6px', border: '1px solid rgba(56, 189, 248, 0.3)' }}>{user?.officerId || 'THILSHANTH45'}</span> | <span style={{ color: '#38bdf8' }}>{selectedDistrict} District ({selectedBlock} Block)</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+              <div style={{ fontSize: '0.88rem', color: '#cbd5e1', fontWeight: 700 }}>
+                OFFICER ID: <span style={{ color: '#ffffff', fontWeight: 900, background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(99, 102, 241, 0.25))', padding: '0.25rem 0.65rem', borderRadius: '8px', border: '1px solid rgba(56, 189, 248, 0.4)' }}>{user?.officerId || 'THILSHANTH45'}</span> | <span style={{ color: '#38bdf8', fontWeight: 800 }}>{selectedDistrict} District ({selectedBlock} Block)</span>
               </div>
               <button
                 onClick={loadDashboardData}
                 className="btn btn-sm btn-ghost"
-                style={{ color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '10px', background: 'rgba(56, 189, 248, 0.1)', padding: '0.4rem' }}
-                title="Refresh Dashboard Data"
+                style={{ color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '10px', background: 'rgba(56, 189, 248, 0.15)', padding: '0.45rem', cursor: 'pointer' }}
+                title="Refresh Live Telemetry Data"
               >
-                <RefreshCw size={16} />
+                <RefreshCw size={17} />
               </button>
             </div>
           </div>
@@ -367,8 +369,9 @@ export default function DistrictBlockDashboard() {
 
         {/* Global Filter Bar */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(26, 38, 64, 0.85) 100%)',
-          border: '1px solid rgba(56, 189, 248, 0.35)',
+          background: 'linear-gradient(135deg, rgba(15, 28, 48, 0.95) 0%, rgba(20, 38, 66, 0.95) 100%)',
+          border: '1px solid rgba(56, 189, 248, 0.4)',
+          borderTop: '3px solid #34d399',
           borderRadius: '20px',
           padding: '1.35rem 1.65rem',
           marginBottom: '1.85rem',
@@ -377,16 +380,17 @@ export default function DistrictBlockDashboard() {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '1.25rem',
-          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.4)',
-          backdropFilter: 'blur(16px)',
+          boxShadow: '0 12px 35px rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(20px)',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.98rem', fontWeight: 900 }}>
-            <Filter size={20} color="#34d399" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '1rem', fontWeight: 900 }}>
+            <Filter size={21} color="#34d399" style={{ filter: 'drop-shadow(0 0 8px rgba(52, 211, 153, 0.6))' }} />
             <span style={{
-              background: 'linear-gradient(90deg, #34d399, #38bdf8)',
+              background: 'linear-gradient(90deg, #ffffff 0%, #34d399 50%, #38bdf8 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              letterSpacing: '-0.01em',
             }}>
-              Administrative Scope & Filters:
+              Administrative Jurisdiction & Spatial Filters:
             </span>
           </div>
 
