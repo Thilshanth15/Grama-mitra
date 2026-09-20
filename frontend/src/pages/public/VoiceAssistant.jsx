@@ -887,14 +887,17 @@ export default function VoiceAssistant() {
               </div>
             )}
 
-            {/* Form Card Container (Ultra-Premium Dark Glassmorphism Theme) */}
+            {/* Form Card Container (Cinematic Thai Farmer Background Theme) */}
             <form onSubmit={handleSchemeSubmit} style={{
-              background: 'linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(8, 18, 32, 0.98) 100%)',
-              border: '1px solid rgba(56, 189, 248, 0.35)',
+              backgroundImage: `linear-gradient(135deg, rgba(8, 20, 34, 0.85) 0%, rgba(4, 12, 22, 0.92) 100%), url("/video/Thai Farmer  Working in farming by sutiponmm.jpg")`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              border: '1.5px solid rgba(56, 189, 248, 0.45)',
               borderRadius: '24px',
               padding: '2.5rem',
-              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(14, 165, 233, 0.15)',
-              backdropFilter: 'blur(20px)',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(14, 165, 233, 0.25)',
+              backdropFilter: 'blur(10px)',
               position: 'relative',
             }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.75rem' }}>
