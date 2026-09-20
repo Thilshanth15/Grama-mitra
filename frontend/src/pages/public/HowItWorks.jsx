@@ -361,9 +361,11 @@ export default function HowItWorks() {
             position: 'absolute',
             top: 0,
             left: 0,
-            width: '100%',
-            height: '100%',
+            width: '108%',
+            height: '108%',
             objectFit: 'cover',
+            transform: 'scale(1.08)',
+            transformOrigin: 'top left',
             zIndex: 0,
           }}
           src="/video/snki.mp4"

@@ -230,9 +230,11 @@ export default function Services() {
           playsInline
           preload="auto"
           style={{
-            width: '100%',
-            height: '100%',
+            width: '108%',
+            height: '108%',
             objectFit: 'cover',
+            transform: 'scale(1.08)',
+            transformOrigin: 'top left',
             filter: 'brightness(1.1) contrast(1.05)',
           }}
           src="/video/snki.mp4"
