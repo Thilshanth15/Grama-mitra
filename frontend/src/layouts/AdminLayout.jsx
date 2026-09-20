@@ -10,8 +10,8 @@ export default function AdminLayout({ children, title }) {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#050c07' }}>
-        <div className="spinner" style={{ width: 36, height: 36, borderColor: '#10b981', borderTopColor: 'transparent' }} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--gray-50)' }}>
+        <div className="spinner" style={{ width: 36, height: 36 }} />
       </div>
     );
   }
@@ -19,46 +19,26 @@ export default function AdminLayout({ children, title }) {
   if (!user) return <Navigate to="/login" replace />;
 
   return (
-    <div className="admin-layout" style={{
-      background: 'linear-gradient(135deg, #040d07 0%, #07150c 50%, #030805 100%)',
-      minHeight: '100vh',
-      color: '#ffffff',
-      position: 'relative',
-    }}>
-      {/* Subtle ambient green glow overlay */}
-      <div style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.07) 0%, rgba(0, 0, 0, 0) 70%)',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
-
+    <div className="admin-layout">
       <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      
-      <div className="admin-main" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Top bar for mobile menu & quick actions */}
-        <header className="admin-topbar" style={{
-          background: 'rgba(4, 13, 7, 0.75)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-        }}>
+      <div className="admin-main">
+        {/* Top bar */}
+        <header className="admin-topbar">
           <div className="admin-topbar-inner">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <button
                 onClick={() => setSidebarOpen(true)}
-                style={{ padding: '0.375rem', borderRadius: '8px', cursor: 'pointer', border: 'none', background: 'rgba(255,255,255,0.06)', color: '#ffffff' }}
+                style={{ display: 'none', padding: '0.375rem', borderRadius: 'var(--radius-md)', cursor: 'pointer', border: 'none', background: 'none', color: 'var(--gray-600)' }}
                 className="mobile-menu-toggle"
               >
                 <Menu size={20} />
               </button>
               <div>
-                <h1 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-                  {title || 'Officer Dashboard'}
+                <h1 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--gray-900)', lineHeight: 1 }}>
+                  {title || 'Admin Dashboard'}
                 </h1>
-                <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: 2 }}>
-                  Grama Mitra — Regional Officer Surveillance
+                <p style={{ fontSize: '0.75rem', color: 'var(--gray-500)', marginTop: 2 }}>
+                  Grama Mitra — Administration
                 </p>
               </div>
             </div>
@@ -66,37 +46,36 @@ export default function AdminLayout({ children, title }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.4rem 0.85rem',
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '10px',
-                color: '#94a3b8',
-                fontSize: '0.85rem',
+                padding: '0.375rem 0.875rem',
+                background: 'var(--gray-100)',
+                borderRadius: 'var(--radius-lg)',
+                color: 'var(--gray-500)',
+                fontSize: '0.875rem',
               }}>
                 <Search size={15} />
-                <span>Search surveillance data…</span>
+                <span>Search…</span>
               </div>
               <button style={{
                 position: 'relative', padding: '0.5rem',
-                borderRadius: '10px', border: '1px solid rgba(255,255,255,0.1)',
-                background: 'rgba(255, 255, 255, 0.06)', cursor: 'pointer', color: '#ffffff',
+                borderRadius: 'var(--radius-lg)', border: 'none',
+                background: 'var(--gray-100)', cursor: 'pointer', color: 'var(--gray-600)',
               }}>
                 <Bell size={18} />
                 <span style={{
                   position: 'absolute', top: 6, right: 6,
                   width: 8, height: 8, borderRadius: '50%',
-                  background: '#ef4444', border: '2px solid #040d07',
+                  background: 'var(--red-500)', border: '2px solid #fff',
                 }} />
               </button>
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.4rem 0.85rem',
-                background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)',
-                borderRadius: '10px',
-                fontSize: '0.8125rem', color: '#34d399', fontWeight: 700,
+                padding: '0.375rem 0.75rem',
+                background: 'var(--green-50)', border: '1px solid var(--green-200)',
+                borderRadius: 'var(--radius-lg)',
+                fontSize: '0.8125rem', color: 'var(--green-700)', fontWeight: 600,
               }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
-                Live Surveillance Active
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green-500)', display: 'inline-block' }} />
+                System Active
               </div>
 
               <Link
@@ -105,26 +84,26 @@ export default function AdminLayout({ children, title }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.4rem',
-                  padding: '0.4rem 0.85rem',
+                  padding: '0.375rem 0.85rem',
                   background: 'rgba(255, 255, 255, 0.06)',
                   border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '10px',
+                  borderRadius: 'var(--radius-lg)',
                   fontSize: '0.8125rem',
                   color: '#ffffff',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   textDecoration: 'none',
                   transition: 'all 0.15s ease',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = 'rgba(16, 185, 129, 0.2)';
-                  e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+                  e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
                   e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
                 }}
-                title="Return to Public Site"
-                aria-label="Exit to Website"
+                title="Return to Public Dashboard"
+                aria-label="Exit to Normal Dashboard"
               >
                 <ExternalLink size={13} />
                 <span>Exit to Website</span>
@@ -134,7 +113,7 @@ export default function AdminLayout({ children, title }) {
         </header>
 
         {/* Content */}
-        <main className="admin-content" style={{ padding: '1.75rem 2rem' }}>
+        <main className="admin-content">
           <div className="admin-container">
             {children}
           </div>

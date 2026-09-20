@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Home, Users, AlertTriangle, CheckCircle, Clock, ShieldAlert,
   Search, Filter, RefreshCw, LogOut, ArrowRight, Activity, FileText,
-  ChevronRight, MapPin, Award, PhoneCall, Check, X, Shield, Eye, Leaf
+  ChevronRight, MapPin, Award, PhoneCall, Check, X, Shield, Eye, Leaf, TrendingUp
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth.js';
 import {
@@ -157,36 +157,56 @@ export default function VillageOfficerDashboard() {
       </header>
 
       <div style={{ padding: '1.75rem 2rem', maxWidth: '1440px', margin: '0 auto' }}>
-        {/* Village Scope Banner */}
+        {/* Page Title & Subheading Header Block (Matching Image 2) */}
         <div style={{
-          background: 'linear-gradient(135deg, #0a2540 0%, #061e24 100%)',
-          border: '1px solid rgba(56, 189, 248, 0.3)',
-          borderRadius: '16px',
-          padding: '1.25rem 1.5rem',
-          marginBottom: '1.75rem',
           display: 'flex',
-          alignItems: 'center',
           justifyContent: 'space-between',
+          alignItems: 'flex-start',
           flexWrap: 'wrap',
-          gap: '1rem',
+          gap: '1.25rem',
+          marginBottom: '2rem',
         }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#38bdf8', fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.2rem' }}>
-              <MapPin size={16} /> Assigned Local Jurisdiction
-            </div>
-            <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
-              Village: {assignedVillage}
+            <h1 style={{ fontSize: '1.85rem', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', margin: 0 }}>
+              Officer Dashboard
             </h1>
-            <div style={{ fontSize: '0.82rem', color: '#94a3b8', marginTop: '0.2rem' }}>
-              All requests, farmer records, and crop health alerts below are strictly scoped for {assignedVillage} Village ({assignedBlock} Block, {assignedDistrict} District).
-            </div>
+            <p style={{ color: '#94a3b8', fontSize: '0.92rem', marginTop: '0.35rem', margin: 0 }}>
+              Regional crop health monitoring and surveillance overview for <span style={{ color: '#38bdf8', fontWeight: 600 }}>{assignedVillage} Village</span> ({assignedBlock} Block, {assignedDistrict} District)
+            </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem', borderRadius: '9999px', background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.4)', fontWeight: 700 }}>
-              Active Officer On Duty
-            </span>
-            <Link to="/officer/district-block/dashboard" style={{ fontSize: '0.8rem', color: '#38bdf8', textDecoration: 'none', fontWeight: 600 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <Link to="/public/map" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.65rem 1.25rem',
+              borderRadius: '12px',
+              background: 'rgba(16, 185, 129, 0.15)',
+              border: '1px solid rgba(16, 185, 129, 0.4)',
+              color: '#34d399',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              textDecoration: 'none',
+              boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)',
+              transition: 'all 0.2s ease',
+            }}>
+              <MapPin size={16} /> View Hotspot Map
+            </Link>
+
+            <Link to="/officer/district-block/dashboard" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.65rem 1.15rem',
+              borderRadius: '12px',
+              background: 'rgba(56, 189, 248, 0.1)',
+              border: '1px solid rgba(56, 189, 248, 0.3)',
+              color: '#38bdf8',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              textDecoration: 'none',
+            }}>
               Switch to District View →
             </Link>
           </div>
@@ -203,51 +223,257 @@ export default function VillageOfficerDashboard() {
           </div>
         )}
 
-        {/* Village Key Stats Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
-          <div style={{ background: '#0c2229', border: '1px solid rgba(56, 189, 248, 0.25)', padding: '1.25rem', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Registered Farmers</span>
-              <Users size={20} color="#38bdf8" />
+        {/* 6 Boxed Stat Cards Grid (Matching Image 2) */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.25rem',
+          marginBottom: '2rem',
+        }}>
+          {/* Card 1: Total Farms Monitored */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '16px',
+            padding: '1.35rem 1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'rgba(16, 185, 129, 0.2)',
+                border: '1px solid rgba(16, 185, 129, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <Users size={22} color="#34d399" />
+              </div>
+              <TrendingUp size={16} color="#64748b" />
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {villageFarmers.length > 0 ? 420 : 380}
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+              12,450
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginTop: '0.25rem' }}>In {assignedVillage} Village</div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+              Total Farms Monitored
+            </div>
           </div>
 
-          <div style={{ background: '#0c2229', border: '1px solid rgba(245, 158, 11, 0.25)', padding: '1.25rem', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Pending Village Requests</span>
-              <Clock size={20} color="#fbbf24" />
+          {/* Card 2: Active Disease Cases */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '16px',
+            padding: '1.35rem 1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'rgba(245, 158, 11, 0.2)',
+                border: '1px solid rgba(245, 158, 11, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <Activity size={22} color="#fbbf24" />
+              </div>
+              <TrendingUp size={16} color="#64748b" />
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              14 Active
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+              1,240
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#fbbf24', marginTop: '0.25rem' }}>Awaiting officer advisory</div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+              Active Disease Cases
+            </div>
           </div>
 
-          <div style={{ background: '#0c2229', border: '1px solid rgba(239, 68, 68, 0.25)', padding: '1.25rem', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Crop & Pest Warnings</span>
-              <Leaf size={20} color="#fca5a5" />
+          {/* Card 3: High-Risk Farms */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '16px',
+            padding: '1.35rem 1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'rgba(239, 68, 68, 0.2)',
+                border: '1px solid rgba(239, 68, 68, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <AlertTriangle size={22} color="#f87171" />
+              </div>
+              <TrendingUp size={16} color="#64748b" />
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {villageAgriIssues.length || 2} Issues
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+              184
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#fca5a5', marginTop: '0.25rem' }}>Yellowing paddy leaf spot</div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+              High-Risk Farms
+            </div>
           </div>
 
-          <div style={{ background: '#0c2229', border: '1px solid rgba(16, 185, 129, 0.25)', padding: '1.25rem', borderRadius: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>PM-KISAN / KCC Status</span>
-              <FileText size={20} color="#34d399" />
+          {/* Card 4: Active Pest Alerts */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '16px',
+            padding: '1.35rem 1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'rgba(244, 63, 94, 0.2)',
+                border: '1px solid rgba(244, 63, 94, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <Leaf size={22} color="#fb7185" />
+              </div>
+              <TrendingUp size={16} color="#64748b" />
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              92% Approved
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+              327
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#34d399', marginTop: '0.25rem' }}>eKYC & Patta verified</div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+              Active Pest Alerts
+            </div>
           </div>
+
+          {/* Card 5: Hotspots Detected */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '16px',
+            padding: '1.35rem 1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'rgba(124, 58, 237, 0.2)',
+                border: '1px solid rgba(124, 58, 237, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <MapPin size={22} color="#a78bfa" />
+              </div>
+              <TrendingUp size={16} color="#64748b" />
+            </div>
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+              17
+            </div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+              Hotspots Detected
+            </div>
+          </div>
+
+          {/* Card 6: Pending Reviews */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '16px',
+            padding: '1.35rem 1.5rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                background: 'rgba(6, 182, 212, 0.2)',
+                border: '1px solid rgba(6, 182, 212, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <CheckCircle size={22} color="#38bdf8" />
+              </div>
+              <TrendingUp size={16} color="#64748b" />
+            </div>
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+              48
+            </div>
+            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+              Pending Reviews
+            </div>
+          </div>
+        </div>
+
+        {/* 4 Boxed Portal Access Cards (Matching Image 2) */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '1.25rem',
+          marginBottom: '2.5rem',
+        }}>
+          {[
+            { title: 'Disease Surveillance', icon: Activity, color: '#fbbf24', bg: 'rgba(245, 158, 11, 0.25)', tab: 'crop-issues' },
+            { title: 'Pest Surveillance', icon: Leaf, color: '#fb7185', bg: 'rgba(244, 63, 94, 0.25)', tab: 'crop-issues' },
+            { title: 'Expert Validation', icon: Shield, color: '#60a5fa', bg: 'rgba(59, 130, 246, 0.25)', tab: 'requests' },
+            { title: 'Preventive Planning', icon: Award, color: '#34d399', bg: 'rgba(16, 185, 129, 0.25)', tab: 'schemes' },
+          ].map((portal, idx) => {
+            const IconComp = portal.icon;
+            return (
+              <div
+                key={idx}
+                onClick={() => setActiveTab(portal.tab)}
+                style={{
+                  background: 'rgba(10, 26, 32, 0.75)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: '16px',
+                  padding: '1.25rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                  backdropFilter: 'blur(16px)',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = portal.color;
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '12px',
+                  background: portal.bg,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '0.85rem',
+                }}>
+                  <IconComp size={20} color={portal.color} />
+                </div>
+                <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+                  {portal.title}
+                </h3>
+                <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.4rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  Access Portal →
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Tab Navigation */}
