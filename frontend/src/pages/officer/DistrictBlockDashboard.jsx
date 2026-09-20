@@ -36,8 +36,24 @@ export default function DistrictBlockDashboard() {
   const [handoffs, setHandoffs] = useState([]);
   const [queries, setQueries] = useState([]);
   const [alerts, setAlerts] = useState([]);
+  const [submittedSchemes, setSubmittedSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionMessage, setActionMessage] = useState('');
+
+  const loadLocalSchemes = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('grama_submitted_schemes') || '[]');
+      setSubmittedSchemes(saved);
+    } catch (e) {
+      console.error('Error loading submitted schemes:', e);
+    }
+  };
+
+  useEffect(() => {
+    loadLocalSchemes();
+    window.addEventListener('scheme-application-submitted', loadLocalSchemes);
+    return () => window.removeEventListener('scheme-application-submitted', loadLocalSchemes);
+  }, []);
 
   useEffect(() => {
     const availableBlocks = getBlocks(selectedDistrict);
@@ -49,6 +65,7 @@ export default function DistrictBlockDashboard() {
 
   const loadDashboardData = async () => {
     setLoading(true);
+    loadLocalSchemes();
     try {
       const [hList, qList, aList] = await Promise.all([
         getHandoffs(),
@@ -78,6 +95,16 @@ export default function DistrictBlockDashboard() {
     setHandoffs(prev => prev.map(h => h.id === id ? { ...h, status: 'Resolved' } : h));
     setActionMessage(`Handoff #${id} resolved successfully.`);
     setTimeout(() => setActionMessage(''), 3000);
+  };
+
+  const handleApproveScheme = (id) => {
+    setSubmittedSchemes(prev => {
+      const updated = prev.map(s => s.id === id ? { ...s, status: 'Verified & Sanctioned' } : s);
+      localStorage.setItem('grama_submitted_schemes', JSON.stringify(updated));
+      return updated;
+    });
+    setActionMessage(`Application #${id.toUpperCase()} approved & verified successfully.`);
+    setTimeout(() => setActionMessage(''), 4000);
   };
 
   // Analytics Chart Data
@@ -722,42 +749,82 @@ export default function DistrictBlockDashboard() {
 
         {/* Tab Content 4: Scheme Approvals */}
         {activeTab === 'schemes' && (
-          <div style={{ background: '#0f172a', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px', padding: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', marginBottom: '1.25rem' }}>
-              Government Scheme Applications & Verification Status
-            </h2>
+          <div style={{ background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 20, 36, 0.98) 100%)', border: '1px solid rgba(168, 85, 247, 0.35)', borderRadius: '20px', padding: '1.75rem', boxShadow: '0 10px 30px rgba(0,0,0,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#fff', margin: 0, display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <FileText size={22} color="#c084fc" /> Government Scheme Applications & Verification Status
+                </h2>
+                <p style={{ color: '#94a3b8', fontSize: '0.85rem', margin: '0.25rem 0 0' }}>
+                  Live applications submitted by farmers from the public site & registered welfare schemes.
+                </p>
+              </div>
+              <span style={{ padding: '0.35rem 0.85rem', borderRadius: '9999px', background: 'rgba(168, 85, 247, 0.2)', border: '1px solid rgba(168, 85, 247, 0.4)', color: '#c084fc', fontSize: '0.8rem', fontWeight: 800 }}>
+                {submittedSchemes.length + DEMO_SCHEME_REQUESTS.length} Applications Total ({submittedSchemes.length} New Live Submissions)
+              </span>
+            </div>
 
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem', textAlign: 'left' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#94a3b8', fontSize: '0.78rem', textTransform: 'uppercase' }}>
-                    <th style={{ padding: '0.75rem 1rem' }}>Farmer Name</th>
-                    <th style={{ padding: '0.75rem 1rem' }}>Village</th>
-                    <th style={{ padding: '0.75rem 1rem' }}>Scheme & Service</th>
-                    <th style={{ padding: '0.75rem 1rem' }}>Document Status</th>
-                    <th style={{ padding: '0.75rem 1rem' }}>Verification State</th>
-                    <th style={{ padding: '0.75rem 1rem' }}>Action</th>
+                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.12)', color: '#94a3b8', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <th style={{ padding: '0.85rem 1rem' }}>Farmer Name</th>
+                    <th style={{ padding: '0.85rem 1rem' }}>Village / Location</th>
+                    <th style={{ padding: '0.85rem 1rem' }}>Scheme & Service</th>
+                    <th style={{ padding: '0.85rem 1rem' }}>Document Status</th>
+                    <th style={{ padding: '0.85rem 1rem' }}>Verification State</th>
+                    <th style={{ padding: '0.85rem 1rem' }}>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {DEMO_SCHEME_REQUESTS.map((sr, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                      <td style={{ padding: '1rem', fontWeight: 700, color: '#fff' }}>{sr.farmerName}</td>
-                      <td style={{ padding: '1rem', color: '#94a3b8' }}>{sr.village}</td>
-                      <td style={{ padding: '1rem', color: '#38bdf8', fontWeight: 600 }}>{sr.scheme}</td>
-                      <td style={{ padding: '1rem', color: '#cbd5e1' }}>{sr.docStatus}</td>
-                      <td style={{ padding: '1rem' }}>
-                        <span style={{ padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 700, background: 'rgba(16,185,129,0.2)', color: '#34d399' }}>
-                          {sr.status}
-                        </span>
-                      </td>
-                      <td style={{ padding: '1rem' }}>
-                        <button className="btn btn-sm btn-outline" style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem' }}>
-                          Review Documents
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {[...submittedSchemes, ...DEMO_SCHEME_REQUESTS]
+                    .filter(sr => selectedVillageFilter === 'ALL' || sr.village === selectedVillageFilter)
+                    .map((sr, i) => {
+                      const isNewSubmission = sr.id && sr.id.startsWith('sr-user-');
+                      return (
+                        <tr key={sr.id || i} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: isNewSubmission ? 'rgba(16, 185, 129, 0.08)' : 'transparent' }}>
+                          <td style={{ padding: '1rem', fontWeight: 800, color: '#fff' }}>
+                            {sr.farmerName}
+                            {isNewSubmission && (
+                              <span style={{ display: 'block', fontSize: '0.72rem', color: '#34d399', fontWeight: 700, marginTop: '0.15rem' }}>
+                                ⚡ New Online Submission
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ padding: '1rem', color: '#94a3b8', fontWeight: 600 }}>{sr.village}</td>
+                          <td style={{ padding: '1rem', color: '#38bdf8', fontWeight: 700 }}>{sr.scheme}</td>
+                          <td style={{ padding: '1rem', color: '#cbd5e1', fontSize: '0.82rem' }}>{sr.docStatus}</td>
+                          <td style={{ padding: '1rem' }}>
+                            <span style={{
+                              padding: '0.25rem 0.65rem', borderRadius: '8px', fontSize: '0.75rem', fontWeight: 800,
+                              background: sr.status.includes('Submitted') ? 'rgba(56, 189, 248, 0.2)' : sr.status.includes('Verified') || sr.status.includes('Approved') ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)',
+                              color: sr.status.includes('Submitted') ? '#38bdf8' : sr.status.includes('Verified') || sr.status.includes('Approved') ? '#34d399' : '#fbbf24',
+                              border: `1px solid ${sr.status.includes('Submitted') ? 'rgba(56, 189, 248, 0.4)' : sr.status.includes('Verified') || sr.status.includes('Approved') ? 'rgba(16, 185, 129, 0.4)' : 'rgba(245, 158, 11, 0.4)'}`,
+                            }}>
+                              {sr.status}
+                            </span>
+                          </td>
+                          <td style={{ padding: '1rem' }}>
+                            {isNewSubmission && sr.status !== 'Verified & Sanctioned' ? (
+                              <button
+                                onClick={() => handleApproveScheme(sr.id)}
+                                style={{
+                                  padding: '0.4rem 0.85rem', borderRadius: '8px', background: 'linear-gradient(135deg, #10b981, #059669)',
+                                  color: '#ffffff', fontWeight: 800, fontSize: '0.78rem', border: 'none', cursor: 'pointer',
+                                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)', display: 'flex', alignItems: 'center', gap: '0.3rem',
+                                }}
+                              >
+                                <Check size={14} /> Verify & Approve
+                              </button>
+                            ) : (
+                              <button className="btn btn-sm btn-outline" style={{ fontSize: '0.75rem', padding: '0.3rem 0.65rem', borderRadius: '8px' }}>
+                                Review Documents
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
