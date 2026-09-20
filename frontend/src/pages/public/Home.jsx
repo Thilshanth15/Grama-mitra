@@ -134,10 +134,17 @@ export default function Home() {
   const [docPatta, setDocPatta] = useState(true);
   const [docAadhar, setDocAadhar] = useState(true);
   const [docBank, setDocBank] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState('Patta_Chitta_LandRecord.pdf');
   const [submitSuccess, setSubmitSuccess] = useState('');
 
   const availableBlocks = getBlocks(formDistrict);
   const availableVillages = getVillages(formDistrict, formBlock);
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setUploadedFileName(e.target.files[0].name);
+    }
+  };
 
   const handleSchemeSubmit = (e) => {
     e.preventDefault();
@@ -150,6 +157,7 @@ export default function Home() {
     if (docPatta) docs.push('Patta & Chitta Verified');
     if (docAadhar) docs.push('Aadhar eKYC Linked');
     if (docBank) docs.push('Bank NOC Attached');
+    if (uploadedFileName) docs.push(`[File: ${uploadedFileName}]`);
     const docStatusText = docs.length > 0 ? docs.join(' • ') : 'Application Received';
 
     const newApp = {
@@ -964,11 +972,34 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Document Verification Checkboxes */}
-            <div style={{ background: 'rgba(9, 21, 36, 0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '1.25rem 1.5rem', marginBottom: '2rem' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
-                Document Checklist & Verification Status / இணைக்கப்பட்ட சான்றுகள்:
+            {/* Document Verification Checklist & File Upload Section */}
+            <div style={{ background: 'rgba(9, 21, 36, 0.8)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '16px', padding: '1.5rem', marginBottom: '2rem' }}>
+              <div style={{ fontSize: '0.9rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <FileText size={18} color="#34d399" />
+                Scheme Document Upload & Checklist / ஆவணங்கள் பதிவேற்றம்:
               </div>
+
+              {/* File Attachment Input Row */}
+              <div style={{ marginBottom: '1.25rem', padding: '1rem', background: 'rgba(15, 23, 42, 0.6)', borderRadius: '12px', border: '1px dashed rgba(56, 189, 248, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+                    Upload Scheme Document / ஆவணப் படம் பதிவேற்றுக (Patta / Aadhar / Chitta PDF or Image) *
+                  </label>
+                  <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
+                    Attached File: <strong style={{ color: '#38bdf8' }}>{uploadedFileName || 'No file selected'}</strong>
+                  </span>
+                </div>
+
+                <label style={{
+                  padding: '0.55rem 1.15rem', borderRadius: '10px', background: 'linear-gradient(135deg, #0284c7, #0369a1)',
+                  color: '#ffffff', fontSize: '0.85rem', fontWeight: 800, cursor: 'pointer', border: '1px solid rgba(56, 189, 248, 0.5)',
+                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.3)', display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                }}>
+                  <FileText size={16} /> Choose File / கோப்பைத் தேர்ந்தெடு
+                  <input type="file" onChange={handleFileChange} accept=".pdf,.png,.jpg,.jpeg" style={{ display: 'none' }} />
+                </label>
+              </div>
+
               <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
                   <input type="checkbox" checked={docPatta} onChange={(e) => setDocPatta(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
