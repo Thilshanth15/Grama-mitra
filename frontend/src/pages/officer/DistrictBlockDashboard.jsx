@@ -406,7 +406,7 @@ export default function DistrictBlockDashboard() {
 
         {/* Key Performance Indicators Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
-          <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '1.25rem', borderRadius: '16px' }}>
+          <div onClick={() => setActiveTab('villages')} style={{ background: activeTab === 'villages' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'villages' ? '1px solid #10b981' : '1px solid rgba(16, 185, 129, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Assigned Villages</span>
               <Building2 size={20} color="#34d399" />
@@ -417,7 +417,7 @@ export default function DistrictBlockDashboard() {
             <div style={{ fontSize: '0.75rem', color: '#34d399', marginTop: '0.25rem' }}>Active monitoring in {selectedBlock}</div>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '1.25rem', borderRadius: '16px' }}>
+          <div onClick={() => setActiveTab('handoffs')} style={{ background: activeTab === 'handoffs' ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'handoffs' ? '1px solid #f59e0b' : '1px solid rgba(245, 158, 11, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Pending Escalations</span>
               <AlertTriangle size={20} color="#fbbf24" />
@@ -428,7 +428,7 @@ export default function DistrictBlockDashboard() {
             <div style={{ fontSize: '0.75rem', color: '#fbbf24', marginTop: '0.25rem' }}>Requires officer review</div>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '1.25rem', borderRadius: '16px' }}>
+          <div onClick={() => setActiveTab('agri')} style={{ background: activeTab === 'agri' ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'agri' ? '1px solid #38bdf8' : '1px solid rgba(56, 189, 248, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Agri & Pest Outbreaks</span>
               <Activity size={20} color="#38bdf8" />
@@ -439,7 +439,7 @@ export default function DistrictBlockDashboard() {
             <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginTop: '0.25rem' }}>Paddy Blast & BPH Warnings</div>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1.25rem', borderRadius: '16px' }}>
+          <div onClick={() => setActiveTab('agri')} style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Health Safety Red Flags</span>
               <ShieldAlert size={20} color="#ef4444" />
@@ -450,7 +450,7 @@ export default function DistrictBlockDashboard() {
             <div style={{ fontSize: '0.75rem', color: '#fca5a5', marginTop: '0.25rem' }}>108 Protocol Triggered</div>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(139, 92, 246, 0.3)', padding: '1.25rem', borderRadius: '16px' }}>
+          <div onClick={() => setActiveTab('schemes')} style={{ background: activeTab === 'schemes' ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'schemes' ? '1px solid #a78bfa' : '1px solid rgba(139, 92, 246, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Scheme Applications</span>
               <FileText size={20} color="#a78bfa" />
@@ -462,37 +462,7 @@ export default function DistrictBlockDashboard() {
           </div>
         </div>
 
-        {/* Tab Navigation Bar */}
-        <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.12)', marginBottom: '1.75rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-          {[
-            { id: 'villages', label: 'Assigned Villages', icon: Building2 },
-            { id: 'handoffs', label: 'Handoff Escalations', icon: AlertTriangle, count: handoffs.filter(h => h.status !== 'Resolved').length },
-            { id: 'agri', label: 'Area Crop Alerts', icon: Activity },
-            { id: 'schemes', label: 'Scheme Approvals', icon: FileText },
-            { id: 'analytics', label: 'Reports & Trends', icon: BarChart },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.65rem 1.2rem', borderRadius: '10px',
-                background: activeTab === tab.id ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(255,255,255,0.05)',
-                color: activeTab === tab.id ? '#ffffff' : '#94a3b8',
-                fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer',
-                whiteSpace: 'nowrap', transition: 'all 0.2s ease',
-              }}
-            >
-              <tab.icon size={16} />
-              <span>{tab.label}</span>
-              {tab.count > 0 && (
-                <span style={{ padding: '0.1rem 0.45rem', borderRadius: '9999px', background: '#ef4444', color: '#fff', fontSize: '0.7rem' }}>
-                  {tab.count}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+
 
         {/* Tab Content 1: Assigned Villages Overview */}
         {activeTab === 'villages' && (

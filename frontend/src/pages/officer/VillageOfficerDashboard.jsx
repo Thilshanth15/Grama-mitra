@@ -623,37 +623,7 @@ export default function VillageOfficerDashboard() {
           })}
         </div>
 
-        {/* Tab Navigation */}
-        <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.12)', marginBottom: '1.75rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-          {[
-            { id: 'farmers', label: 'Village Farmers Directory', icon: Users },
-            { id: 'requests', label: 'Pending Assistance Requests', icon: Clock, count: 14 },
-            { id: 'crop-issues', label: 'Crop Health & Pest Outbreaks', icon: Leaf },
-            { id: 'schemes', label: 'Village Scheme Applications', icon: FileText },
-            { id: 'activity', label: 'Recent Activity Feed', icon: Activity },
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                padding: '0.65rem 1.2rem', borderRadius: '10px',
-                background: activeTab === tab.id ? 'linear-gradient(135deg, #0284c7, #0369a1)' : 'rgba(255,255,255,0.05)',
-                color: activeTab === tab.id ? '#ffffff' : '#94a3b8',
-                fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer',
-                whiteSpace: 'nowrap', transition: 'all 0.2s ease',
-              }}
-            >
-              <tab.icon size={16} />
-              <span>{tab.label}</span>
-              {tab.count > 0 && (
-                <span style={{ padding: '0.1rem 0.45rem', borderRadius: '9999px', background: '#f59e0b', color: '#fff', fontSize: '0.7rem' }}>
-                  {tab.count}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+
 
         {/* Tab Content 1: Village Farmers Directory */}
         {activeTab === 'farmers' && (
