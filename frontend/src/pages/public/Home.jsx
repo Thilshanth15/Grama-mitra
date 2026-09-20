@@ -180,7 +180,7 @@ export default function Home() {
             zIndex: 0,
             filter: 'brightness(1.06) contrast(1.04)',
           }}
-          src="/video/Cinematic_4k_quality_video._The_20260919174842.mp4"
+          src="/video/Cinematic_wide_shot._The_farmers_20260920055822.mp4"
         />
 
         {/* Floating Glass Action Bar at Viewport Bottom */}
