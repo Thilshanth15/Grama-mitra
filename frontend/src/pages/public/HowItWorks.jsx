@@ -146,16 +146,6 @@ const ARCH_LAYERS = [
 ];
 
 export default function HowItWorks() {
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(err => {
-        console.log("HowItWorks video autoplay:", err);
-      });
-    }
-  }, []);
-
   return (
     <PublicLayout>
       {/* Hero Header with Cinematic Ambient AI Mesh */}
@@ -362,13 +352,11 @@ export default function HowItWorks() {
       <section className="section" style={{ position: 'relative', background: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', overflow: 'hidden' }}>
         {/* Full-Screen Rural Farming Background Video */}
         <video
-          ref={videoRef}
-          key="snki-video-player"
+          key="snki-video"
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
           style={{
             position: 'absolute',
             top: 0,
@@ -380,11 +368,8 @@ export default function HowItWorks() {
             transformOrigin: 'top left',
             zIndex: 0,
           }}
-          src="/video/snki'.mp4"
-        >
-          <source src="/video/snki'.mp4" type="video/mp4" />
-          <source src="/video/snki.mp4" type="video/mp4" />
-        </video>
+          src="/video/snki.mp4"
+        />
 
         {/* Subtle Dark Overlay for Text & Card Readability */}
         <div style={{

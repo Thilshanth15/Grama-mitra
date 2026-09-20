@@ -304,8 +304,8 @@ export default function VillageOfficerDashboard() {
         </header>
 
         <div style={{ padding: '1.75rem 2rem', maxWidth: '1440px', margin: '0 auto' }}>
-        {/* Page Title & Subheading Header Block (Matching Image 2) */}
-        <div style={{
+          {/* Page Title & Enterprise Header Block */}
+          <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
@@ -314,31 +314,58 @@ export default function VillageOfficerDashboard() {
           marginBottom: '2rem',
         }}>
           <div>
-            <h1 style={{ fontSize: '1.85rem', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', margin: 0 }}>
-              Officer Dashboard
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.85rem', borderRadius: '9999px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.35)', color: '#34d399', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }} />
+              Enterprise Command Platform • Production Node TN-THJ-9421
+            </div>
+            <h1 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.25rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', margin: 0 }}>
+              Officer Command Dashboard
             </h1>
-            <p style={{ color: '#94a3b8', fontSize: '0.92rem', marginTop: '0.35rem', margin: 0 }}>
-              Regional crop health monitoring and surveillance overview for <span style={{ color: '#38bdf8', fontWeight: 600 }}>{assignedVillage} Village</span> ({assignedBlock} Block, {assignedDistrict} District)
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginTop: '0.35rem', margin: 0 }}>
+              Agricultural intelligence, pest surveillance & scheme verification ledger for <span style={{ color: '#38bdf8', fontWeight: 700 }}>{assignedVillage} Village</span> ({assignedBlock} Block, {assignedDistrict} District)
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => handleAction(`Generated official inspection report for ${assignedVillage} Village`)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.65rem 1.15rem',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%)',
+                border: '1px solid rgba(56, 189, 248, 0.4)',
+                color: '#38bdf8',
+                fontWeight: 800,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(56, 189, 248, 0.2)',
+                transition: 'all 0.25s ease',
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+            >
+              <FileText size={16} /> Export Audit Report
+            </button>
+
             <Link to="/public/map" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
               padding: '0.65rem 1.25rem',
               borderRadius: '12px',
-              background: 'rgba(16, 185, 129, 0.15)',
+              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%)',
               border: '1px solid rgba(16, 185, 129, 0.4)',
               color: '#34d399',
-              fontWeight: 700,
+              fontWeight: 800,
               fontSize: '0.88rem',
               textDecoration: 'none',
               boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.25s ease',
             }}>
-              <MapPin size={16} /> View Hotspot Map
+              <MapPin size={16} /> Hotspot Map
             </Link>
 
             <Link to="/officer/district-block/dashboard" style={{
@@ -347,14 +374,14 @@ export default function VillageOfficerDashboard() {
               gap: '0.4rem',
               padding: '0.65rem 1.15rem',
               borderRadius: '12px',
-              background: 'rgba(56, 189, 248, 0.1)',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              color: '#38bdf8',
-              fontWeight: 600,
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              color: '#cbd5e1',
+              fontWeight: 700,
               fontSize: '0.85rem',
               textDecoration: 'none',
             }}>
-              Switch to District View →
+              District View →
             </Link>
           </div>
         </div>
@@ -362,209 +389,287 @@ export default function VillageOfficerDashboard() {
         {/* Action Message Toast */}
         {actionMessage && (
           <div style={{
-            padding: '0.85rem 1.25rem', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10b981',
-            borderRadius: '12px', color: '#34d399', fontSize: '0.88rem', fontWeight: 600, marginBottom: '1.25rem',
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            padding: '0.9rem 1.35rem', background: 'rgba(16, 185, 129, 0.2)', border: '1px solid #10b981',
+            borderRadius: '14px', color: '#34d399', fontSize: '0.9rem', fontWeight: 700, marginBottom: '1.5rem',
+            display: 'flex', alignItems: 'center', gap: '0.6rem', boxShadow: '0 8px 25px rgba(16, 185, 129, 0.25)',
           }}>
-            <CheckCircle size={18} /> {actionMessage}
+            <CheckCircle size={20} /> {actionMessage}
           </div>
         )}
 
-        {/* 6 Boxed Stat Cards Grid (Matching Image 2) */}
+        {/* 6 Boxed Stat Cards Grid (Balanced 3x2 Production Layout) */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1.25rem',
-          marginBottom: '2rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '1.35rem',
+          marginBottom: '2.5rem',
         }}>
           {/* Card 1: Total Farms Monitored */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            padding: '1.35rem 1.5rem',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            onClick={() => setActiveTab('farmers')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.85) 0%, rgba(6, 18, 22, 0.95) 100%)',
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              borderRadius: '18px',
+              padding: '1.4rem 1.6rem',
+              boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
               <div style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
+                width: '46px',
+                height: '46px',
+                borderRadius: '14px',
                 background: 'rgba(16, 185, 129, 0.2)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
+                border: '1px solid rgba(16, 185, 129, 0.45)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)',
               }}>
-                <Users size={22} color="#34d399" />
+                <Users size={24} color="#34d399" />
               </div>
-              <TrendingUp size={16} color="#64748b" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.65rem', borderRadius: '9999px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#34d399' }}>
+                +8.4% YoY
+              </span>
             </div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+            <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.25rem' }}>
               12,450
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.9rem', color: '#f1f5f9', fontWeight: 800, marginBottom: '0.25rem' }}>
               Total Farms Monitored
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+              100% Land Record Registry Sync
             </div>
           </div>
 
           {/* Card 2: Active Disease Cases */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            padding: '1.35rem 1.5rem',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            onClick={() => setActiveTab('crop-issues')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.85) 0%, rgba(6, 18, 22, 0.95) 100%)',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
+              borderRadius: '18px',
+              padding: '1.4rem 1.6rem',
+              boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
               <div style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
+                width: '46px',
+                height: '46px',
+                borderRadius: '14px',
                 background: 'rgba(245, 158, 11, 0.2)',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
+                border: '1px solid rgba(245, 158, 11, 0.45)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.25)',
               }}>
-                <Activity size={22} color="#fbbf24" />
+                <Activity size={24} color="#fbbf24" />
               </div>
-              <TrendingUp size={16} color="#64748b" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.65rem', borderRadius: '9999px', background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.3)', color: '#fbbf24' }}>
+                84 Resolved Today
+              </span>
             </div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+            <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.25rem' }}>
               1,240
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.9rem', color: '#f1f5f9', fontWeight: 800, marginBottom: '0.25rem' }}>
               Active Disease Cases
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+              TNAU Diagnostic Protocol Active
             </div>
           </div>
 
           {/* Card 3: High-Risk Farms */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            padding: '1.35rem 1.5rem',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            onClick={() => setActiveTab('crop-issues')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.85) 0%, rgba(6, 18, 22, 0.95) 100%)',
+              border: '1px solid rgba(239, 68, 68, 0.35)',
+              borderRadius: '18px',
+              padding: '1.4rem 1.6rem',
+              boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
               <div style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
+                width: '46px',
+                height: '46px',
+                borderRadius: '14px',
                 background: 'rgba(239, 68, 68, 0.2)',
-                border: '1px solid rgba(239, 68, 68, 0.4)',
+                border: '1px solid rgba(239, 68, 68, 0.45)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(239, 68, 68, 0.25)',
               }}>
-                <AlertTriangle size={22} color="#f87171" />
+                <AlertTriangle size={24} color="#f87171" />
               </div>
-              <TrendingUp size={16} color="#64748b" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.65rem', borderRadius: '9999px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171' }}>
+                Quarantine L2
+              </span>
             </div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+            <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.25rem' }}>
               184
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.9rem', color: '#f1f5f9', fontWeight: 800, marginBottom: '0.25rem' }}>
               High-Risk Farms
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+              Field Officer Patrol Dispatched
             </div>
           </div>
 
           {/* Card 4: Active Pest Alerts */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            padding: '1.35rem 1.5rem',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            onClick={() => setActiveTab('crop-issues')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.85) 0%, rgba(6, 18, 22, 0.95) 100%)',
+              border: '1px solid rgba(244, 63, 94, 0.3)',
+              borderRadius: '18px',
+              padding: '1.4rem 1.6rem',
+              boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
               <div style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
+                width: '46px',
+                height: '46px',
+                borderRadius: '14px',
                 background: 'rgba(244, 63, 94, 0.2)',
-                border: '1px solid rgba(244, 63, 94, 0.4)',
+                border: '1px solid rgba(244, 63, 94, 0.45)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(244, 63, 94, 0.25)',
               }}>
-                <Leaf size={22} color="#fb7185" />
+                <Leaf size={24} color="#fb7185" />
               </div>
-              <TrendingUp size={16} color="#64748b" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.65rem', borderRadius: '9999px', background: 'rgba(244, 63, 94, 0.15)', border: '1px solid rgba(244, 63, 94, 0.3)', color: '#fb7185' }}>
+                BPH Pest Alert
+              </span>
             </div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+            <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.25rem' }}>
               327
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.9rem', color: '#f1f5f9', fontWeight: 800, marginBottom: '0.25rem' }}>
               Active Pest Alerts
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+              Neem Kernel Bio-Treatment Scheduled
             </div>
           </div>
 
           {/* Card 5: Hotspots Detected */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            padding: '1.35rem 1.5rem',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            onClick={() => navigate('/public/map')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.85) 0%, rgba(6, 18, 22, 0.95) 100%)',
+              border: '1px solid rgba(168, 85, 247, 0.35)',
+              borderRadius: '18px',
+              padding: '1.4rem 1.6rem',
+              boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
               <div style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
-                background: 'rgba(124, 58, 237, 0.2)',
-                border: '1px solid rgba(124, 58, 237, 0.4)',
+                width: '46px',
+                height: '46px',
+                borderRadius: '14px',
+                background: 'rgba(168, 85, 247, 0.2)',
+                border: '1px solid rgba(168, 85, 247, 0.45)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(168, 85, 247, 0.25)',
               }}>
-                <MapPin size={22} color="#a78bfa" />
+                <MapPin size={24} color="#c084fc" />
               </div>
-              <TrendingUp size={16} color="#64748b" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.65rem', borderRadius: '9999px', background: 'rgba(168, 85, 247, 0.15)', border: '1px solid rgba(168, 85, 247, 0.3)', color: '#c084fc' }}>
+                4 Geofenced Areas
+              </span>
             </div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+            <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.25rem' }}>
               17
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.9rem', color: '#f1f5f9', fontWeight: 800, marginBottom: '0.25rem' }}>
               Hotspots Detected
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+              Satellite Infrared Telemetry Sync
             </div>
           </div>
 
           {/* Card 6: Pending Reviews */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.8) 0%, rgba(6, 18, 22, 0.9) 100%)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '16px',
-            padding: '1.35rem 1.5rem',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            onClick={() => setActiveTab('requests')}
+            style={{
+              background: 'linear-gradient(135deg, rgba(12, 34, 41, 0.85) 0%, rgba(6, 18, 22, 0.95) 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.35)',
+              borderRadius: '18px',
+              padding: '1.4rem 1.6rem',
+              boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'none'}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
               <div style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
-                background: 'rgba(6, 182, 212, 0.2)',
-                border: '1px solid rgba(6, 182, 212, 0.4)',
+                width: '46px',
+                height: '46px',
+                borderRadius: '14px',
+                background: 'rgba(56, 189, 248, 0.2)',
+                border: '1px solid rgba(56, 189, 248, 0.45)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(56, 189, 248, 0.25)',
               }}>
-                <CheckCircle size={22} color="#38bdf8" />
+                <CheckCircle size={24} color="#38bdf8" />
               </div>
-              <TrendingUp size={16} color="#64748b" />
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.65rem', borderRadius: '9999px', background: 'rgba(56, 189, 248, 0.15)', border: '1px solid rgba(56, 189, 248, 0.3)', color: '#38bdf8' }}>
+                SLA &lt; 24 Hours
+              </span>
             </div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, color: '#ffffff', margin: '0.85rem 0 0.2rem' }}>
+            <div style={{ fontSize: '2.1rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '0.25rem' }}>
               48
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.9rem', color: '#f1f5f9', fontWeight: 800, marginBottom: '0.25rem' }}>
               Pending Reviews
+            </div>
+            <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+              VAO Verification Queue Active
             </div>
           </div>
         </div>
 
-        {/* 4 Boxed Portal Access Cards (Matching Image 2) */}
+        {/* 4 Boxed Portal Access Cards */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -583,26 +688,29 @@ export default function VillageOfficerDashboard() {
                 key={idx}
                 onClick={() => setActiveTab(portal.tab)}
                 style={{
-                  background: 'rgba(10, 26, 32, 0.75)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'rgba(10, 26, 32, 0.85)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                   borderRadius: '16px',
-                  padding: '1.25rem',
+                  padding: '1.35rem',
                   cursor: 'pointer',
                   transition: 'all 0.25s ease',
                   backdropFilter: 'blur(16px)',
+                  boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.borderColor = portal.color;
                   e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = `0 12px 30px ${portal.bg}`;
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
                   e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
                 }}
               >
                 <div style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '12px',
                   background: portal.bg,
                   display: 'flex',
@@ -610,13 +718,13 @@ export default function VillageOfficerDashboard() {
                   justifyContent: 'center',
                   marginBottom: '0.85rem',
                 }}>
-                  <IconComp size={20} color={portal.color} />
+                  <IconComp size={22} color={portal.color} />
                 </div>
-                <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
                   {portal.title}
                 </h3>
-                <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.4rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  Access Portal →
+                <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.4rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  Open Command Module →
                 </div>
               </div>
             );
