@@ -3,12 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import {
   Mic, MicOff, Send, Volume2, VolumeX, RefreshCw, Users,
   Leaf, Building2, Heart, HelpCircle, AlertTriangle, Wifi, WifiOff,
-  Info, ChevronDown, Camera, Image, X, Upload, FileText, CheckCircle2,
-  Globe, Phone, Mail, Sparkles
+  Info, ChevronDown, Camera, Image, X, Upload, FileText, CheckCircle2
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 import ResponseCard from '../../components/ResponseCard.jsx';
-import DemoCallModal from '../../components/DemoCallModal.jsx';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { sendMessage, speakText, stopSpeaking } from '../../services/api.js';
 import { useToast } from '../../hooks/useToast.js';
@@ -53,13 +51,10 @@ export default function VoiceAssistant() {
   const [speaking, setSpeaking] = useState(false);
   const [recognition, setRecognition] = useState(null);
   const [isSpeechSupported, setIsSpeechSupported] = useState(false);
+  const { toasts, addToast, removeToast } = useToast();
   const inputRef = useRef(null);
   const resultRef = useRef(null);
   const fileInputRef = useRef(null);
-  const [showCallModal, setShowCallModal] = useState(false);
-  const [showEmailModal, setShowEmailModal] = useState(false);
-  const [emailForm, setEmailForm] = useState({ name: '', email: '', subject: '', message: '' });
-  const [emailSuccess, setEmailSuccess] = useState('');
 
   // Scheme Application Form State
   const districts = getDistricts();
@@ -848,164 +843,6 @@ export default function VoiceAssistant() {
             </div>
           </div>
 
-          {/* ── MULTI-CHANNEL DIRECT ACCESS (WEBSITE, TOLL-FREE, EMAIL) ── */}
-          <div style={{
-            marginTop: '3.5rem',
-            padding: '2.25rem 2rem',
-            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 20, 36, 0.98) 100%)',
-            border: '1px solid rgba(56, 189, 248, 0.35)',
-            borderRadius: '24px',
-            backdropFilter: 'blur(20px)',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(14, 165, 233, 0.15)',
-          }}>
-            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px',
-                background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2))',
-                border: '1px solid rgba(56, 189, 248, 0.4)', color: '#38bdf8', fontSize: '0.82rem', fontWeight: 900,
-                textTransform: 'uppercase', marginBottom: '0.85rem', boxShadow: '0 0 15px rgba(56, 189, 248, 0.2)',
-              }}>
-                <Sparkles size={15} color="#38bdf8" /> Official Platform Access Points
-              </div>
-              <h3 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.85rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.01em', marginBottom: '0.5rem' }}>
-                Direct Access Channels / <span style={{ color: '#34d399' }}>நேரடி அணுகல் வழிகள்</span>
-              </h3>
-              <p style={{ color: '#94a3b8', fontSize: '0.975rem', maxWidth: '680px', margin: '0 auto', lineHeight: 1.6 }}>
-                Connect directly through our official website portal, 24/7 toll-free helpline, or official email support channel.
-              </p>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-              {/* 1. Website */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
-                border: '1px solid rgba(6, 182, 212, 0.4)',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.1rem' }}>
-                  <div style={{
-                    width: 50, height: 50, borderRadius: '16px', background: 'rgba(6, 182, 212, 0.2)',
-                    border: '1px solid rgba(6, 182, 212, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                  }}>
-                    <Globe size={24} color="#22d3ee" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#22d3ee', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Website Access</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem' }}>Grama Mitra Web</div>
-                    <div style={{ fontSize: '0.85rem', color: '#cbd5e1', marginTop: '0.35rem', lineHeight: 1.5 }}>
-                      gramaMitra.in — 24/7 AI Tamil Voice & Image Diagnosis Portal
-                    </div>
-                  </div>
-                </div>
-                <a
-                  href="/assistant"
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
-                    padding: '0.75rem 1.25rem', borderRadius: '14px',
-                    background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
-                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', textDecoration: 'none',
-                    boxShadow: '0 4px 18px rgba(6, 182, 212, 0.45)', transition: 'all 0.2s ease',
-                  }}
-                >
-                  <Globe size={16} /> Access Website Portal
-                </a>
-              </div>
-
-              {/* 2. Toll-Free Helpline */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
-                border: '1px solid rgba(245, 158, 11, 0.4)',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.1rem' }}>
-                  <div style={{
-                    width: 50, height: 50, borderRadius: '16px', background: 'rgba(245, 158, 11, 0.2)',
-                    border: '1px solid rgba(245, 158, 11, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                  }}>
-                    <Phone size={24} color="#fbbf24" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Toll-Free Helpline</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem' }}>1800-180-1551</div>
-                    <div style={{ fontSize: '0.85rem', color: '#cbd5e1', marginTop: '0.35rem', lineHeight: 1.5 }}>
-                      1800-GRAMA-AI Direct Phone Helpline for Farmers
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowCallModal(true);
-                    speakText("Vanakkam! Welcome to Grama Mitra 1800 Toll-Free Helpline.", language === 'en' ? 'en-IN' : 'ta-IN');
-                  }}
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
-                    padding: '0.75rem 1.25rem', borderRadius: '14px',
-                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', border: 'none', cursor: 'pointer',
-                    boxShadow: '0 4px 18px rgba(245, 158, 11, 0.45)', transition: 'all 0.2s ease',
-                  }}
-                >
-                  <Phone size={16} /> Call Toll-Free Helpline
-                </button>
-              </div>
-
-              {/* 3. Email Support */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
-              }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.1rem' }}>
-                  <div style={{
-                    width: 50, height: 50, borderRadius: '16px', background: 'rgba(16, 185, 129, 0.2)',
-                    border: '1px solid rgba(16, 185, 129, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                  }}>
-                    <Mail size={24} color="#34d399" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Support</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem' }}>hello@gramaMitra.in</div>
-                    <div style={{ fontSize: '0.85rem', color: '#cbd5e1', marginTop: '0.35rem', lineHeight: 1.5 }}>
-                      Official Desk Support & Department Inquiries
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowEmailModal(true)}
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
-                    padding: '0.75rem 1.25rem', borderRadius: '14px',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', border: 'none', cursor: 'pointer',
-                    boxShadow: '0 4px 18px rgba(16, 185, 129, 0.45)', transition: 'all 0.2s ease',
-                  }}
-                >
-                  <Mail size={16} /> Send Email Inquiry
-                </button>
-              </div>
-            </div>
-          </div>
-
           {/* ── GOVERNMENT SCHEME APPLICATION FORM SECTION ── */}
           <div style={{
             marginTop: '4rem',
@@ -1050,20 +887,19 @@ export default function VoiceAssistant() {
               </div>
             )}
 
-            {/* Form Card Container (Ultra-Premium Dark Glassmorphism Theme) */}
+            {/* Form Card Container (White Theme with Rich Color Palettes) */}
             <form onSubmit={handleSchemeSubmit} style={{
-              background: 'linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(8, 18, 32, 0.98) 100%)',
-              border: '1px solid rgba(56, 189, 248, 0.35)',
+              background: '#ffffff',
+              border: '2px solid #38bdf8',
               borderRadius: '24px',
               padding: '2.5rem',
-              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(14, 165, 233, 0.15)',
-              backdropFilter: 'blur(20px)',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.35), 0 0 40px rgba(56, 189, 248, 0.25)',
               position: 'relative',
             }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.75rem' }}>
                 {/* Farmer Name */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0284c7', marginBottom: '0.5rem' }}>
                     Farmer Full Name / விவசாயி பெயர் *
                   </label>
                   <input
@@ -1073,17 +909,17 @@ export default function VoiceAssistant() {
                     onChange={(e) => setFarmerName(e.target.value)}
                     placeholder="e.g. K. Ramasamy / கே. இராமசாமி"
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
                       outline: 'none', boxSizing: 'border-box', fontWeight: 700,
-                      boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                      boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)',
                     }}
                   />
                 </div>
 
                 {/* Mobile Number */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#34d399', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#0d9488', marginBottom: '0.5rem' }}>
                     Mobile / Phone Number / தொலைபேசி எண் *
                   </label>
                   <input
@@ -1093,114 +929,114 @@ export default function VoiceAssistant() {
                     onChange={(e) => setFarmerPhone(e.target.value)}
                     placeholder="e.g. +91 98421 44510"
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
                       outline: 'none', boxSizing: 'border-box', fontWeight: 700,
-                      boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                      boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)',
                     }}
                   />
                 </div>
 
                 {/* District */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#a78bfa', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#7c3aed', marginBottom: '0.5rem' }}>
                     District / மாவட்டம்
                   </label>
                   <select
                     value={formDistrict}
                     onChange={(e) => setFormDistrict(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
                       outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    {districts.map((d) => <option key={d} value={d} style={{ background: '#091524', color: '#ffffff' }}>{d}</option>)}
+                    {districts.map((d) => <option key={d} value={d} style={{ background: '#ffffff', color: '#0f172a' }}>{d}</option>)}
                   </select>
                 </div>
 
                 {/* Block */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#60a5fa', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#2563eb', marginBottom: '0.5rem' }}>
                     Block / வட்டம்
                   </label>
                   <select
                     value={formBlock}
                     onChange={(e) => setFormBlock(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
                       outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    {availableBlocks.map((b) => <option key={b} value={b} style={{ background: '#091524', color: '#ffffff' }}>{b}</option>)}
+                    {availableBlocks.map((b) => <option key={b} value={b} style={{ background: '#ffffff', color: '#0f172a' }}>{b}</option>)}
                   </select>
                 </div>
 
                 {/* Village */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#f472b6', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#059669', marginBottom: '0.5rem' }}>
                     Village / கிராமம்
                   </label>
                   <select
                     value={formVillage}
                     onChange={(e) => setFormVillage(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
                       outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    {availableVillages.map((v) => <option key={v} value={v} style={{ background: '#091524', color: '#ffffff' }}>{v}</option>)}
+                    {availableVillages.map((v) => <option key={v} value={v} style={{ background: '#ffffff', color: '#0f172a' }}>{v}</option>)}
                   </select>
                 </div>
 
                 {/* Scheme Choice */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#fbbf24', marginBottom: '0.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#d97706', marginBottom: '0.5rem' }}>
                     Target Scheme & Service / திட்டம் தேர்வு *
                   </label>
                   <select
                     value={selectedScheme}
                     onChange={(e) => setSelectedScheme(e.target.value)}
                     style={{
-                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      width: '100%', background: '#f8fafc', border: '1.5px solid #cbd5e1',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#0f172a', fontSize: '0.95rem',
                       outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
                     }}
                   >
-                    <option value="PM-KISAN installment verification" style={{ background: '#091524', color: '#ffffff' }}>PM-KISAN installment verification (ரூ. 6,000 / ஆண்டு)</option>
-                    <option value="PMFBY Crop Insurance Claim (Kharif)" style={{ background: '#091524', color: '#ffffff' }}>PMFBY Crop Insurance Claim / பயிர் காப்பீடு</option>
-                    <option value="Kisan Credit Card (KCC) Loan Subvention" style={{ background: '#091524', color: '#ffffff' }}>Kisan Credit Card (KCC) Loan Subvention / கிசான் கடன் அட்டை</option>
-                    <option value="Drip Irrigation Subsidized Kit (PMKSY)" style={{ background: '#091524', color: '#ffffff' }}>Drip Irrigation Subsidized Kit (PMKSY) / சொட்டு நீர் பாசனம்</option>
-                    <option value="Subsidized Fertilizer & Quality Seed Supply" style={{ background: '#091524', color: '#ffffff' }}>Subsidized Fertilizer & Quality Seed Supply / மானிய உரம்</option>
+                    <option value="PM-KISAN installment verification" style={{ background: '#ffffff', color: '#0f172a' }}>PM-KISAN installment verification (ரூ. 6,000 / ஆண்டு)</option>
+                    <option value="PMFBY Crop Insurance Claim (Kharif)" style={{ background: '#ffffff', color: '#0f172a' }}>PMFBY Crop Insurance Claim / பயிர் காப்பீடு</option>
+                    <option value="Kisan Credit Card (KCC) Loan Subvention" style={{ background: '#ffffff', color: '#0f172a' }}>Kisan Credit Card (KCC) Loan Subvention / கிசான் கடன் அட்டை</option>
+                    <option value="Drip Irrigation Subsidized Kit (PMKSY)" style={{ background: '#ffffff', color: '#0f172a' }}>Drip Irrigation Subsidized Kit (PMKSY) / சொட்டு நீர் பாசனம்</option>
+                    <option value="Subsidized Fertilizer & Quality Seed Supply" style={{ background: '#ffffff', color: '#0f172a' }}>Subsidized Fertilizer & Quality Seed Supply / மானிய உரம்</option>
                   </select>
                 </div>
               </div>
 
               {/* Document Verification Checkboxes */}
               <div style={{
-                background: 'rgba(9, 21, 36, 0.85)',
-                border: '1px solid rgba(52, 211, 153, 0.35)',
+                background: 'linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%)',
+                border: '1.5px solid #6ee7b7',
                 borderRadius: '16px',
                 padding: '1.25rem 1.5rem',
                 marginBottom: '2rem',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
+                boxShadow: '0 4px 15px rgba(16, 185, 129, 0.08)',
               }}>
-                <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#047857', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
                   Document Checklist & Verification Status / இணைக்கப்பட்ட சான்றுகள்:
                 </div>
                 <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 700 }}>
-                    <input type="checkbox" checked={docPatta} onChange={(e) => setDocPatta(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#0f172a', fontWeight: 700 }}>
+                    <input type="checkbox" checked={docPatta} onChange={(e) => setDocPatta(e.target.checked)} style={{ accentColor: '#059669', width: 18, height: 18 }} />
                     <span>Patta / Chitta Land Record (பட்டா / சிட்டா)</span>
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
-                    <input type="checkbox" checked={docAadhar} onChange={(e) => setDocAadhar(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#0f172a', fontWeight: 700 }}>
+                    <input type="checkbox" checked={docAadhar} onChange={(e) => setDocAadhar(e.target.checked)} style={{ accentColor: '#059669', width: 18, height: 18 }} />
                     <span>Aadhar eKYC Linked (ஆதார் இணைப்பு)</span>
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
-                    <input type="checkbox" checked={docBank} onChange={(e) => setDocBank(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#0f172a', fontWeight: 700 }}>
+                    <input type="checkbox" checked={docBank} onChange={(e) => setDocBank(e.target.checked)} style={{ accentColor: '#059669', width: 18, height: 18 }} />
                     <span>Bank Passbook NOC (வங்கி கணக்கு நகல்)</span>
                   </label>
                 </div>
@@ -1213,8 +1049,8 @@ export default function VoiceAssistant() {
                   style={{
                     padding: '1rem 2.5rem',
                     borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
-                    border: '1px solid rgba(52, 211, 153, 0.6)',
+                    background: 'linear-gradient(135deg, #059669 0%, #0284c7 100%)',
+                    border: 'none',
                     color: '#ffffff',
                     fontWeight: 900,
                     fontSize: '1.05rem',
@@ -1222,16 +1058,16 @@ export default function VoiceAssistant() {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    boxShadow: '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)',
+                    boxShadow: '0 8px 25px rgba(2, 132, 199, 0.4), 0 4px 12px rgba(5, 150, 105, 0.3)',
                     transition: 'all 0.25s ease',
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.7)';
+                    e.currentTarget.style.boxShadow = '0 12px 35px rgba(2, 132, 199, 0.55)';
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.transform = 'none';
-                    e.currentTarget.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(2, 132, 199, 0.4), 0 4px 12px rgba(5, 150, 105, 0.3)';
                   }}
                 >
                   <Send size={20} color="#ffffff" />
@@ -1240,220 +1076,6 @@ export default function VoiceAssistant() {
               </div>
             </form>
           </div>
-          {/* ── LIVE INTERACTIVE TOLL-FREE AI HELPLINE CALL DEMO MODAL ── */}
-          <DemoCallModal
-            isOpen={showCallModal}
-            onClose={() => setShowCallModal(false)}
-            initialLang={language}
-          />
-          {/* ── OFFICIAL EMAIL INQUIRY MODAL ── */}
-          {showEmailModal && (
-            <div style={{
-              position: 'fixed',
-              top: 0, left: 0, right: 0, bottom: 0,
-              background: 'rgba(2, 6, 15, 0.88)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              zIndex: 99999,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1.5rem',
-            }}>
-              <div style={{
-                width: '100%',
-                maxWidth: '520px',
-                background: 'linear-gradient(135deg, #091524 0%, #050d18 100%)',
-                border: '2px solid rgba(52, 211, 153, 0.6)',
-                borderRadius: '28px',
-                padding: '2.5rem 2rem',
-                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(52, 211, 153, 0.35)',
-                color: '#ffffff',
-                position: 'relative',
-              }}>
-                {/* Top Close Button */}
-                <button
-                  onClick={() => {
-                    setShowEmailModal(false);
-                    setEmailSuccess('');
-                  }}
-                  style={{
-                    position: 'absolute', top: 18, right: 18,
-                    background: 'rgba(255,255,255,0.1)', border: 'none',
-                    color: '#94a3b8', borderRadius: '50%', width: 36, height: 36,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer', transition: 'all 0.2s',
-                  }}
-                >
-                  <X size={20} />
-                </button>
-
-                <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                  <div style={{
-                    width: 68,
-                    height: 68,
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.4))',
-                    border: '2px solid #34d399',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '1rem',
-                    boxShadow: '0 0 30px rgba(16, 185, 129, 0.5)',
-                  }}>
-                    <Mail size={32} color="#34d399" />
-                  </div>
-
-                  <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.35rem' }}>
-                    Official Email Desk
-                  </div>
-                  <h2 style={{ fontSize: '1.65rem', fontWeight: 900, color: '#ffffff', marginBottom: '0.25rem' }}>
-                    hello@gramaMitra.in
-                  </h2>
-                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: 0 }}>
-                    Direct email channel for farmer support & government partnerships
-                  </p>
-                </div>
-
-                {emailSuccess ? (
-                  <div style={{
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%)',
-                    border: '1px solid #10b981', borderRadius: '18px', padding: '1.5rem', textAlign: 'center', color: '#34d399',
-                  }}>
-                    <CheckCircle2 size={40} color="#34d399" style={{ margin: '0 auto 0.75rem' }} />
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.4rem' }}>Email Inquiry Transmitted!</h3>
-                    <p style={{ fontSize: '0.88rem', color: '#cbd5e1', marginBottom: '1.25rem' }}>
-                      Your message has been logged and sent to <strong>hello@gramaMitra.in</strong>. Our team will respond shortly.
-                    </p>
-                    <button
-                      onClick={() => {
-                        setShowEmailModal(false);
-                        setEmailSuccess('');
-                      }}
-                      style={{
-                        padding: '0.75rem 1.5rem', borderRadius: '12px', background: '#10b981', color: '#fff',
-                        fontWeight: 800, border: 'none', cursor: 'pointer',
-                      }}
-                    >
-                      Close Window
-                    </button>
-                  </div>
-                ) : (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (!emailForm.email.trim() || !emailForm.message.trim()) {
-                        addToast('Please enter your email and message.', 'warning');
-                        return;
-                      }
-                      setEmailSuccess('Message sent successfully!');
-                      addToast('✉️ Email inquiry sent to hello@gramaMitra.in', 'success');
-                      setEmailForm({ name: '', email: '', subject: '', message: '' });
-                    }}
-                    style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-                  >
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
-                        Your Name / பெயர்
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. K. Ramasamy"
-                        value={emailForm.name}
-                        onChange={(e) => setEmailForm(f => ({ ...f, name: e.target.value }))}
-                        style={{
-                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
-                        Your Email Address / மின்னஞ்சல் *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="e.g. farmer@gmail.com"
-                        value={emailForm.email}
-                        onChange={(e) => setEmailForm(f => ({ ...f, email: e.target.value }))}
-                        style={{
-                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
-                        Subject / தலைப்பு
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Crop Advisory Request / Scheme Inquiry"
-                        value={emailForm.subject}
-                        onChange={(e) => setEmailForm(f => ({ ...f, subject: e.target.value }))}
-                        style={{
-                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
-                        Message Details / செய்தி *
-                      </label>
-                      <textarea
-                        required
-                        rows={3}
-                        placeholder="Type your inquiry or message here..."
-                        value={emailForm.message}
-                        onChange={(e) => setEmailForm(f => ({ ...f, message: e.target.value }))}
-                        style={{
-                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
-                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
-                        }}
-                      />
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-                      <button
-                        type="submit"
-                        style={{
-                          flex: 1, padding: '0.85rem', borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                          border: 'none', color: '#fff', fontWeight: 900, fontSize: '0.92rem',
-                          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                          boxShadow: '0 4px 18px rgba(16, 185, 129, 0.4)',
-                        }}
-                      >
-                        <Send size={16} /> Send Email Inquiry
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          navigator.clipboard.writeText('hello@gramaMitra.in');
-                          addToast('📋 Copied hello@gramaMitra.in to clipboard!', 'info');
-                        }}
-                        style={{
-                          padding: '0.85rem 1rem', borderRadius: '12px',
-                          background: 'rgba(56, 189, 248, 0.15)',
-                          border: '1px solid rgba(56, 189, 248, 0.4)',
-                          color: '#38bdf8', fontWeight: 800, fontSize: '0.85rem',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Copy Email
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </PublicLayout>
