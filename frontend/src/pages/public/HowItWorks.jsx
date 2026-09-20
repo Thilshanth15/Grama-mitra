@@ -349,8 +349,42 @@ export default function HowItWorks() {
       </section>
 
       {/* Responsible AI Principles — Vivid Colorful Cards */}
-      <section className="section" style={{ background: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-        <div className="container">
+      <section className="section" style={{
+        position: 'relative',
+        background: '#000000',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        overflow: 'hidden',
+      }}>
+        {/* Full-Bleed Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+            opacity: 0.45,
+            filter: 'brightness(0.9) contrast(1.1)',
+          }}
+          src="/video/snki'.mp4"
+        />
+
+        {/* Subtle Dark Overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
             <div style={{ marginBottom: '1.75rem' }}>
               <span className="section-label">Core Pillars</span>
