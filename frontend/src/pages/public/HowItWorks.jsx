@@ -352,6 +352,7 @@ export default function HowItWorks() {
       <section className="section" style={{ position: 'relative', background: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', overflow: 'hidden' }}>
         {/* Full-Screen Rural Farming Background Video */}
         <video
+          key="snki-video"
           autoPlay
           loop
           muted
@@ -365,7 +366,7 @@ export default function HowItWorks() {
             objectFit: 'cover',
             zIndex: 0,
           }}
-          src="/video/snki'.mp4"
+          src="/video/snki.mp4"
         />
 
         {/* Subtle Dark Overlay for Text & Card Readability */}
