@@ -176,7 +176,7 @@ export default function Home() {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transform: 'translate(-50%, -50%) scale(1.18)',
+            transform: 'translate(-50%, -50%) scale(1.28)',
             zIndex: 0,
             filter: 'brightness(1.06) contrast(1.04)',
           }}
@@ -795,7 +795,7 @@ export default function Home() {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transform: 'translate(-50%, -50%) scale(1.05)',
+            transform: 'translate(-50%, -50%) scale(1.22)',
             zIndex: 0,
             filter: 'brightness(0.92) contrast(1.05) saturate(1.15)',
           }}
