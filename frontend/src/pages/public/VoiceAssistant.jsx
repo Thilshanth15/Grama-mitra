@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import {
   Mic, MicOff, Send, Volume2, VolumeX, RefreshCw, Users,
   Leaf, Building2, Heart, HelpCircle, AlertTriangle, Wifi, WifiOff,
-  Info, ChevronDown, Camera, Image, X, Upload
+  Info, ChevronDown, Camera, Image, X, Upload, FileText, CheckCircle2
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 import ResponseCard from '../../components/ResponseCard.jsx';
@@ -11,6 +11,7 @@ import { useLanguage } from '../../context/LanguageContext.jsx';
 import { sendMessage, speakText, stopSpeaking } from '../../services/api.js';
 import { useToast } from '../../hooks/useToast.js';
 import { ToastContainer } from '../../components/Toast.jsx';
+import { getDistricts, getBlocks, getVillages } from '../../data/locationData.js';
 
 const SUGGESTED_QUESTIONS = {
   all: [
@@ -54,6 +55,61 @@ export default function VoiceAssistant() {
   const inputRef = useRef(null);
   const resultRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  // Scheme Application Form State
+  const districts = getDistricts();
+  const [formDistrict, setFormDistrict] = useState('Thanjavur');
+  const [formBlock, setFormBlock] = useState('Kumbakonam');
+  const [formVillage, setFormVillage] = useState('Kovilur');
+  const [farmerName, setFarmerName] = useState('');
+  const [farmerPhone, setFarmerPhone] = useState('');
+  const [selectedScheme, setSelectedScheme] = useState('PM-KISAN installment verification');
+  const [docPatta, setDocPatta] = useState(true);
+  const [docAadhar, setDocAadhar] = useState(true);
+  const [docBank, setDocBank] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState('');
+
+  const availableBlocks = getBlocks(formDistrict);
+  const availableVillages = getVillages(formDistrict, formBlock);
+
+  const handleSchemeSubmit = (e) => {
+    e.preventDefault();
+    if (!farmerName.trim() || !farmerPhone.trim()) {
+      addToast('Please enter Farmer Name and Phone Number.', 'warning');
+      return;
+    }
+
+    const docs = [];
+    if (docPatta) docs.push('Patta & Chitta Verified');
+    if (docAadhar) docs.push('Aadhar eKYC Linked');
+    if (docBank) docs.push('Bank NOC Attached');
+    const docStatusText = docs.length > 0 ? docs.join(' • ') : 'Application Received';
+
+    const newApp = {
+      id: `sr-user-${Date.now().toString().slice(-4)}`,
+      farmerName: farmerName.trim(),
+      village: formVillage || 'Kovilur',
+      block: formBlock || 'Kumbakonam',
+      district: formDistrict || 'Thanjavur',
+      phone: farmerPhone.trim(),
+      scheme: selectedScheme,
+      date: new Date().toISOString().split('T')[0],
+      status: 'Submitted (Pending Review)',
+      docStatus: docStatusText,
+    };
+
+    const existing = JSON.parse(localStorage.getItem('grama_submitted_schemes') || '[]');
+    localStorage.setItem('grama_submitted_schemes', JSON.stringify([newApp, ...existing]));
+
+    window.dispatchEvent(new Event('scheme-application-submitted'));
+
+    const successMsg = `Application #${newApp.id.toUpperCase()} Submitted Successfully! Transmitted to ${formDistrict} District (${formBlock} Block) Officer Dashboard.`;
+    setSubmitSuccess(successMsg);
+    addToast(successMsg, 'success');
+    setFarmerName('');
+    setFarmerPhone('');
+    setTimeout(() => setSubmitSuccess(''), 7000);
+  };
 
   useEffect(() => {
     setIsSpeechSupported('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
@@ -785,6 +841,231 @@ export default function VoiceAssistant() {
               Emergency situations trigger automatic escalation. 
               <span style={{ color: '#34d399', fontWeight: 600 }}> Integrated multi-channel AI architecture for web, WhatsApp, and toll-free IVR.</span>
             </div>
+          </div>
+
+          {/* ── GOVERNMENT SCHEME APPLICATION FORM SECTION ── */}
+          <div style={{
+            marginTop: '4rem',
+            paddingTop: '3rem',
+            borderTop: '1px solid rgba(56, 189, 248, 0.25)',
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px',
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
+                border: '1px solid rgba(52, 211, 153, 0.4)', color: '#34d399', fontSize: '0.82rem', fontWeight: 900,
+                textTransform: 'uppercase', marginBottom: '1rem', boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)',
+              }}>
+                <FileText size={15} color="#34d399" /> Government Scheme Direct Application
+              </div>
+              <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '0.75rem' }}>
+                Online Scheme Application Format / <span style={{ color: '#38bdf8' }}>அரசு திட்டங்கள் விண்ணப்பப் படிவம்</span>
+              </h2>
+              <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: 1.7 }}>
+                Fill out your details below to apply for PM-KISAN, PMFBY crop insurance, or KCC loans directly through the Voice Assistant. Submitted applications are instantly transmitted directly to the **District & Block Officer Dashboard**.
+              </p>
+            </div>
+
+            {/* Success Notification Banner */}
+            {submitSuccess && (
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%)',
+                border: '1px solid #10b981',
+                borderRadius: '18px',
+                padding: '1.25rem 1.75rem',
+                marginBottom: '2rem',
+                color: '#34d399',
+                fontSize: '1rem',
+                fontWeight: 800,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.85rem',
+                boxShadow: '0 8px 30px rgba(16, 185, 129, 0.3)',
+              }}>
+                <CheckCircle2 size={26} color="#34d399" />
+                <span>{submitSuccess}</span>
+              </div>
+            )}
+
+            {/* Form Card Container */}
+            <form onSubmit={handleSchemeSubmit} style={{
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 20, 36, 0.98) 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.35)',
+              borderRadius: '24px',
+              padding: '2.5rem',
+              boxShadow: '0 25px 60px rgba(0,0,0,0.8), 0 0 30px rgba(14, 165, 233, 0.15)',
+              backdropFilter: 'blur(20px)',
+            }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.75rem' }}>
+                {/* Farmer Name */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                    Farmer Full Name / விவசாயி பெயர் *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={farmerName}
+                    onChange={(e) => setFarmerName(e.target.value)}
+                    placeholder="e.g. K. Ramasamy / கே. இராமசாமி"
+                    style={{
+                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                    }}
+                  />
+                </div>
+
+                {/* Mobile Number */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                    Mobile / Phone Number / தொலைபேசி எண் *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={farmerPhone}
+                    onChange={(e) => setFarmerPhone(e.target.value)}
+                    placeholder="e.g. +91 98421 44510"
+                    style={{
+                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                    }}
+                  />
+                </div>
+
+                {/* District */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                    District / மாவட்டம்
+                  </label>
+                  <select
+                    value={formDistrict}
+                    onChange={(e) => setFormDistrict(e.target.value)}
+                    style={{
+                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                    }}
+                  >
+                    {districts.map((d) => <option key={d} value={d}>{d}</option>)}
+                  </select>
+                </div>
+
+                {/* Block */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                    Block / வட்டம்
+                  </label>
+                  <select
+                    value={formBlock}
+                    onChange={(e) => setFormBlock(e.target.value)}
+                    style={{
+                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                    }}
+                  >
+                    {availableBlocks.map((b) => <option key={b} value={b}>{b}</option>)}
+                  </select>
+                </div>
+
+                {/* Village */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                    Village / கிராமம்
+                  </label>
+                  <select
+                    value={formVillage}
+                    onChange={(e) => setFormVillage(e.target.value)}
+                    style={{
+                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                    }}
+                  >
+                    {availableVillages.map((v) => <option key={v} value={v}>{v}</option>)}
+                  </select>
+                </div>
+
+                {/* Scheme Choice */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', marginBottom: '0.5rem' }}>
+                    Target Scheme & Service / திட்டம் தேர்வு *
+                  </label>
+                  <select
+                    value={selectedScheme}
+                    onChange={(e) => setSelectedScheme(e.target.value)}
+                    style={{
+                      width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                      borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
+                      outline: 'none', boxSizing: 'border-box', fontWeight: 700,
+                    }}
+                  >
+                    <option value="PM-KISAN installment verification">PM-KISAN installment verification (ரூ. 6,000 / ஆண்டு)</option>
+                    <option value="PMFBY Crop Insurance Claim (Kharif)">PMFBY Crop Insurance Claim / பயிர் காப்பீடு</option>
+                    <option value="Kisan Credit Card (KCC) Loan Subvention">Kisan Credit Card (KCC) Loan Subvention / கிசான் கடன் அட்டை</option>
+                    <option value="Drip Irrigation Subsidized Kit (PMKSY)">Drip Irrigation Subsidized Kit (PMKSY) / சொட்டு நீர் பாசனம்</option>
+                    <option value="Subsidized Fertilizer & Quality Seed Supply">Subsidized Fertilizer & Quality Seed Supply / மானிய உரம்</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Document Verification Checkboxes */}
+              <div style={{ background: 'rgba(9, 21, 36, 0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '1.25rem 1.5rem', marginBottom: '2rem' }}>
+                <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
+                  Document Checklist & Verification Status / இணைக்கப்பட்ட சான்றுகள்:
+                </div>
+                <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
+                    <input type="checkbox" checked={docPatta} onChange={(e) => setDocPatta(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                    <span>Patta / Chitta Land Record (பட்டா / சிட்டா)</span>
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
+                    <input type="checkbox" checked={docAadhar} onChange={(e) => setDocAadhar(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                    <span>Aadhar eKYC Linked (ஆதார் இணைப்பு)</span>
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', cursor: 'pointer', fontSize: '0.9rem', color: '#ffffff', fontWeight: 600 }}>
+                    <input type="checkbox" checked={docBank} onChange={(e) => setDocBank(e.target.checked)} style={{ accentColor: '#10b981', width: 18, height: 18 }} />
+                    <span>Bank Passbook NOC (வங்கி கணக்கு நகல்)</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div style={{ textAlign: 'center' }}>
+                <button
+                  type="submit"
+                  style={{
+                    padding: '1rem 2.5rem',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
+                    border: '1px solid rgba(52, 211, 153, 0.6)',
+                    color: '#ffffff',
+                    fontWeight: 900,
+                    fontSize: '1.05rem',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    boxShadow: '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)',
+                    transition: 'all 0.25s ease',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.7)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.transform = 'none';
+                    e.currentTarget.style.boxShadow = '0 0 30px rgba(16, 185, 129, 0.5), 0 10px 20px rgba(6, 182, 212, 0.3)';
+                  }}
+                >
+                  <Send size={20} color="#ffffff" />
+                  <span>Submit Scheme Application / விண்ணப்பத்தை அனுப்புக</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
