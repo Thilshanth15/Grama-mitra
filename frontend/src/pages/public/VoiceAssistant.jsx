@@ -843,101 +843,95 @@ export default function VoiceAssistant() {
             </div>
           </div>
 
-          {/* ── GOVERNMENT SCHEME APPLICATION FORM SECTION (WITH CINEMATIC BACKGROUND VIDEO) ── */}
+          {/* ── GOVERNMENT SCHEME APPLICATION FORM SECTION ── */}
           <div style={{
-            position: 'relative',
             marginTop: '4rem',
-            padding: '3.5rem 2rem',
-            borderRadius: '28px',
-            overflow: 'hidden',
-            border: '1px solid rgba(56, 189, 248, 0.4)',
-            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(14, 165, 233, 0.25)',
+            paddingTop: '3rem',
+            borderTop: '1px solid rgba(56, 189, 248, 0.25)',
           }}>
-            {/* Background Video Layer */}
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{
+            <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px',
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
+                border: '1px solid rgba(52, 211, 153, 0.4)', color: '#34d399', fontSize: '0.82rem', fontWeight: 900,
+                textTransform: 'uppercase', marginBottom: '1rem', boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)',
+              }}>
+                <FileText size={15} color="#34d399" /> Government Scheme Direct Application
+              </div>
+              <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '0.75rem' }}>
+                Online Scheme Application Format / <span style={{ color: '#38bdf8' }}>அரசு திட்டங்கள் விண்ணப்பப் படிவம்</span>
+              </h2>
+              <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: 1.7 }}>
+                Fill out your details below to apply for PM-KISAN, PMFBY crop insurance, or KCC loans directly through the Voice Assistant. Submitted applications are instantly transmitted directly to the **District & Block Officer Dashboard**.
+              </p>
+            </div>
+
+            {/* Success Notification Banner */}
+            {submitSuccess && (
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%)',
+                border: '1px solid #10b981',
+                borderRadius: '18px',
+                padding: '1.25rem 1.75rem',
+                marginBottom: '2rem',
+                color: '#34d399',
+                fontSize: '1rem',
+                fontWeight: 800,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.85rem',
+                boxShadow: '0 8px 30px rgba(16, 185, 129, 0.3)',
+              }}>
+                <CheckCircle2 size={26} color="#34d399" />
+                <span>{submitSuccess}</span>
+              </div>
+            )}
+
+            {/* Form Card Container with Live Video Background (/video/app dashboard.mp4) */}
+            <form onSubmit={handleSchemeSubmit} style={{
+              position: 'relative',
+              borderRadius: '24px',
+              border: '1px solid rgba(56, 189, 248, 0.45)',
+              padding: '2.5rem',
+              overflow: 'hidden',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(14, 165, 233, 0.25)',
+              backdropFilter: 'blur(20px)',
+            }}>
+              {/* Background Video Layer */}
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  zIndex: 0,
+                  filter: 'brightness(0.45) contrast(1.15) saturate(1.2)',
+                  pointerEvents: 'none',
+                }}
+              >
+                <source src="/video/app dashboard.mp4" type="video/mp4" />
+              </video>
+
+              {/* Ambient Dark Tint Overlay */}
+              <div style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
-                zIndex: 0,
-                filter: 'brightness(0.65) contrast(1.15)',
-              }}
-            >
-              <source src="/video/app dashboard.mp4" type="video/mp4" />
-            </video>
+                background: 'linear-gradient(135deg, rgba(8, 18, 32, 0.82) 0%, rgba(4, 10, 22, 0.88) 100%)',
+                zIndex: 1,
+                pointerEvents: 'none',
+              }} />
 
-            {/* Dark Glassmorphism Backdrop Overlay */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              background: 'radial-gradient(ellipse at center, rgba(8, 20, 36, 0.75) 0%, rgba(3, 8, 16, 0.88) 100%)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              zIndex: 1,
-            }} />
-
-            {/* Foreground Content Container */}
-            <div style={{ position: 'relative', zIndex: 2, maxWidth: 1050, margin: '0 auto' }}>
-              <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-                <div style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.3))',
-                  border: '1px solid rgba(52, 211, 153, 0.6)', color: '#34d399', fontSize: '0.82rem', fontWeight: 900,
-                  textTransform: 'uppercase', marginBottom: '1rem', boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)',
-                }}>
-                  <FileText size={15} color="#34d399" /> Government Scheme Direct Application
-                </div>
-                <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '0.75rem', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
-                  Online Scheme Application Format / <span style={{ color: '#38bdf8' }}>அரசு திட்டங்கள் விண்ணப்பப் படிவம்</span>
-                </h2>
-                <p style={{ color: '#cbd5e1', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: 1.7, fontWeight: 600, textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
-                  Fill out your details below to apply for PM-KISAN, PMFBY crop insurance, or KCC loans directly through the Voice Assistant. Submitted applications are instantly transmitted directly to the **District & Block Officer Dashboard**.
-                </p>
-              </div>
-
-              {/* Success Notification Banner */}
-              {submitSuccess && (
-                <div style={{
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(6, 182, 212, 0.35) 100%)',
-                  border: '1px solid #10b981',
-                  borderRadius: '18px',
-                  padding: '1.25rem 1.75rem',
-                  marginBottom: '2rem',
-                  color: '#34d399',
-                  fontSize: '1rem',
-                  fontWeight: 800,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.85rem',
-                  boxShadow: '0 8px 30px rgba(16, 185, 129, 0.4)',
-                  backdropFilter: 'blur(12px)',
-                }}>
-                  <CheckCircle2 size={26} color="#34d399" />
-                  <span>{submitSuccess}</span>
-                </div>
-              )}
-
-              {/* Form Card Container (Ultra-Premium Dark Glassmorphism Theme) */}
-              <form onSubmit={handleSchemeSubmit} style={{
-                background: 'linear-gradient(135deg, rgba(11, 23, 38, 0.85) 0%, rgba(6, 15, 26, 0.9) 100%)',
-                border: '1px solid rgba(56, 189, 248, 0.4)',
-                borderRadius: '24px',
-                padding: '2.5rem',
-                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(14, 165, 233, 0.25)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                position: 'relative',
-              }}>
+              {/* Interactive Form Controls Content Container */}
+              <div style={{ position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.75rem' }}>
                   {/* Farmer Name */}
                   <div>
@@ -951,10 +945,11 @@ export default function VoiceAssistant() {
                       onChange={(e) => setFarmerName(e.target.value)}
                       placeholder="e.g. K. Ramasamy / கே. இராமசாமி"
                       style={{
-                        width: '100%', background: 'rgba(9, 21, 36, 0.9)', border: '1px solid rgba(56, 189, 248, 0.35)',
+                        width: '100%', background: 'rgba(9, 21, 36, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)',
                         borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
                         outline: 'none', boxSizing: 'border-box', fontWeight: 700,
-                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(10px)',
                       }}
                     />
                   </div>
@@ -971,10 +966,11 @@ export default function VoiceAssistant() {
                       onChange={(e) => setFarmerPhone(e.target.value)}
                       placeholder="e.g. +91 98421 44510"
                       style={{
-                        width: '100%', background: 'rgba(9, 21, 36, 0.9)', border: '1px solid rgba(56, 189, 248, 0.35)',
+                        width: '100%', background: 'rgba(9, 21, 36, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)',
                         borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
                         outline: 'none', boxSizing: 'border-box', fontWeight: 700,
-                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)',
+                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(10px)',
                       }}
                     />
                   </div>
@@ -988,9 +984,10 @@ export default function VoiceAssistant() {
                       value={formDistrict}
                       onChange={(e) => setFormDistrict(e.target.value)}
                       style={{
-                        width: '100%', background: 'rgba(9, 21, 36, 0.9)', border: '1px solid rgba(56, 189, 248, 0.35)',
+                        width: '100%', background: 'rgba(9, 21, 36, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)',
                         borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
                         outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
+                        backdropFilter: 'blur(10px)',
                       }}
                     >
                       {districts.map((d) => <option key={d} value={d} style={{ background: '#091524', color: '#ffffff' }}>{d}</option>)}
@@ -1006,9 +1003,10 @@ export default function VoiceAssistant() {
                       value={formBlock}
                       onChange={(e) => setFormBlock(e.target.value)}
                       style={{
-                        width: '100%', background: 'rgba(9, 21, 36, 0.9)', border: '1px solid rgba(56, 189, 248, 0.35)',
+                        width: '100%', background: 'rgba(9, 21, 36, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)',
                         borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
                         outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
+                        backdropFilter: 'blur(10px)',
                       }}
                     >
                       {availableBlocks.map((b) => <option key={b} value={b} style={{ background: '#091524', color: '#ffffff' }}>{b}</option>)}
@@ -1024,9 +1022,10 @@ export default function VoiceAssistant() {
                       value={formVillage}
                       onChange={(e) => setFormVillage(e.target.value)}
                       style={{
-                        width: '100%', background: 'rgba(9, 21, 36, 0.9)', border: '1px solid rgba(56, 189, 248, 0.35)',
+                        width: '100%', background: 'rgba(9, 21, 36, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)',
                         borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
                         outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
+                        backdropFilter: 'blur(10px)',
                       }}
                     >
                       {availableVillages.map((v) => <option key={v} value={v} style={{ background: '#091524', color: '#ffffff' }}>{v}</option>)}
@@ -1042,9 +1041,10 @@ export default function VoiceAssistant() {
                       value={selectedScheme}
                       onChange={(e) => setSelectedScheme(e.target.value)}
                       style={{
-                        width: '100%', background: 'rgba(9, 21, 36, 0.9)', border: '1px solid rgba(56, 189, 248, 0.35)',
+                        width: '100%', background: 'rgba(9, 21, 36, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)',
                         borderRadius: '12px', padding: '0.75rem 1rem', color: '#ffffff', fontSize: '0.95rem',
                         outline: 'none', boxSizing: 'border-box', fontWeight: 700, cursor: 'pointer',
+                        backdropFilter: 'blur(10px)',
                       }}
                     >
                       <option value="PM-KISAN installment verification" style={{ background: '#091524', color: '#ffffff' }}>PM-KISAN installment verification (ரூ. 6,000 / ஆண்டு)</option>
@@ -1059,11 +1059,12 @@ export default function VoiceAssistant() {
                 {/* Document Verification Checkboxes */}
                 <div style={{
                   background: 'rgba(9, 21, 36, 0.85)',
-                  border: '1px solid rgba(52, 211, 153, 0.35)',
+                  border: '1px solid rgba(52, 211, 153, 0.4)',
                   borderRadius: '16px',
                   padding: '1.25rem 1.5rem',
                   marginBottom: '2rem',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+                  backdropFilter: 'blur(10px)',
                 }}>
                   <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.85rem' }}>
                     Document Checklist & Verification Status / இணைக்கப்பட்ட சான்றுகள்:
@@ -1116,8 +1117,8 @@ export default function VoiceAssistant() {
                     <span>Submit Scheme Application / விண்ணப்பத்தை அனுப்புக</span>
                   </button>
                 </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
