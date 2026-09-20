@@ -3,7 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import {
   Mic, MicOff, Send, Volume2, VolumeX, RefreshCw, Users,
   Leaf, Building2, Heart, HelpCircle, AlertTriangle, Wifi, WifiOff,
-  Info, ChevronDown, Camera, Image, X, Upload, FileText, CheckCircle2
+  Info, ChevronDown, Camera, Image, X, Upload, FileText, CheckCircle2,
+  Globe, Phone, Mail, Sparkles
 } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 import ResponseCard from '../../components/ResponseCard.jsx';
@@ -250,54 +251,21 @@ export default function VoiceAssistant() {
     <PublicLayout>
       <ToastContainer toasts={toasts} removeToast={removeToast} />
 
-      {/* Page header with Cinematic Ambient AI Radial Background & Full-Bleed Video */}
+      {/* Page header with Cinematic Ambient AI Radial Background */}
       <div style={{
         position: 'relative',
-        background: '#030308',
+        background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.25) 0%, rgba(16, 185, 129, 0.15) 45%, rgba(3, 3, 8, 1) 100%)',
         padding: '7rem 0 3.5rem',
         borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
         color: '#fff',
         overflow: 'hidden',
       }}>
-        {/* Full-Bleed Header Video Background (App Dashboard Video) */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transform: 'translate(-50%, -50%) scale(1.05)',
-            zIndex: 0,
-            opacity: 0.38,
-            filter: 'brightness(0.75) contrast(1.1)',
-          }}
-          src="/video/app_dashboard.mp4"
-        />
-
-        {/* Radial Dark Overlay */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.45) 0%, rgba(16, 185, 129, 0.3) 45%, rgba(3, 3, 8, 0.88) 100%)',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }} />
-
         {/* Ambient background glow orbs */}
         <div style={{
           position: 'absolute', top: '-100px', left: '50%', transform: 'translateX(-50%)',
           width: '600px', height: '300px',
           background: 'radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(56, 189, 248, 0.18) 50%, transparent 70%)',
-          filter: 'blur(70px)', pointerEvents: 'none', zIndex: 1,
+          filter: 'blur(70px)', pointerEvents: 'none', zIndex: 0,
         }} />
 
         <div className="container-sm" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
@@ -354,47 +322,13 @@ export default function VoiceAssistant() {
         minHeight: '75vh',
         padding: '3.5rem 0 5rem',
         color: '#ffffff',
-        overflow: 'hidden',
       }}>
-        {/* Full-Bleed Video Background (App Dashboard Video) */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transform: 'translate(-50%, -50%) scale(1.05)',
-            zIndex: 0,
-            opacity: 0.42,
-            filter: 'brightness(0.8) contrast(1.1)',
-          }}
-          src="/video/app_dashboard.mp4"
-        />
-
-        {/* Dark Vignette Overlay for Legibility */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'radial-gradient(ellipse at center, rgba(3, 3, 8, 0.4) 0%, rgba(3, 3, 8, 0.82) 75%, rgba(3, 3, 8, 0.98) 100%)',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }} />
-
         {/* Secondary ambient glow */}
         <div style={{
           position: 'absolute', top: '15%', left: '50%', transform: 'translateX(-50%)',
           width: '500px', height: '400px',
           background: 'radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(16, 185, 129, 0.1) 50%, transparent 70%)',
-          filter: 'blur(90px)', pointerEvents: 'none', zIndex: 1,
+          filter: 'blur(90px)', pointerEvents: 'none', zIndex: 0,
         }} />
 
         <div className="container-sm" style={{ position: 'relative', zIndex: 2 }}>
@@ -907,6 +841,159 @@ export default function VoiceAssistant() {
               Health responses are informational only — not a substitute for professional medical advice.
               Emergency situations trigger automatic escalation. 
               <span style={{ color: '#34d399', fontWeight: 600 }}> Integrated multi-channel AI architecture for web, WhatsApp, and toll-free IVR.</span>
+            </div>
+          </div>
+
+          {/* ── MULTI-CHANNEL DIRECT ACCESS (WEBSITE, TOLL-FREE, EMAIL) ── */}
+          <div style={{
+            marginTop: '3.5rem',
+            padding: '2.25rem 2rem',
+            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 20, 36, 0.98) 100%)',
+            border: '1px solid rgba(56, 189, 248, 0.35)',
+            borderRadius: '24px',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(14, 165, 233, 0.15)',
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px',
+                background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2))',
+                border: '1px solid rgba(56, 189, 248, 0.4)', color: '#38bdf8', fontSize: '0.82rem', fontWeight: 900,
+                textTransform: 'uppercase', marginBottom: '0.85rem', boxShadow: '0 0 15px rgba(56, 189, 248, 0.2)',
+              }}>
+                <Sparkles size={15} color="#38bdf8" /> Official Platform Access Points
+              </div>
+              <h3 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.85rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.01em', marginBottom: '0.5rem' }}>
+                Direct Access Channels / <span style={{ color: '#34d399' }}>நேரடி அணுகல் வழிகள்</span>
+              </h3>
+              <p style={{ color: '#94a3b8', fontSize: '0.975rem', maxWidth: '680px', margin: '0 auto', lineHeight: 1.6 }}>
+                Connect directly through our official website portal, 24/7 toll-free helpline, or official email support channel.
+              </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+              {/* 1. Website */}
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
+                border: '1px solid rgba(6, 182, 212, 0.4)',
+                borderRadius: '20px',
+                padding: '1.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '1.25rem',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.1rem' }}>
+                  <div style={{
+                    width: 50, height: 50, borderRadius: '16px', background: 'rgba(6, 182, 212, 0.2)',
+                    border: '1px solid rgba(6, 182, 212, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                  }}>
+                    <Globe size={24} color="#22d3ee" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#22d3ee', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Website Access</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem' }}>Grama Mitra Web</div>
+                    <div style={{ fontSize: '0.85rem', color: '#cbd5e1', marginTop: '0.35rem', lineHeight: 1.5 }}>
+                      gramaMitra.in — 24/7 AI Tamil Voice & Image Diagnosis Portal
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="/assistant"
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
+                    padding: '0.75rem 1.25rem', borderRadius: '14px',
+                    background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', textDecoration: 'none',
+                    boxShadow: '0 4px 18px rgba(6, 182, 212, 0.45)', transition: 'all 0.2s ease',
+                  }}
+                >
+                  <Globe size={16} /> Access Website Portal
+                </a>
+              </div>
+
+              {/* 2. Toll-Free Helpline */}
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
+                border: '1px solid rgba(245, 158, 11, 0.4)',
+                borderRadius: '20px',
+                padding: '1.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '1.25rem',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.1rem' }}>
+                  <div style={{
+                    width: 50, height: 50, borderRadius: '16px', background: 'rgba(245, 158, 11, 0.2)',
+                    border: '1px solid rgba(245, 158, 11, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                  }}>
+                    <Phone size={24} color="#fbbf24" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Toll-Free Helpline</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem' }}>1800-180-1551</div>
+                    <div style={{ fontSize: '0.85rem', color: '#cbd5e1', marginTop: '0.35rem', lineHeight: 1.5 }}>
+                      1800-GRAMA-AI Direct Phone Helpline for Farmers
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="tel:18001801551"
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
+                    padding: '0.75rem 1.25rem', borderRadius: '14px',
+                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', textDecoration: 'none',
+                    boxShadow: '0 4px 18px rgba(245, 158, 11, 0.45)', transition: 'all 0.2s ease',
+                  }}
+                >
+                  <Phone size={16} /> Call Toll-Free Helpline
+                </a>
+              </div>
+
+              {/* 3. Email Support */}
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
+                border: '1px solid rgba(16, 185, 129, 0.4)',
+                borderRadius: '20px',
+                padding: '1.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '1.25rem',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.1rem' }}>
+                  <div style={{
+                    width: 50, height: 50, borderRadius: '16px', background: 'rgba(16, 185, 129, 0.2)',
+                    border: '1px solid rgba(16, 185, 129, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                  }}>
+                    <Mail size={24} color="#34d399" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Support</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#ffffff', marginTop: '0.15rem' }}>hello@gramaMitra.in</div>
+                    <div style={{ fontSize: '0.85rem', color: '#cbd5e1', marginTop: '0.35rem', lineHeight: 1.5 }}>
+                      Official Desk Support & Department Inquiries
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="mailto:hello@gramaMitra.in"
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
+                    padding: '0.75rem 1.25rem', borderRadius: '14px',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', textDecoration: 'none',
+                    boxShadow: '0 4px 18px rgba(16, 185, 129, 0.45)', transition: 'all 0.2s ease',
+                  }}
+                >
+                  <Mail size={16} /> Send Email Inquiry
+                </a>
+              </div>
             </div>
           </div>
 
