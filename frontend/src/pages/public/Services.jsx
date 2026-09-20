@@ -229,9 +229,12 @@ export default function Services() {
       <section style={{
         position: 'relative',
         background: '#030712',
-        padding: '6rem 0 4rem',
+        padding: '5rem 0 4rem',
         overflow: 'hidden',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+        minHeight: '85vh',
+        display: 'flex',
+        alignItems: 'center',
       }}>
         {/* Full-Screen Rural Farming Background Video */}
         <video
@@ -248,117 +251,137 @@ export default function Services() {
             height: '100%',
             objectFit: 'cover',
             zIndex: 0,
+            filter: 'brightness(1.12) contrast(1.08)',
           }}
           src="/video/snki.mp4"
         />
 
-        {/* Subtle Dark Overlay for Text Readability */}
+        {/* Light Translucent Overlay to ensure text legibility while keeping video clearly visible */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'rgba(0, 0, 0, 0.45)',
+          background: 'linear-gradient(180deg, rgba(3, 7, 18, 0.3) 0%, rgba(3, 7, 18, 0.15) 50%, rgba(3, 7, 18, 0.45) 100%)',
           zIndex: 1,
           pointerEvents: 'none',
         }} />
 
-        {/* Colorful Glowing Orbs */}
-        <div className="glow-orb" style={{ top: '-10%', left: '15%', width: '450px', height: '450px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(0,0,0,0) 70%)' }} />
-        <div className="glow-orb" style={{ top: '20%', right: '10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(0,0,0,0) 70%)' }} />
-        <div className="glow-orb" style={{ bottom: '-10%', left: '40%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(244, 63, 94, 0.18) 0%, rgba(0,0,0,0) 70%)' }} />
+        {/* Colorful Glowing Orbs for ambiance */}
+        <div className="glow-orb" style={{ top: '-10%', left: '15%', width: '450px', height: '450px', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(0,0,0,0) 70%)' }} />
+        <div className="glow-orb" style={{ top: '20%', right: '10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(0,0,0,0) 70%)' }} />
+        <div className="glow-orb" style={{ bottom: '-10%', left: '40%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(0,0,0,0) 70%)' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.625rem', padding: '0.5rem 1.25rem', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.15)', backdropFilter: 'blur(10px)', marginBottom: '2rem', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
-            <Sparkles size={16} style={{ color: '#34d399' }} />
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(90deg, #34d399, #60a5fa, #fca5a5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Empowering Rural India Through AI
-            </span>
-          </div>
-
-          <h1 style={{
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            fontWeight: 900,
-            color: '#ffffff',
-            letterSpacing: '-0.03em',
-            lineHeight: 1.15,
-            marginBottom: '1.25rem',
-            maxWidth: '900px',
-            marginInline: 'auto',
-          }}>
-            Five Pillar Services. <br />
-            <span style={{
-              background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #f43f5e 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              filter: 'drop-shadow(0 4px 15px rgba(59, 130, 246, 0.3))',
-            }}>
-              One Multi-Channel AI Engine.
-            </span>
-          </h1>
-
-          <p style={{
-            color: '#94a3b8',
-            fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
-            maxWidth: '750px',
-            margin: '0 auto 3rem',
-            lineHeight: 1.7,
-            fontWeight: 400,
-          }}>
-            Delivering verified agricultural science, government scheme access, health safeguards, and telephony access for rural citizens — natively in Tamil.
-          </p>
-
-          {/* Quick Domain Filter Tabs */}
+          {/* Central Ultra-Premium Glassmorphism Card Wrapper */}
           <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '0.75rem',
-            maxWidth: '950px',
+            maxWidth: '1020px',
             margin: '0 auto',
+            padding: 'clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem)',
+            borderRadius: '28px',
+            background: 'rgba(6, 15, 28, 0.58)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1px solid rgba(255, 255, 255, 0.22)',
+            boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 30px rgba(59, 130, 246, 0.15)',
           }}>
-            <button
-              onClick={() => setActiveTab('all')}
-              style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '9999px',
-                border: activeTab === 'all' ? '1px solid #3b82f6' : '1px solid rgba(255, 255, 255, 0.1)',
-                background: activeTab === 'all' ? 'linear-gradient(135deg, #2563eb, #1d4ed8)' : 'rgba(255, 255, 255, 0.04)',
-                color: '#ffffff',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                boxShadow: activeTab === 'all' ? '0 0 20px rgba(59, 130, 246, 0.4)' : 'none',
-              }}
-            >
-              🌟 All Services
-            </button>
-            {SERVICES.map(s => {
-              const isActive = activeTab === s.id;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => setActiveTab(s.id)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1.35rem',
-                    borderRadius: '9999px',
-                    border: isActive ? `1px solid ${s.theme.primary}` : '1px solid rgba(255, 255, 255, 0.1)',
-                    background: isActive ? s.theme.gradient : 'rgba(255, 255, 255, 0.04)',
-                    color: isActive ? s.theme.pillText : '#cbd5e1',
-                    fontWeight: 700,
-                    fontSize: '0.875rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    boxShadow: isActive ? `0 0 20px ${s.theme.glow}` : 'none',
-                  }}
-                >
-                  <s.icon size={16} style={{ color: s.theme.primary }} />
-                  {s.title.split(' ')[0]}
-                </button>
-              );
-            })}
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.625rem', padding: '0.5rem 1.35rem', borderRadius: '9999px', background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.25)', backdropFilter: 'blur(12px)', marginBottom: '1.75rem', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
+              <Sparkles size={16} style={{ color: '#34d399' }} />
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', background: 'linear-gradient(90deg, #34d399, #60a5fa, #fca5a5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                Empowering Rural India Through AI
+              </span>
+            </div>
+
+            <h1 style={{
+              fontSize: 'clamp(2.4rem, 5vw, 4rem)',
+              fontWeight: 900,
+              color: '#ffffff',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.15,
+              marginBottom: '1.25rem',
+              maxWidth: '900px',
+              marginInline: 'auto',
+              textShadow: '0 4px 20px rgba(0,0,0,0.6)',
+            }}>
+              Five Pillar Services. <br />
+              <span style={{
+                background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #f43f5e 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                filter: 'drop-shadow(0 4px 15px rgba(59, 130, 246, 0.4))',
+              }}>
+                One Multi-Channel AI Engine.
+              </span>
+            </h1>
+
+            <p style={{
+              color: '#e2e8f0',
+              fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
+              maxWidth: '780px',
+              margin: '0 auto 2.5rem',
+              lineHeight: 1.7,
+              fontWeight: 400,
+              textShadow: '0 2px 10px rgba(0,0,0,0.7)',
+            }}>
+              Delivering verified agricultural science, government scheme access, health safeguards, and telephony access for rural citizens — natively in Tamil.
+            </p>
+
+            {/* Quick Domain Filter Tabs with Glassmorphism */}
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '0.75rem',
+              maxWidth: '950px',
+              margin: '0 auto',
+            }}>
+              <button
+                onClick={() => setActiveTab('all')}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '9999px',
+                  border: activeTab === 'all' ? '1px solid #60a5fa' : '1px solid rgba(255, 255, 255, 0.18)',
+                  background: activeTab === 'all' ? 'linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.9))' : 'rgba(255, 255, 255, 0.08)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  color: '#ffffff',
+                  fontWeight: 800,
+                  fontSize: '0.9rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                  boxShadow: activeTab === 'all' ? '0 0 25px rgba(59, 130, 246, 0.6)' : '0 4px 15px rgba(0,0,0,0.2)',
+                }}
+              >
+                🌟 All Services
+              </button>
+              {SERVICES.map(s => {
+                const isActive = activeTab === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => setActiveTab(s.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.75rem 1.35rem',
+                      borderRadius: '9999px',
+                      border: isActive ? `1px solid ${s.theme.primary}` : '1px solid rgba(255, 255, 255, 0.18)',
+                      background: isActive ? s.theme.gradient : 'rgba(255, 255, 255, 0.08)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      color: isActive ? s.theme.pillText : '#f1f5f9',
+                      fontWeight: 800,
+                      fontSize: '0.875rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                      boxShadow: isActive ? `0 0 25px ${s.theme.glow}` : '0 4px 15px rgba(0,0,0,0.2)',
+                    }}
+                  >
+                    <s.icon size={16} style={{ color: s.theme.primary }} />
+                    {s.title.split(' ')[0]}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
