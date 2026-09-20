@@ -721,9 +721,10 @@ export default function Home() {
         position: 'relative',
         background: 'linear-gradient(135deg, #042f2e 0%, #064e3b 30%, #78350f 70%, #451a03 100%)',
         padding: '3.75rem 0',
+        marginBottom: '4rem',
         borderTop: '1px solid rgba(245, 158, 11, 0.25)',
-        borderBottom: '1px solid rgba(245, 158, 11, 0.2)',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+        borderBottom: '1px solid rgba(245, 158, 11, 0.25)',
+        boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
       }}>
         {/* Subtle ambient light glow matching golden harvest & emerald crops */}
         <div style={{
@@ -755,10 +756,10 @@ export default function Home() {
       <section id="ask-grama-mitra-cta" className="section" style={{
         position: 'relative',
         background: '#000000',
-        padding: '6.5rem 0 6.5rem',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
+        padding: '5.5rem 0',
+        borderTop: '1px solid rgba(255,255,255,0.15)',
         overflow: 'hidden',
-        minHeight: '580px',
+        minHeight: '520px',
         display: 'flex',
         alignItems: 'center',
       }}>
@@ -792,7 +793,7 @@ export default function Home() {
 
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
           {/* Top Right Corner: Ultra-Premium Glass Title Card */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '4.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '3.5rem' }}>
             <div style={{
               maxWidth: '580px',
               textAlign: 'right',
@@ -845,19 +846,19 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bottom Right Corner: Action Buttons in Spacious Translucent Glass Container */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '0.5rem' }}>
+          {/* Bottom Right Corner: Action Buttons in Compact Translucent Glass Container */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{
               display: 'inline-flex',
-              gap: '1rem',
+              gap: '0.75rem',
               flexWrap: 'wrap',
               alignItems: 'center',
               background: 'linear-gradient(135deg, rgba(6, 11, 20, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '22px',
-              padding: '0.95rem 1.35rem',
+              borderRadius: '20px',
+              padding: '0.75rem 1.15rem',
               boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.35)',
               position: 'relative',
               overflow: 'hidden',
@@ -866,13 +867,13 @@ export default function Home() {
               <Link to="/assistant" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.7rem',
-                padding: '0.75rem 1.45rem 0.75rem 0.9rem',
-                borderRadius: '16px',
+                gap: '0.6rem',
+                padding: '0.6rem 1.25rem 0.6rem 0.75rem',
+                borderRadius: '14px',
                 background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.88) 0%, rgba(5, 150, 105, 0.88) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '0.95rem',
+                fontSize: '0.92rem',
                 textDecoration: 'none',
                 boxShadow: '0 8px 25px -4px rgba(16, 185, 129, 0.6), inset 0 1.5px 2px rgba(255, 255, 255, 0.6)',
                 border: '1px solid rgba(255, 255, 255, 0.5)',
@@ -884,31 +885,31 @@ export default function Home() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '10px',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '9px',
                   background: 'rgba(255, 255, 255, 0.3)',
                   border: '1px solid rgba(255, 255, 255, 0.6)',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
                 }}>
-                  <Mic size={17} color="#ffffff" />
+                  <Mic size={16} color="#ffffff" />
                 </span>
                 <span style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Start Voice Assistant</span>
-                <ArrowRight size={17} color="#ffffff" />
+                <ArrowRight size={16} color="#ffffff" />
               </Link>
 
               {/* Secondary Discovery CTA */}
               <Link to="/services" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.55rem',
-                padding: '0.75rem 1.45rem',
-                borderRadius: '16px',
+                gap: '0.5rem',
+                padding: '0.6rem 1.25rem',
+                borderRadius: '14px',
                 border: '1px solid rgba(255, 255, 255, 0.35)',
                 background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 58, 138, 0.3) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '0.95rem',
+                fontSize: '0.92rem',
                 textDecoration: 'none',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
@@ -916,7 +917,7 @@ export default function Home() {
                 transition: 'all 0.25s ease',
               }} aria-label="View All Services">
                 <span>View All Services</span>
-                <ChevronRight size={17} color="#fbbf24" />
+                <ChevronRight size={16} color="#fbbf24" />
               </Link>
             </div>
           </div>
