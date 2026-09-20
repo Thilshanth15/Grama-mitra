@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Building2, ArrowLeft, Lock, Mail, Shield, CheckCircle, AlertCircle, ChevronRight, HelpCircle } from 'lucide-react';
+import { Building2, ArrowLeft, Lock, Mail, Shield, CheckCircle, AlertCircle, ChevronRight, HelpCircle, User } from 'lucide-react';
 import PublicLayout from '../../layouts/PublicLayout.jsx';
 import { useAuth } from '../../hooks/useAuth.js';
 import { getDistricts, getBlocks } from '../../data/locationData.js';
@@ -14,6 +14,7 @@ export default function DistrictBlockLogin() {
   const [blocks, setBlocks] = useState(getBlocks(districts[0] || 'Thanjavur'));
   const [block, setBlock] = useState('');
   
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
@@ -33,8 +34,8 @@ export default function DistrictBlockLogin() {
     e.preventDefault();
     setError('');
 
-    if (!district || !block) {
-      setError('Please select both your assigned District and Block.');
+    if (!username.trim()) {
+      setError('Please enter your User Name.');
       return;
     }
     if (!email.trim()) {
@@ -49,12 +50,12 @@ export default function DistrictBlockLogin() {
     setIsSubmitting(true);
     try {
       const officerUser = await loginDistrictOfficer({
-        district,
-        block,
+        district: district || 'Thanjavur',
+        block: block || 'Kumbakonam',
         officerId: email.includes('@') ? email.split('@')[0].toUpperCase() : email.toUpperCase(),
         email: email.includes('@') ? email : `${email.toLowerCase()}@gramaMitra.in`,
         password,
-        officerName: `District Officer (${district} / ${block})`,
+        officerName: username.trim(),
       });
 
       if (officerUser) {
@@ -148,54 +149,31 @@ export default function DistrictBlockLogin() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {/* District & Block Selection Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '0.4rem' }}>
-                  District <span style={{ color: '#ef4444' }}>*</span>
-                </label>
-                <select
-                  value={district}
-                  onChange={(e) => setDistrict(e.target.value)}
+            {/* User Name Field */}
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '0.4rem' }}>
+                User Name <span style={{ color: '#ef4444' }}>*</span>
+              </label>
+              <div style={{ position: 'relative' }}>
+                <User size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter your official user name"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '0.75rem 0.85rem',
+                    padding: '0.75rem 0.85rem 0.75rem 2.4rem',
                     background: 'rgba(15, 23, 42, 0.8)',
                     border: '1px solid rgba(255, 255, 255, 0.15)',
                     borderRadius: '10px',
                     color: '#ffffff',
                     fontSize: '0.875rem',
                     outline: 'none',
+                    boxSizing: 'border-box',
                   }}
-                >
-                  {districts.map(d => (
-                    <option key={d} value={d} style={{ background: '#0f172a', color: '#fff' }}>{d}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#cbd5e1', marginBottom: '0.4rem' }}>
-                  Assigned Block <span style={{ color: '#ef4444' }}>*</span>
-                </label>
-                <select
-                  value={block}
-                  onChange={(e) => setBlock(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 0.85rem',
-                    background: 'rgba(15, 23, 42, 0.8)',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    borderRadius: '10px',
-                    color: '#ffffff',
-                    fontSize: '0.875rem',
-                    outline: 'none',
-                  }}
-                >
-                  {blocks.map(b => (
-                    <option key={b} value={b} style={{ background: '#0f172a', color: '#fff' }}>{b}</option>
-                  ))}
-                </select>
+                />
               </div>
             </div>
 
