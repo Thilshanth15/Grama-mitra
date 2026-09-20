@@ -846,22 +846,28 @@ export default function VoiceAssistant() {
           {/* ── GOVERNMENT SCHEME APPLICATION FORM SECTION ── */}
           <div style={{
             marginTop: '4rem',
-            paddingTop: '3rem',
-            borderTop: '1px solid rgba(56, 189, 248, 0.25)',
+            padding: '3rem 2rem',
+            borderRadius: '32px',
+            backgroundImage: `linear-gradient(135deg, rgba(3, 10, 20, 0.7) 0%, rgba(2, 6, 14, 0.82) 100%), url("/video/thai_farmer_working.jpg")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            border: '1.5px solid rgba(56, 189, 248, 0.4)',
+            boxShadow: '0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(14, 165, 233, 0.25)',
           }}>
             <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
               <div style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: '9999px',
-                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2))',
-                border: '1px solid rgba(52, 211, 153, 0.4)', color: '#34d399', fontSize: '0.82rem', fontWeight: 900,
-                textTransform: 'uppercase', marginBottom: '1rem', boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)',
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25))',
+                border: '1px solid rgba(52, 211, 153, 0.5)', color: '#34d399', fontSize: '0.82rem', fontWeight: 900,
+                textTransform: 'uppercase', marginBottom: '1rem', boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)',
               }}>
                 <FileText size={15} color="#34d399" /> Government Scheme Direct Application
               </div>
               <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 900, color: '#ffffff', letterSpacing: '-0.02em', marginBottom: '0.75rem' }}>
                 Online Scheme Application Format / <span style={{ color: '#38bdf8' }}>அரசு திட்டங்கள் விண்ணப்பப் படிவம்</span>
               </h2>
-              <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: 1.7 }}>
+              <p style={{ color: '#cbd5e1', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: 1.7, fontWeight: 600 }}>
                 Fill out your details below to apply for PM-KISAN, PMFBY crop insurance, or KCC loans directly through the Voice Assistant. Submitted applications are instantly transmitted directly to the **District & Block Officer Dashboard**.
               </p>
             </div>
@@ -887,17 +893,14 @@ export default function VoiceAssistant() {
               </div>
             )}
 
-            {/* Form Card Container (Cinematic Thai Farmer Background Theme) */}
+            {/* Form Card Container (Translucent Glassmorphism over Thai Farmer Background) */}
             <form onSubmit={handleSchemeSubmit} style={{
-              backgroundImage: `linear-gradient(135deg, rgba(8, 20, 34, 0.85) 0%, rgba(4, 12, 22, 0.92) 100%), url("/video/Thai Farmer  Working in farming by sutiponmm.jpg")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
+              background: 'rgba(8, 20, 36, 0.78)',
               border: '1.5px solid rgba(56, 189, 248, 0.45)',
               borderRadius: '24px',
               padding: '2.5rem',
-              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(14, 165, 233, 0.25)',
-              backdropFilter: 'blur(10px)',
+              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(14, 165, 233, 0.2)',
+              backdropFilter: 'blur(14px)',
               position: 'relative',
             }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '1.75rem' }}>
