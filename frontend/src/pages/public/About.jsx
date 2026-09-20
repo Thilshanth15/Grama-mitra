@@ -434,12 +434,12 @@ export default function About() {
             gap: '0.625rem',
             padding: '1.1rem 2.5rem',
             borderRadius: '16px',
-            background: '#ffffff',
-            color: '#0f172a',
+            background: 'linear-gradient(135deg, #38bdf8 0%, #2563eb 50%, #10b981 100%)',
+            color: '#ffffff',
             fontWeight: 900,
             fontSize: '1.05rem',
             textDecoration: 'none',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
+            boxShadow: '0 10px 30px rgba(56, 189, 248, 0.4)',
           }}>
             Open Voice Assistant <ArrowRight size={20} />
           </Link>
