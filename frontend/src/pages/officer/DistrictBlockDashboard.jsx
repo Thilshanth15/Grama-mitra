@@ -406,63 +406,65 @@ export default function DistrictBlockDashboard() {
           </div>
         </div>
 
-        {/* Key Performance Indicators Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
-          <div onClick={() => setActiveTab('villages')} style={{ background: activeTab === 'villages' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'villages' ? '1px solid #10b981' : '1px solid rgba(16, 185, 129, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Assigned Villages</span>
-              <Building2 size={20} color="#34d399" />
+        {/* Key Performance Indicators Grid (Hidden when Hotspot Mapping is active) */}
+        {activeTab !== 'hotspot-map' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+            <div onClick={() => setActiveTab('villages')} style={{ background: activeTab === 'villages' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'villages' ? '1px solid #10b981' : '1px solid rgba(16, 185, 129, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Assigned Villages</span>
+                <Building2 size={20} color="#34d399" />
+              </div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
+                {VILLAGES_MASTER.filter(v => v.block === selectedBlock).length || 5}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#34d399', marginTop: '0.25rem' }}>Active monitoring in {selectedBlock}</div>
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {VILLAGES_MASTER.filter(v => v.block === selectedBlock).length || 5}
-            </div>
-            <div style={{ fontSize: '0.75rem', color: '#34d399', marginTop: '0.25rem' }}>Active monitoring in {selectedBlock}</div>
-          </div>
 
-          <div onClick={() => setActiveTab('handoffs')} style={{ background: activeTab === 'handoffs' ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'handoffs' ? '1px solid #f59e0b' : '1px solid rgba(245, 158, 11, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Pending Escalations</span>
-              <AlertTriangle size={20} color="#fbbf24" />
+            <div onClick={() => setActiveTab('handoffs')} style={{ background: activeTab === 'handoffs' ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'handoffs' ? '1px solid #f59e0b' : '1px solid rgba(245, 158, 11, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Pending Escalations</span>
+                <AlertTriangle size={20} color="#fbbf24" />
+              </div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
+                {handoffs.filter(h => h.status !== 'Resolved').length || 8}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#fbbf24', marginTop: '0.25rem' }}>Requires officer review</div>
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {handoffs.filter(h => h.status !== 'Resolved').length || 8}
-            </div>
-            <div style={{ fontSize: '0.75rem', color: '#fbbf24', marginTop: '0.25rem' }}>Requires officer review</div>
-          </div>
 
-          <div onClick={() => setActiveTab('agri')} style={{ background: activeTab === 'agri' ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'agri' ? '1px solid #38bdf8' : '1px solid rgba(56, 189, 248, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Agri & Pest Outbreaks</span>
-              <Activity size={20} color="#38bdf8" />
+            <div onClick={() => setActiveTab('agri')} style={{ background: activeTab === 'agri' ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'agri' ? '1px solid #38bdf8' : '1px solid rgba(56, 189, 248, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Agri & Pest Outbreaks</span>
+                <Activity size={20} color="#38bdf8" />
+              </div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
+                {DEMO_AGRI_ISSUES.length} Active Alerts
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginTop: '0.25rem' }}>Paddy Blast & BPH Warnings</div>
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {DEMO_AGRI_ISSUES.length} Active Alerts
-            </div>
-            <div style={{ fontSize: '0.75rem', color: '#38bdf8', marginTop: '0.25rem' }}>Paddy Blast & BPH Warnings</div>
-          </div>
 
-          <div onClick={() => setActiveTab('agri')} style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Health Safety Red Flags</span>
-              <ShieldAlert size={20} color="#ef4444" />
+            <div onClick={() => setActiveTab('agri')} style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Health Safety Red Flags</span>
+                <ShieldAlert size={20} color="#ef4444" />
+              </div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
+                {alerts.length || 2} Alerts
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#fca5a5', marginTop: '0.25rem' }}>108 Protocol Triggered</div>
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {alerts.length || 2} Alerts
-            </div>
-            <div style={{ fontSize: '0.75rem', color: '#fca5a5', marginTop: '0.25rem' }}>108 Protocol Triggered</div>
-          </div>
 
-          <div onClick={() => setActiveTab('schemes')} style={{ background: activeTab === 'schemes' ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'schemes' ? '1px solid #a78bfa' : '1px solid rgba(139, 92, 246, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Scheme Applications</span>
-              <FileText size={20} color="#a78bfa" />
+            <div onClick={() => setActiveTab('schemes')} style={{ background: activeTab === 'schemes' ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), #1e293b)' : 'linear-gradient(135deg, #0f172a, #1e293b)', border: activeTab === 'schemes' ? '1px solid #a78bfa' : '1px solid rgba(139, 92, 246, 0.3)', padding: '1.25rem', borderRadius: '16px', cursor: 'pointer', transition: 'all 0.2s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>Scheme Applications</span>
+                <FileText size={20} color="#a78bfa" />
+              </div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
+                {DEMO_SCHEME_REQUESTS.length + 30} Total
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#a78bfa', marginTop: '0.25rem' }}>PM-KISAN, PMFBY & KCC</div>
             </div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>
-              {DEMO_SCHEME_REQUESTS.length + 30} Total
-            </div>
-            <div style={{ fontSize: '0.75rem', color: '#a78bfa', marginTop: '0.25rem' }}>PM-KISAN, PMFBY & KCC</div>
           </div>
-        </div>
+        )}
 
 
 
