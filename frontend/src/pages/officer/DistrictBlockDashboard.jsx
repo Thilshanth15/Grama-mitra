@@ -29,6 +29,7 @@ export default function DistrictBlockDashboard() {
   const [blocks, setBlocks] = useState(getBlocks(user?.district || districts[0] || 'Thanjavur'));
   const [selectedBlock, setSelectedBlock] = useState(user?.block || 'Kumbakonam');
   const [selectedVillageFilter, setSelectedVillageFilter] = useState('ALL');
+  const [dateRange, setDateRange] = useState('30d');
   const [activeTab, setActiveTab] = useState('hotspot-map');
 
   // Live Firebase/Local Data
