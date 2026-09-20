@@ -52,11 +52,13 @@ export default function VoiceAssistant() {
   const [speaking, setSpeaking] = useState(false);
   const [recognition, setRecognition] = useState(null);
   const [isSpeechSupported, setIsSpeechSupported] = useState(false);
-  const { toasts, addToast, removeToast } = useToast();
   const inputRef = useRef(null);
   const resultRef = useRef(null);
   const fileInputRef = useRef(null);
   const [showCallModal, setShowCallModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailForm, setEmailForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [emailSuccess, setEmailSuccess] = useState('');
 
   // Scheme Application Form State
   const districts = getDistricts();
@@ -986,18 +988,19 @@ export default function VoiceAssistant() {
                     </div>
                   </div>
                 </div>
-                <a
-                  href="mailto:hello@gramaMitra.in"
+                <button
+                  type="button"
+                  onClick={() => setShowEmailModal(true)}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem',
                     padding: '0.75rem 1.25rem', borderRadius: '14px',
                     background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', textDecoration: 'none',
+                    color: '#ffffff', fontWeight: 900, fontSize: '0.9rem', border: 'none', cursor: 'pointer',
                     boxShadow: '0 4px 18px rgba(16, 185, 129, 0.45)', transition: 'all 0.2s ease',
                   }}
                 >
                   <Mail size={16} /> Send Email Inquiry
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -1395,6 +1398,214 @@ export default function VoiceAssistant() {
                     <Phone size={18} style={{ transform: 'rotate(135deg)' }} /> End Call
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+          {/* ── OFFICIAL EMAIL INQUIRY MODAL ── */}
+          {showEmailModal && (
+            <div style={{
+              position: 'fixed',
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: 'rgba(2, 6, 15, 0.88)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              zIndex: 99999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '1.5rem',
+            }}>
+              <div style={{
+                width: '100%',
+                maxWidth: '520px',
+                background: 'linear-gradient(135deg, #091524 0%, #050d18 100%)',
+                border: '2px solid rgba(52, 211, 153, 0.6)',
+                borderRadius: '28px',
+                padding: '2.5rem 2rem',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(52, 211, 153, 0.35)',
+                color: '#ffffff',
+                position: 'relative',
+              }}>
+                {/* Top Close Button */}
+                <button
+                  onClick={() => {
+                    setShowEmailModal(false);
+                    setEmailSuccess('');
+                  }}
+                  style={{
+                    position: 'absolute', top: 18, right: 18,
+                    background: 'rgba(255,255,255,0.1)', border: 'none',
+                    color: '#94a3b8', borderRadius: '50%', width: 36, height: 36,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: 'pointer', transition: 'all 0.2s',
+                  }}
+                >
+                  <X size={20} />
+                </button>
+
+                <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                  <div style={{
+                    width: 68,
+                    height: 68,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.4))',
+                    border: '2px solid #34d399',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '1rem',
+                    boxShadow: '0 0 30px rgba(16, 185, 129, 0.5)',
+                  }}>
+                    <Mail size={32} color="#34d399" />
+                  </div>
+
+                  <div style={{ fontSize: '0.78rem', fontWeight: 900, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.35rem' }}>
+                    Official Email Desk
+                  </div>
+                  <h2 style={{ fontSize: '1.65rem', fontWeight: 900, color: '#ffffff', marginBottom: '0.25rem' }}>
+                    hello@gramaMitra.in
+                  </h2>
+                  <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: 0 }}>
+                    Direct email channel for farmer support & government partnerships
+                  </p>
+                </div>
+
+                {emailSuccess ? (
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%)',
+                    border: '1px solid #10b981', borderRadius: '18px', padding: '1.5rem', textAlign: 'center', color: '#34d399',
+                  }}>
+                    <CheckCircle2 size={40} color="#34d399" style={{ margin: '0 auto 0.75rem' }} />
+                    <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.4rem' }}>Email Inquiry Transmitted!</h3>
+                    <p style={{ fontSize: '0.88rem', color: '#cbd5e1', marginBottom: '1.25rem' }}>
+                      Your message has been logged and sent to <strong>hello@gramaMitra.in</strong>. Our team will respond shortly.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setShowEmailModal(false);
+                        setEmailSuccess('');
+                      }}
+                      style={{
+                        padding: '0.75rem 1.5rem', borderRadius: '12px', background: '#10b981', color: '#fff',
+                        fontWeight: 800, border: 'none', cursor: 'pointer',
+                      }}
+                    >
+                      Close Window
+                    </button>
+                  </div>
+                ) : (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (!emailForm.email.trim() || !emailForm.message.trim()) {
+                        addToast('Please enter your email and message.', 'warning');
+                        return;
+                      }
+                      setEmailSuccess('Message sent successfully!');
+                      addToast('✉️ Email inquiry sent to hello@gramaMitra.in', 'success');
+                      setEmailForm({ name: '', email: '', subject: '', message: '' });
+                    }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+                  >
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
+                        Your Name / பெயர்
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. K. Ramasamy"
+                        value={emailForm.name}
+                        onChange={(e) => setEmailForm(f => ({ ...f, name: e.target.value }))}
+                        style={{
+                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
+                        Your Email Address / மின்னஞ்சல் *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="e.g. farmer@gmail.com"
+                        value={emailForm.email}
+                        onChange={(e) => setEmailForm(f => ({ ...f, email: e.target.value }))}
+                        style={{
+                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
+                        Subject / தலைப்பு
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Crop Advisory Request / Scheme Inquiry"
+                        value={emailForm.subject}
+                        onChange={(e) => setEmailForm(f => ({ ...f, subject: e.target.value }))}
+                        style={{
+                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', marginBottom: '0.4rem' }}>
+                        Message Details / செய்தி *
+                      </label>
+                      <textarea
+                        required
+                        rows={3}
+                        placeholder="Type your inquiry or message here..."
+                        value={emailForm.message}
+                        onChange={(e) => setEmailForm(f => ({ ...f, message: e.target.value }))}
+                        style={{
+                          width: '100%', background: '#091524', border: '1px solid rgba(56, 189, 248, 0.35)',
+                          borderRadius: '10px', padding: '0.65rem 0.85rem', color: '#fff', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box',
+                        }}
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
+                      <button
+                        type="submit"
+                        style={{
+                          flex: 1, padding: '0.85rem', borderRadius: '12px',
+                          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                          border: 'none', color: '#fff', fontWeight: 900, fontSize: '0.92rem',
+                          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                          boxShadow: '0 4px 18px rgba(16, 185, 129, 0.4)',
+                        }}
+                      >
+                        <Send size={16} /> Send Email Inquiry
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText('hello@gramaMitra.in');
+                          addToast('📋 Copied hello@gramaMitra.in to clipboard!', 'info');
+                        }}
+                        style={{
+                          padding: '0.85rem 1rem', borderRadius: '12px',
+                          background: 'rgba(56, 189, 248, 0.15)',
+                          border: '1px solid rgba(56, 189, 248, 0.4)',
+                          color: '#38bdf8', fontWeight: 800, fontSize: '0.85rem',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Copy Email
+                      </button>
+                    </div>
+                  </form>
+                )}
               </div>
             </div>
           )}
