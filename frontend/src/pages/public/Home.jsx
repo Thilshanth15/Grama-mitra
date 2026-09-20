@@ -181,7 +181,7 @@ export default function Home() {
             zIndex: 0,
             filter: 'brightness(1.06) contrast(1.04)',
           }}
-          src="/video/bulla.mp4"
+          src="/video/app dashboard.mp4"
         />
 
         {/* Floating Glass Action Bar at Viewport Bottom */}
