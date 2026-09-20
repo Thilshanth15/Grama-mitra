@@ -178,6 +178,8 @@ export default function Home() {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            transform: 'scale(1.08)',
+            transformOrigin: 'top left',
             zIndex: 0,
           }}
           src="/video/app dashboard.mp4"
