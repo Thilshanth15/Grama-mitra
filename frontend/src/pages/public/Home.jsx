@@ -755,10 +755,10 @@ export default function Home() {
       <section id="ask-grama-mitra-cta" className="section" style={{
         position: 'relative',
         background: '#000000',
-        padding: '5.5rem 0',
+        padding: '6.5rem 0 6.5rem',
         borderTop: '1px solid rgba(255,255,255,0.08)',
         overflow: 'hidden',
-        minHeight: '520px',
+        minHeight: '580px',
         display: 'flex',
         alignItems: 'center',
       }}>
@@ -792,7 +792,7 @@ export default function Home() {
 
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
           {/* Top Right Corner: Ultra-Premium Glass Title Card */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '3.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '4.5rem' }}>
             <div style={{
               maxWidth: '580px',
               textAlign: 'right',
@@ -845,19 +845,19 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bottom Right Corner: Action Buttons in Compact Translucent Glass Container */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {/* Bottom Right Corner: Action Buttons in Spacious Translucent Glass Container */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '0.5rem' }}>
             <div style={{
               display: 'inline-flex',
-              gap: '0.75rem',
+              gap: '1rem',
               flexWrap: 'wrap',
               alignItems: 'center',
               background: 'linear-gradient(135deg, rgba(6, 11, 20, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '20px',
-              padding: '0.75rem 1.15rem',
+              borderRadius: '22px',
+              padding: '0.95rem 1.35rem',
               boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.35)',
               position: 'relative',
               overflow: 'hidden',
@@ -866,13 +866,13 @@ export default function Home() {
               <Link to="/assistant" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.6rem',
-                padding: '0.6rem 1.25rem 0.6rem 0.75rem',
-                borderRadius: '14px',
+                gap: '0.7rem',
+                padding: '0.75rem 1.45rem 0.75rem 0.9rem',
+                borderRadius: '16px',
                 background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.88) 0%, rgba(5, 150, 105, 0.88) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '0.92rem',
+                fontSize: '0.95rem',
                 textDecoration: 'none',
                 boxShadow: '0 8px 25px -4px rgba(16, 185, 129, 0.6), inset 0 1.5px 2px rgba(255, 255, 255, 0.6)',
                 border: '1px solid rgba(255, 255, 255, 0.5)',
@@ -884,31 +884,31 @@ export default function Home() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '9px',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '10px',
                   background: 'rgba(255, 255, 255, 0.3)',
                   border: '1px solid rgba(255, 255, 255, 0.6)',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
                 }}>
-                  <Mic size={16} color="#ffffff" />
+                  <Mic size={17} color="#ffffff" />
                 </span>
                 <span style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Start Voice Assistant</span>
-                <ArrowRight size={16} color="#ffffff" />
+                <ArrowRight size={17} color="#ffffff" />
               </Link>
 
               {/* Secondary Discovery CTA */}
               <Link to="/services" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.6rem 1.25rem',
-                borderRadius: '14px',
+                gap: '0.55rem',
+                padding: '0.75rem 1.45rem',
+                borderRadius: '16px',
                 border: '1px solid rgba(255, 255, 255, 0.35)',
                 background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 58, 138, 0.3) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '0.92rem',
+                fontSize: '0.95rem',
                 textDecoration: 'none',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
@@ -916,7 +916,7 @@ export default function Home() {
                 transition: 'all 0.25s ease',
               }} aria-label="View All Services">
                 <span>View All Services</span>
-                <ChevronRight size={16} color="#fbbf24" />
+                <ChevronRight size={17} color="#fbbf24" />
               </Link>
             </div>
           </div>
