@@ -349,13 +349,8 @@ export default function HowItWorks() {
       </section>
 
       {/* Responsible AI Principles — Vivid Colorful Cards */}
-      <section className="section" style={{
-        position: 'relative',
-        background: '#000000',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-        overflow: 'hidden',
-      }}>
-        {/* Full-Bleed Video Background */}
+      <section className="section" style={{ position: 'relative', background: '#000000', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', overflow: 'hidden' }}>
+        {/* Full-Screen Rural Farming Background Video */}
         <video
           autoPlay
           loop
@@ -369,26 +364,21 @@ export default function HowItWorks() {
             height: '100%',
             objectFit: 'cover',
             zIndex: 0,
-            opacity: 0.45,
-            filter: 'brightness(0.9) contrast(1.1)',
           }}
           src="/video/snki'.mp4"
         />
 
-        {/* Subtle Dark Overlay */}
+        {/* Subtle Dark Overlay for Text & Card Readability */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
+          background: 'rgba(0, 0, 0, 0.45)',
           zIndex: 1,
           pointerEvents: 'none',
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ marginBottom: '1.75rem' }}>
-              <span className="section-label">Core Pillars</span>
-            </div>
             <h2 className="section-title">Built on Responsible AI</h2>
             <p className="section-subtitle">
               Every component is engineered for safety, transparency, zero hallucinations, and high rural accessibility.
