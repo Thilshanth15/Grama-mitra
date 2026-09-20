@@ -156,12 +156,13 @@ export default function Home() {
       <section style={{
         position: 'relative',
         height: 'calc(100vh - var(--nav-height, 76px))',
+        minHeight: '550px',
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'center',
         padding: '0 0 2.5rem',
         overflow: 'hidden',
-        background: '#000000',
+        background: '#040d1a',
         color: '#ffffff',
       }}>
         {/* Full-Bleed Video Background */}
@@ -172,17 +173,24 @@ export default function Home() {
           playsInline
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transform: 'translate(-50%, -50%) scale(1.28)',
             zIndex: 0,
-            filter: 'brightness(1.06) contrast(1.04)',
           }}
           src="/video/app dashboard.mp4"
         />
+
+        {/* Subtle Dark Overlay for Content Contrast & Readability */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.35)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }} />
 
         {/* Floating Glass Action Bar at Viewport Bottom */}
         <div className="container" style={{ position: 'relative', zIndex: 3, textAlign: 'center' }}>
