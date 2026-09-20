@@ -122,7 +122,7 @@ export default function Home() {
   const { t } = useLanguage();
   const scrollToCTA = (e) => {
     if (e) e.preventDefault();
-    const target = document.getElementById('impact-stats-section') || document.getElementById('ask-grama-mitra-cta');
+    const target = document.getElementById('ask-grama-mitra-cta');
     if (!target) return;
 
     const navOffset = 76;
@@ -182,56 +182,6 @@ export default function Home() {
           }}
           src="/video/Cinematic_wide_shot._The_farmers_20260920055822.mp4"
         />
-
-        {/* Top-Left Hero Title: GRAMA MITRA */}
-        <div style={{
-          position: 'absolute',
-          top: '2.25rem',
-          left: '2.5rem',
-          zIndex: 3,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-        }}>
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(6, 11, 20, 0.55) 0%, rgba(15, 23, 42, 0.4) 100%)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.25)',
-            borderRadius: '20px',
-            padding: '0.95rem 1.65rem',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.65), inset 0 1.5px 2px rgba(255, 255, 255, 0.35)',
-          }}>
-            <h1 style={{
-              fontSize: 'clamp(2rem, 3.6vw, 2.85rem)',
-              fontWeight: 900,
-              color: '#ffffff',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              margin: 0,
-              lineHeight: 1.1,
-              textShadow: '0 4px 20px rgba(0, 0, 0, 0.9)',
-              fontFamily: "'Inter', 'Outfit', system-ui, sans-serif",
-            }}>
-              GRAMA MITRA
-            </h1>
-            <div style={{
-              fontSize: '0.8rem',
-              fontWeight: 800,
-              color: '#34d399',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              marginTop: '0.3rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.45rem',
-              textShadow: '0 2px 10px rgba(0,0,0,0.8)',
-            }}>
-              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#34d399', boxShadow: '0 0 10px #34d399' }} />
-              Rural AI Intelligence Platform
-            </div>
-          </div>
-        </div>
 
         {/* Floating Glass Action Bar at Viewport Bottom */}
         <div className="container" style={{ position: 'relative', zIndex: 3, textAlign: 'center' }}>
