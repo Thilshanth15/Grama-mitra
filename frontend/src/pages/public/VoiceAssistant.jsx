@@ -897,12 +897,13 @@ export default function VoiceAssistant() {
               boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(14, 165, 233, 0.25)',
               backdropFilter: 'blur(20px)',
             }}>
-              {/* Background Video Layer */}
+              {/* Background Video Layer (/video/app_dashboard.mp4) */}
               <video
                 autoPlay
                 loop
                 muted
                 playsInline
+                src="/video/app_dashboard.mp4"
                 style={{
                   position: 'absolute',
                   top: 0,
@@ -911,21 +912,19 @@ export default function VoiceAssistant() {
                   height: '100%',
                   objectFit: 'cover',
                   zIndex: 0,
-                  filter: 'brightness(0.45) contrast(1.15) saturate(1.2)',
+                  filter: 'brightness(0.85) contrast(1.1) saturate(1.15)',
                   pointerEvents: 'none',
                 }}
-              >
-                <source src="/video/app dashboard.mp4" type="video/mp4" />
-              </video>
+              />
 
-              {/* Ambient Dark Tint Overlay */}
+              {/* Ambient Glassmorphism Tint Overlay */}
               <div style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 width: '100%',
                 height: '100%',
-                background: 'linear-gradient(135deg, rgba(8, 18, 32, 0.82) 0%, rgba(4, 10, 22, 0.88) 100%)',
+                background: 'linear-gradient(135deg, rgba(8, 18, 32, 0.5) 0%, rgba(4, 10, 22, 0.6) 100%)',
                 zIndex: 1,
                 pointerEvents: 'none',
               }} />
