@@ -791,9 +791,8 @@ export default function Home() {
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-          {/* Right Aligned Column: Title Card with Action Buttons Box directly below */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '1.5rem' }}>
-            {/* Top Right: Ultra-Premium Glass Title Card */}
+          {/* Top Right Corner: Ultra-Premium Glass Title Card */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '3.5rem' }}>
             <div style={{
               maxWidth: '580px',
               textAlign: 'right',
@@ -844,21 +843,22 @@ export default function Home() {
                 </span>
               </h2>
             </div>
+          </div>
 
-            {/* Below Title Card: Action Buttons in Translucent Glass Container */}
+          {/* Bottom Right Corner: Action Buttons in Compact Translucent Glass Container */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{
-              display: 'flex',
-              gap: '1.25rem',
+              display: 'inline-flex',
+              gap: '0.75rem',
               flexWrap: 'wrap',
               alignItems: 'center',
-              justifyContent: 'flex-end',
               background: 'linear-gradient(135deg, rgba(6, 11, 20, 0.45) 0%, rgba(15, 23, 42, 0.35) 100%)',
               backdropFilter: 'blur(24px)',
               WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '28px',
-              padding: '1.35rem 1.85rem',
-              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.35)',
+              borderRadius: '20px',
+              padding: '0.75rem 1.15rem',
+              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.35)',
               position: 'relative',
               overflow: 'hidden',
             }}>
@@ -866,15 +866,15 @@ export default function Home() {
               <Link to="/assistant" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.85rem',
-                padding: '1.05rem 2.35rem 1.05rem 1.35rem',
-                borderRadius: '18px',
+                gap: '0.6rem',
+                padding: '0.6rem 1.25rem 0.6rem 0.75rem',
+                borderRadius: '14px',
                 background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.88) 0%, rgba(5, 150, 105, 0.88) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '1.05rem',
+                fontSize: '0.92rem',
                 textDecoration: 'none',
-                boxShadow: '0 12px 35px -4px rgba(16, 185, 129, 0.6), inset 0 1.5px 2px rgba(255, 255, 255, 0.6)',
+                boxShadow: '0 8px 25px -4px rgba(16, 185, 129, 0.6), inset 0 1.5px 2px rgba(255, 255, 255, 0.6)',
                 border: '1px solid rgba(255, 255, 255, 0.5)',
                 transition: 'all 0.25s ease',
                 backdropFilter: 'blur(12px)',
@@ -884,39 +884,39 @@ export default function Home() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '12px',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '9px',
                   background: 'rgba(255, 255, 255, 0.3)',
                   border: '1px solid rgba(255, 255, 255, 0.6)',
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
                 }}>
-                  <Mic size={20} color="#ffffff" />
+                  <Mic size={16} color="#ffffff" />
                 </span>
                 <span style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Start Voice Assistant</span>
-                <ArrowRight size={20} color="#ffffff" />
+                <ArrowRight size={16} color="#ffffff" />
               </Link>
 
               {/* Secondary Discovery CTA */}
               <Link to="/services" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.75rem',
-                padding: '1.05rem 2.25rem',
-                borderRadius: '18px',
+                gap: '0.5rem',
+                padding: '0.6rem 1.25rem',
+                borderRadius: '14px',
                 border: '1px solid rgba(255, 255, 255, 0.35)',
                 background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 58, 138, 0.3) 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '1.05rem',
+                fontSize: '0.92rem',
                 textDecoration: 'none',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
+                boxShadow: '0 8px 20px rgba(0,0,0,0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.25)',
                 transition: 'all 0.25s ease',
               }} aria-label="View All Services">
                 <span>View All Services</span>
-                <ChevronRight size={20} color="#fbbf24" />
+                <ChevronRight size={16} color="#fbbf24" />
               </Link>
             </div>
           </div>
